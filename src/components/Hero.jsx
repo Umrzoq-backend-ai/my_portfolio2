@@ -8,61 +8,47 @@ const HERO_IMAGE = null;
 const HERO_VIDEO = heroVideo;
 
 const Hero = () => {
-  const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
+  const bgVideoRef = useRef(null);
+  const modalVideoRef = useRef(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true, easing: 'ease-out' });
   }, []);
 
-  // Brauzer autoPlay faqat muted holda ishlaydi.
-  // Foydalanuvchi unmute bosganda: video qayta yuklanadi va ovoz bilan o'ynaydi.
-  const toggleMute = (e) => {
+  // "Play Reel" bosganda modal ochiladi — video ovoz bilan ijro etadi
+  const openModal = (e) => {
     e.stopPropagation();
-    const video = videoRef.current;
-    if (!video) return;
+    setModalOpen(true);
+    setTimeout(() => {
+      if (modalVideoRef.current) {
+        modalVideoRef.current.currentTime = 0;
+        modalVideoRef.current.play();
+      }
+    }, 100);
+  };
 
-    if (isMuted) {
-      // Ovozni yoqish: currentTime saqlab, muted=false qilib davom ettirish
-      const currentTime = video.currentTime;
-      video.muted = false;
-      video.currentTime = currentTime;
-      video.play().then(() => {
-        setIsMuted(false);
-        setIsPlaying(true);
-      }).catch(() => {
-        // Brauzer ruxsat bermasa, muted qoladi
-        video.muted = true;
-        setIsMuted(true);
-      });
-    } else {
-      video.muted = true;
-      setIsMuted(true);
+  const closeModal = () => {
+    setModalOpen(false);
+    if (modalVideoRef.current) {
+      modalVideoRef.current.pause();
+      modalVideoRef.current.currentTime = 0;
     }
   };
 
-  const toggleVideo = (e) => {
-    e.stopPropagation();
-    const video = videoRef.current;
-    if (!video) return;
-    if (video.paused) {
-      video.play();
-      setIsPlaying(true);
-    } else {
-      video.pause();
-      setIsPlaying(false);
-    }
-  };
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') closeModal(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   return (
     <section className="relative w-full h-screen overflow-hidden bg-black">
 
-      {/* ── BACKGROUND LAYER ── */}
+      {/* ── BACKGROUND VIDEO (muted, loop — brauzer qoidasi) ── */}
       {HERO_VIDEO ? (
-        /* Video background */
         <video
-          ref={videoRef}
+          ref={bgVideoRef}
           autoPlay
           loop
           muted
@@ -72,14 +58,12 @@ const Hero = () => {
           <source src={HERO_VIDEO} type="video/mp4" />
         </video>
       ) : HERO_IMAGE ? (
-        /* Image background */
         <img
           src={HERO_IMAGE}
           alt="Umrzoq Yulchiyev"
           className="absolute top-0 left-0 w-full h-full object-cover object-center z-0"
         />
       ) : (
-        /* Fallback animated gradient */
         <div className="absolute top-0 left-0 w-full h-full z-0">
           <div className="absolute inset-0 bg-gradient-to-br from-[#ff2a2a] via-[#8b0000] to-black" />
           <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-black/30 rounded-full blur-[100px] animate-pulse" />
@@ -87,37 +71,8 @@ const Hero = () => {
         </div>
       )}
 
-      {/* Dark overlay — makes text readable over any background */}
+      {/* Dark overlay */}
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/10 to-black/20" />
-
-      {/* ── SOUND TOGGLE BUTTON ── */}
-      {HERO_VIDEO && (
-        <button
-          onClick={toggleMute}
-          aria-label={isMuted ? 'Unmute video' : 'Mute video'}
-          className="absolute top-5 right-5 z-30 flex items-center gap-2 px-3 py-2 rounded-full bg-black/60 border border-white/30 backdrop-blur-md text-white hover:bg-[#ff2a2a] hover:border-[#ff2a2a] transition-all duration-300 group"
-        >
-          {isMuted ? (
-            <>
-              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
-              </svg>
-              <span className="text-xs font-bold tracking-wider uppercase">Sound on</span>
-            </>
-          ) : (
-            <>
-              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                  d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-              </svg>
-              <span className="text-xs font-bold tracking-wider uppercase">Mute</span>
-            </>
-          )}
-        </button>
-      )}
 
       {/* ── LEFT FLOATING SOCIAL BAR ── */}
       <div className="hidden lg:flex flex-col gap-6 fixed left-6 top-1/2 -translate-y-1/2 z-50 mix-blend-difference">
@@ -196,28 +151,24 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Right: Play Reel button (works with video, decorative with image) */}
-        <div
-          data-aos="zoom-in"
-          data-aos-delay="600"
-          className="mt-8 md:mt-0 flex flex-row md:flex-col items-center gap-2 md:gap-3 cursor-pointer group self-start md:self-auto"
-          onClick={HERO_VIDEO ? toggleVideo : undefined}
-        >
-          <div className={`w-12 h-12 md:w-20 md:h-20 rounded-full border border-white/30 bg-black/20 backdrop-blur-md flex justify-center items-center transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_40px_rgba(255,42,42,0.6)] ${HERO_VIDEO ? 'group-hover:scale-110 group-hover:bg-[#ff2a2a]' : 'group-hover:scale-110 group-hover:bg-[#ff2a2a]'}`}>
-            {isPlaying ? (
-              <svg className="w-5 h-5 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-              </svg>
-            ) : (
+        {/* Right: Play Reel — modal ochadi, ovoz bilan */}
+        {HERO_VIDEO && (
+          <div
+            data-aos="zoom-in"
+            data-aos-delay="600"
+            className="mt-8 md:mt-0 flex flex-row md:flex-col items-center gap-2 md:gap-3 cursor-pointer group self-start md:self-auto"
+            onClick={openModal}
+          >
+            <div className="w-12 h-12 md:w-20 md:h-20 rounded-full border border-white/30 bg-black/20 backdrop-blur-md flex justify-center items-center transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:scale-110 group-hover:bg-[#ff2a2a] group-hover:shadow-[0_0_40px_rgba(255,42,42,0.6)]">
               <svg className="w-5 h-5 md:w-8 md:h-8 text-white ml-0.5 md:ml-1" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z" />
               </svg>
-            )}
+            </div>
+            <span className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">
+              Play Reel
+            </span>
           </div>
-          <span className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">
-            {isPlaying ? 'Pause' : 'Play Reel'}
-          </span>
-        </div>
+        )}
       </div>
 
       {/* ── SCROLL INDICATOR ── */}
@@ -231,6 +182,40 @@ const Hero = () => {
           </svg>
         </div>
       </div>
+
+      {/* ── VIDEO MODAL — ovoz bilan to'liq ijro ── */}
+      {modalOpen && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={closeModal}
+        >
+          <div
+            className="relative w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Yopish tugmasi */}
+            <button
+              onClick={closeModal}
+              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white hover:bg-[#ff2a2a] transition-all duration-200"
+              aria-label="Close video"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Video — controls bilan, ovozli */}
+            <video
+              ref={modalVideoRef}
+              controls
+              playsInline
+              className="w-full aspect-video bg-black"
+            >
+              <source src={HERO_VIDEO} type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
