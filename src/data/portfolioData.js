@@ -417,59 +417,224 @@ export const emailjsConfig = {
 };
 
 // ============================================================
-// Chatbot FAQ — keyword-based matching, no API needed
+// Chatbot FAQ — multilingual (UZ / RU / EN), keyword-based
 // ============================================================
 export const chatbotData = {
-  greeting: "Salom! Men Umrzoq Yulchiyevning AI assistentiman 🤖\nSavol bering, javob berishga harakat qilaman!",
-  placeholder: "Savol yozing...",
+  greeting: "Salom! / Hello! / Привет! 👋\nMen Umrzoq Yulchiyevning AI assistentiman 🤖\nO'zbek, ingliz yoki rus tilida savol bering!",
+  placeholder: "Savol yozing... / Ask me anything...",
   suggestions: [
     "Kim siz?",
-    "Qanday bog'lanish?",
-    "Loyihalaringiz?",
-    "Qanday texnologiyalar?",
-    "Resume yuklash",
+    "What do you do?",
+    "Чем занимаетесь?",
+    "Loyihalar / Projects",
+    "Contact info",
   ],
   faqs: [
+    // ── KIM / WHO / КТО ──────────────────────────────────────
     {
-      keywords: ["kim", "who", "umrzoq", "tanishing", "introduce", "haqida", "about"],
-      answer: "Men Umrzoq Yulchiyev — Junior Data Scientist va Backend Developer. Uzbekistondan, hozir School 21 Uzbekistonda o'qiyapman. Python, FastAPI, Django va Machine Learning bilan ishlayapman. 🚀",
+      keywords: [
+        // UZ
+        "kim", "kimsan", "o'zingiz", "tanishing", "haqida", "qanday odam",
+        // EN
+        "who", "who are you", "about you", "introduce", "tell me about",
+        // RU
+        "кто", "кто ты", "кто вы", "расскажи", "о себе", "познакомьтесь",
+      ],
+      answer: "Men — Umrzoq Yulchiyev 👨‍💻\n\nJunior Data Scientist va Backend Developer. O'zbekistonning Zomin, Jizzakh shahridan. Hozir School 21 Uzbekistonda o'qiyapman.\n\nI'm Umrzoq Yulchiyev — a Junior Data Scientist & Backend Developer from Uzbekistan, currently studying at School 21.\n\nЯ — Умрзок Юлчиев, Junior Data Scientist и Backend Developer из Узбекистана. Сейчас учусь в School 21 Uzbekistan. 🚀",
     },
+
+    // ── NIMA QILASIZ / WHAT DO YOU DO / ЧЕМ ЗАНИМАЕТЕСЬ ────
     {
-      keywords: ["bog'lanish", "contact", "email", "telefon", "phone", "telegram", "reach", "murojaat"],
-      answer: "Menga quyidagilar orqali murojaat qilishingiz mumkin:\n📧 Email: school21dev@gmail.com\n📱 Telegram: @umrzoq_21\n💼 LinkedIn: linkedin.com/in/umrzoqyulchiyevcode",
+      keywords: [
+        // UZ
+        "nima qilasiz", "nima ishlaysiz", "kasb", "mutaxassis", "soha", "nima bilan shug'ullanasiz",
+        // EN
+        "what do you do", "your work", "your job", "specialization", "what you do", "occupation",
+        // RU
+        "чем занимаетесь", "чем занимаешься", "что делаешь", "специализация", "профессия", "работа",
+      ],
+      answer: "Men quyidagi sohalarda ishlayapman:\n\n🤖 AI / Machine Learning — aqlli modellar yaratish\n⚡ Backend Development — FastAPI, Django bilan API qurilish\n📊 Data Science — ma'lumotlarni tahlil qilish va vizualizatsiya\n🔬 Computer Vision — OpenCV, MediaPipe\n\nI build AI-powered apps, ML models, and backend APIs using Python, FastAPI, Django, and Scikit-learn.\n\nЯ разрабатываю AI-приложения, ML-модели и backend API на Python, FastAPI и Django. 💡",
     },
+
+    // ── LOYIHALAR / PROJECTS / ПРОЕКТЫ ──────────────────────
     {
-      keywords: ["loyiha", "project", "ishlar", "portfolio", "nima qilgan", "work"],
-      answer: "Mening asosiy loyihalarim:\n🩻 AI Radiologist — X-ray tahlili\n🎬 UzbekDub AI — YouTube dubbing\n🖱️ Virtual Mouse — qo'l harakati bilan boshqarish\n🤖 AI Telegram Bot\n📊 MovieLens Analytics\n\nBatafsil 'Projects' bo'limida ko'ring!",
+      keywords: [
+        // UZ
+        "loyiha", "loyihalar", "ishlar", "nima qilgan", "portfolio", "qanday loyihalar",
+        // EN
+        "project", "projects", "work", "built", "what have you built", "portfolio",
+        // RU
+        "проект", "проекты", "что делал", "работы", "портфолио",
+      ],
+      answer: "Mening asosiy loyihalarim / My Projects / Мои проекты:\n\n🩻 AI Radiologist — Ko'krak X-ray tahlili (Deep Learning)\n🎬 UzbekDub AI — YouTube videolarini o'zbekchaga dubbing\n🖱️ Virtual Mouse — Qo'l harakati bilan kompyuter boshqarish\n🤖 AI Telegram Bot — Aqlli Telegram bot\n📊 MovieLens Analytics — Ma'lumotlar tahlili\n🌐 Portfolio Website — Ushbu sayt (React + Vite)\n\nBatafsil ko'rish uchun ↓ 'Projects' bo'limiga o'ting!",
     },
+
+    // ── TEXNOLOGIYALAR / SKILLS / НАВЫКИ ────────────────────
     {
-      keywords: ["texnologiya", "technology", "skill", "python", "tech", "stack", "ko'nikma", "bilim"],
-      answer: "Men ishlatadigan texnologiyalar:\n🐍 Python (88%)\n⚡ FastAPI (85%)\n🌐 Django (80%)\n🤖 Machine Learning (83%)\n📊 Pandas, NumPy, Scikit-learn\n🗄️ PostgreSQL, SQLite\n🔧 Git, Linux, Jupyter",
+      keywords: [
+        // UZ
+        "texnologiya", "texnologiyalar", "ko'nikma", "bilim", "stack", "qanday dasturlash",
+        // EN
+        "technology", "technologies", "skill", "skills", "tech stack", "programming", "languages", "tools",
+        // RU
+        "технология", "технологии", "навык", "навыки", "стек", "умения", "языки программирования",
+      ],
+      answer: "Tech Stack:\n\n🐍 Python — 88%\n⚡ FastAPI — 85%\n🌐 Django — 80%\n🤖 Machine Learning (Scikit-learn) — 83%\n📊 Pandas, NumPy, Matplotlib\n👁️ OpenCV, MediaPipe\n🗄️ PostgreSQL, SQLite, MySQL\n🔧 Git, Linux, Jupyter Notebook\n📝 C++, SQL, JavaScript (basic)",
     },
+
+    // ── BOG'LANISH / CONTACT / КОНТАКТЫ ─────────────────────
     {
-      keywords: ["resume", "cv", "yuklab", "download", "rezyume"],
-      answer: "Mening resume ni yuklab olish uchun sahifaning yuqorisidagi 'Download Resume' tugmasini bosing yoki to'g'ridan-to'g'ri:\n📄 /Umrzoq_Yulchiyev_Resume.pdf",
+      keywords: [
+        // UZ
+        "bog'lanish", "aloqa", "murojaat", "email", "telefon", "telegram", "linkedin",
+        // EN
+        "contact", "reach", "email", "phone", "get in touch", "hire", "message",
+        // RU
+        "контакт", "связь", "написать", "почта", "телефон", "связаться", "нанять",
+      ],
+      answer: "Bog'lanish / Contact / Контакты:\n\n📧 Email: school21dev@gmail.com\n📱 Telegram: @umrzoq_21\n💼 LinkedIn: linkedin.com/in/umrzoqyulchiyevcode\n🐙 GitHub: github.com/Umrzoq-backend-ai\n\nIshga olmoqchimisiz? / Want to hire me?\nHire Me tugmasini bosing yoki email yuboring! 💼",
     },
+
+    // ── RESUME / CV / РЕЗЮМЕ ─────────────────────────────────
     {
-      keywords: ["tajriba", "experience", "ish", "internship", "ishlagan"],
-      answer: "Tajribam:\n🎓 School 21 Uzbekistan — Data Science (2024–hozir)\n🏆 AI Hackathon Samarkand — AI Developer\n💻 Self-Directed Projects — Backend & AI Developer (2023–hozir)",
+      keywords: [
+        // UZ
+        "resume", "rezyume", "cv", "yuklab", "hujjat",
+        // EN
+        "resume", "cv", "download", "curriculum vitae",
+        // RU
+        "резюме", "cv", "скачать", "загрузить",
+      ],
+      answer: "Resume yuklab olish / Download Resume / Скачать резюме:\n\n📄 Sahifa yuqorisidagi 'Download Resume' tugmasini bosing!\n\nYoki to'g'ridan-to'g'ri:\n🔗 /Umrzoq_Yulchiyev_Resume.pdf",
     },
+
+    // ── TAJRIBA / EXPERIENCE / ОПЫТ ──────────────────────────
     {
-      keywords: ["ta'lim", "education", "o'qish", "university", "maktab", "school"],
-      answer: "Ta'limim:\n🏫 School 21 Uzbekistan — Data Science Program (hozirgi)\n📍 O'rta maktab — Zomin, Jizzakh\n\nSchool 21 — peer-to-peer metodologiya asosida dasturlash o'rgatadigan innovatsion maktab.",
+      keywords: [
+        // UZ
+        "tajriba", "ish tajriba", "internship", "ishlagan", "qayerda ishlagan",
+        // EN
+        "experience", "work experience", "internship", "worked", "jobs",
+        // RU
+        "опыт", "опыт работы", "стажировка", "где работал", "работал",
+      ],
+      answer: "Tajriba / Experience / Опыт:\n\n🎓 School 21 Uzbekistan\n   Data Science Student (2024 — hozir)\n\n🏆 AI Hackathon — Samarkand\n   AI Developer, Participant (2024)\n\n💻 Self-Directed Projects\n   Backend & AI Developer (2023 — hozir)\n   FastAPI, Django, OpenCV, ML modellar",
     },
+
+    // ── TA'LIM / EDUCATION / ОБРАЗОВАНИЕ ────────────────────
     {
-      keywords: ["sertifikat", "certificate", "award", "mukofot"],
-      answer: "Sertifikatlarim:\n🎓 Data Science Program — School 21\n🤖 Machine Learning — Coursera\n🐍 Python Programming\n🏆 AI Hackathon Participant — Samarkand\n⚡ FastAPI & Django\n📊 Data Analysis with Pandas",
+      keywords: [
+        // UZ
+        "ta'lim", "o'qish", "maktab", "university", "qayerda o'qiydi", "diplom",
+        // EN
+        "education", "study", "university", "school", "degree", "where do you study",
+        // RU
+        "образование", "учёба", "университет", "школа", "где учишься", "диплом",
+      ],
+      answer: "Ta'lim / Education / Образование:\n\n🏫 School 21 Uzbekistan\n   Data Science Program (hozirgi / current / сейчас)\n   Peer-to-peer, project-based metodologiya\n\n📍 O'rta maktab — Zomin, Jizzakh, O'zbekiston\n\nSchool 21 — kod yozishni amaliy loyihalar orqali o'rgatadigan innovatsion maktab 🚀",
     },
+
+    // ── SERTIFIKAT / CERTIFICATE / СЕРТИФИКАТЫ ──────────────
     {
-      keywords: ["yosh", "age", "qayerdan", "location", "joylashuv", "uzbekiston", "qayerda"],
-      answer: "Men Zomin, Jizzakh, O'zbekistondan. Hozir School 21 Uzbekistonda o'qiyapman va AI hamda Backend development bilan shug'ullanaman. 🇺🇿",
+      keywords: [
+        // UZ
+        "sertifikat", "sertifikatlar", "guvohnoma", "mukofot", "diplom",
+        // EN
+        "certificate", "certificates", "certification", "award", "achievement",
+        // RU
+        "сертификат", "сертификаты", "диплом", "достижения", "награды",
+      ],
+      answer: "Sertifikatlar / Certificates / Сертификаты:\n\n🎓 Data Science Program — School 21 Uzbekistan\n🤖 Machine Learning — Coursera\n🐍 Python Programming — Online\n🏆 AI Hackathon Participant — Samarkand\n⚡ FastAPI & Django — Self-Study\n📊 Data Analysis with Pandas — Online",
     },
+
+    // ── JOYLASHUV / LOCATION / МЕСТОПОЛОЖЕНИЕ ───────────────
     {
-      keywords: ["maqsad", "goal", "kelajak", "future", "dream", "orzu"],
-      answer: "Mening asosiy maqsadim — AI Engineer bo'lish va real hayotdagi muammolarni hal qiladigan aqlli yechimlar yaratish. Machine Learning va AI sohasida chuqur bilim olish ustida ishlayapman. 🎯",
+      keywords: [
+        // UZ
+        "qayerdan", "qayerda", "joylashuv", "shahar", "uzbekiston", "yashaydi",
+        // EN
+        "location", "where are you", "where from", "country", "city", "based",
+        // RU
+        "откуда", "где живёт", "город", "страна", "местоположение", "узбекистан",
+      ],
+      answer: "📍 Zomin, Jizzakh, O'zbekiston 🇺🇿\n\nHozir School 21 Uzbekistonda o'qiyapman va remote ishlashga tayyor!\n\nBased in Uzbekistan, open to remote work worldwide 🌍\n\nНахожусь в Узбекистане, готов к удалённой работе 💻",
+    },
+
+    // ── MAQSAD / GOAL / ЦЕЛЬ ─────────────────────────────────
+    {
+      keywords: [
+        // UZ
+        "maqsad", "kelajak", "orzu", "rejalar", "nima bo'lmoqchi",
+        // EN
+        "goal", "future", "dream", "plans", "ambition", "career goal", "vision",
+        // RU
+        "цель", "мечта", "планы", "будущее", "карьера", "амбиции",
+      ],
+      answer: "Mening maqsadim / My Goal / Моя цель:\n\n🎯 AI Engineer bo'lish va real muammolarni hal qiladigan aqlli yechimlar yaratish.\n\nMen uchun eng muhimi — Machine Learning va AI sohasida chuqur bilim, kuchli portfolio va xalqaro darajadagi loyihalar.\n\nMy goal is to become an AI Engineer and build intelligent solutions that solve real-world problems.\n\nМоя цель — стать AI Engineer и создавать умные решения, которые решают реальные проблемы. 🚀",
+    },
+
+    // ── SALARY / ISH HAQI / ЗАРПЛАТА ─────────────────────────
+    {
+      keywords: [
+        // UZ
+        "maosh", "ish haqi", "oylik", "qancha olasiz",
+        // EN
+        "salary", "pay", "rate", "compensation", "how much",
+        // RU
+        "зарплата", "оплата", "сколько стоит", "ставка",
+      ],
+      answer: "Ish haqi bo'yicha to'g'ridan-to'g'ri gaplashaylik:\n\n📧 school21dev@gmail.com ga yozing\n📱 Telegram: @umrzoq_21\n\nFor salary discussion, please reach out directly:\nEmail: school21dev@gmail.com\n\nПо вопросам оплаты пишите напрямую:\n📧 school21dev@gmail.com 💼",
+    },
+
+    // ── SALOM / HELLO / ПРИВЕТ ───────────────────────────────
+    {
+      keywords: [
+        // UZ
+        "salom", "assalomu alaykum", "hayr", "xayr",
+        // EN
+        "hello", "hi", "hey", "greetings", "good morning", "good evening",
+        // RU
+        "привет", "здравствуй", "здравствуйте", "добрый день", "добрый вечер", "пока",
+      ],
+      answer: "Salom! 👋 Assalomu alaykum!\nHello! Hi there!\nПривет! Здравствуйте!\n\nMen Umrzoq Yulchiyevning AI assistentiman 🤖\nQanday yordam bera olaman? / How can I help? / Чем могу помочь?",
+    },
+
+    // ── RAHMAT / THANKS / СПАСИБО ────────────────────────────
+    {
+      keywords: [
+        // UZ
+        "rahmat", "tashakkur", "minnatdor",
+        // EN
+        "thanks", "thank you", "thx", "appreciate", "grateful",
+        // RU
+        "спасибо", "благодарю", "благодарность", "thanks",
+      ],
+      answer: "Iltimos! / You're welcome! / Пожалуйста! 😊\n\nBoshqa savollaringiz bo'lsa bemalol so'rang!\nFeel free to ask anything else!\nЗадавайте любые вопросы! 🚀",
+    },
+
+    // ── PYTHON / AI / ML ─────────────────────────────────────
+    {
+      keywords: [
+        "python", "fastapi", "django", "machine learning", "deep learning",
+        "ai", "artificial intelligence", "ml", "data science", "neural",
+        "искусственный интеллект", "машинное обучение",
+      ],
+      answer: "Python va AI sohasida tajribam:\n\n🐍 Python — asosiy tilim, 3+ yil tajriba\n⚡ FastAPI — tezkor REST API qurilishi\n🌐 Django — to'liq web framework\n🤖 Machine Learning — Scikit-learn, classification, regression, clustering\n📊 Data Analysis — Pandas, NumPy, Matplotlib\n👁️ Computer Vision — OpenCV, MediaPipe\n\nI specialize in Python-based AI and backend development.\n\nСпециализируюсь на Python, AI и backend разработке. 💻",
+    },
+
+    // ── ISHGA OLISH / HIRING / НАНЯТЬ ────────────────────────
+    {
+      keywords: [
+        // UZ
+        "ishga olmoqchi", "yollash", "freelance", "hamkorlik", "loyiha taklif",
+        // EN
+        "hire", "hiring", "freelance", "collaboration", "work together", "job offer", "opportunity",
+        // RU
+        "нанять", "сотрудничество", "фриланс", "предложение", "работа вместе",
+      ],
+      answer: "Ajoyib! Hamkorlikka tayyor! 🎉\n\nGreat! I'm open to opportunities!\n\nОтлично! Готов к сотрудничеству!\n\n📧 Email: school21dev@gmail.com\n📱 Telegram: @umrzoq_21\n💼 LinkedIn: linkedin.com/in/umrzoqyulchiyevcode\n\nYoki sahifadagi 'Hire Me' tugmasini bosing! 👆",
     },
   ],
-  fallback: "Kechirasiz, bu savolni tushunmadim 🤔\nQuyidagi mavzular haqida so'rashingiz mumkin:\n• Kim ekanligim\n• Loyihalarim\n• Texnologiyalar\n• Bog'lanish\n• Resume\n• Ta'lim & Tajriba",
+
+  fallback: "Tushunmadim, lekin yordam bermoqchiman 🤔\n\nSo'rashingiz mumkin / You can ask about / Можете спросить про:\n• Kim ekanligim / About me / О себе\n• Nima qilaman / What I do / Чем занимаюсь\n• Loyihalarim / Projects / Проекты\n• Texnologiyalar / Tech stack / Технологии\n• Bog'lanish / Contact / Контакты\n• Resume / CV / Резюме\n• Ta'lim / Education / Образование",
 };
