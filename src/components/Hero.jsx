@@ -9,31 +9,49 @@ const HERO_VIDEO = heroVideo;
 
 const Hero = () => {
   const videoRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true, easing: 'ease-out' });
   }, []);
 
-  const toggleVideo = (e) => {
+  // Brauzer autoPlay faqat muted holda ishlaydi.
+  // Foydalanuvchi unmute bosganda: video qayta yuklanadi va ovoz bilan o'ynaydi.
+  const toggleMute = (e) => {
     e.stopPropagation();
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isMuted) {
+      // Ovozni yoqish: currentTime saqlab, muted=false qilib davom ettirish
+      const currentTime = video.currentTime;
+      video.muted = false;
+      video.currentTime = currentTime;
+      video.play().then(() => {
+        setIsMuted(false);
         setIsPlaying(true);
-      } else {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      }
+      }).catch(() => {
+        // Brauzer ruxsat bermasa, muted qoladi
+        video.muted = true;
+        setIsMuted(true);
+      });
+    } else {
+      video.muted = true;
+      setIsMuted(true);
     }
   };
 
-  const toggleMute = (e) => {
+  const toggleVideo = (e) => {
     e.stopPropagation();
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(videoRef.current.muted);
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
     }
   };
 
@@ -77,21 +95,26 @@ const Hero = () => {
         <button
           onClick={toggleMute}
           aria-label={isMuted ? 'Unmute video' : 'Mute video'}
-          className="absolute top-6 right-6 z-30 w-10 h-10 rounded-full bg-black/50 border border-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#ff2a2a] transition-all duration-300"
+          className="absolute top-5 right-5 z-30 flex items-center gap-2 px-3 py-2 rounded-full bg-black/60 border border-white/30 backdrop-blur-md text-white hover:bg-[#ff2a2a] hover:border-[#ff2a2a] transition-all duration-300 group"
         >
           {isMuted ? (
-            /* muted icon */
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
-            </svg>
+            <>
+              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+              </svg>
+              <span className="text-xs font-bold tracking-wider uppercase">Sound on</span>
+            </>
           ) : (
-            /* unmuted icon */
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M15.536 8.464a5 5 0 010 7.072M12 6v12m-3.536-9.536A5 5 0 005.929 12a5 5 0 002.535 4.464M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-            </svg>
+            <>
+              <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              </svg>
+              <span className="text-xs font-bold tracking-wider uppercase">Mute</span>
+            </>
           )}
         </button>
       )}
