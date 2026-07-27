@@ -240,9 +240,10 @@ export const projects = [
     description:
       "A modern, responsive personal portfolio website built with React and Vite to showcase projects, skills, and experience. Features smooth animations, dark theme, and a clean UI.",
     techTags: ["React", "Vite", "TailwindCSS", "JavaScript"],
+    image: "https://opengraph.githubassets.com/1/Umrzoq-backend-ai/my_portfolio2",
     links: {
-      github: "https://github.com/umrzoq-backend-ai",
-      demo: null,
+      github: "https://github.com/Umrzoq-backend-ai/my_portfolio2",
+      demo: "https://umrzoq-portfolio.vercel.app",
     },
     isFlagship: true,
   },
@@ -254,6 +255,7 @@ export const projects = [
     description:
       "An intelligent Telegram bot powered by AI that can answer questions, process commands, and interact with users. Built with Python and integrated with AI APIs for smart responses.",
     techTags: ["Python", "Telegram API", "AI", "REST API"],
+    image: "https://opengraph.githubassets.com/1/Umrzoq-backend-ai/ai-telegram-bot",
     links: {
       github: "https://github.com/umrzoq-backend-ai",
       demo: null,
@@ -268,6 +270,7 @@ export const projects = [
     description:
       "An AI-powered medical imaging application that analyzes chest X-rays using computer vision and deep learning. Helps detect anomalies and assists in radiological diagnosis.",
     techTags: ["Python", "OpenCV", "Deep Learning", "Computer Vision", "FastAPI"],
+    image: "https://opengraph.githubassets.com/1/Umrzoq-backend-ai/ai-radiologist",
     links: {
       github: "https://github.com/umrzoq-backend-ai",
       demo: null,
@@ -282,6 +285,7 @@ export const projects = [
     description:
       "An AI-based YouTube video dubbing system that automatically translates and dubs video content into Uzbek. Combines speech recognition, translation, and text-to-speech technologies.",
     techTags: ["Python", "NLP", "Speech Recognition", "TTS", "AI"],
+    image: "https://opengraph.githubassets.com/1/Umrzoq-backend-ai/uzbekdub-ai",
     links: {
       github: "https://github.com/umrzoq-backend-ai",
       demo: null,
@@ -296,6 +300,7 @@ export const projects = [
     description:
       "A computer vision project that enables touchless mouse control using hand gestures detected via webcam. Built with OpenCV and MediaPipe for real-time hand tracking.",
     techTags: ["Python", "OpenCV", "MediaPipe", "Computer Vision"],
+    image: "https://opengraph.githubassets.com/1/Umrzoq-backend-ai/virtual-mouse",
     links: {
       github: "https://github.com/umrzoq-backend-ai",
       demo: null,
@@ -310,6 +315,7 @@ export const projects = [
     description:
       "A data analytics project using the MovieLens dataset to explore movie ratings, user preferences, and recommendation patterns. Features detailed visualizations and statistical analysis.",
     techTags: ["Python", "Pandas", "NumPy", "Matplotlib", "Scikit-learn"],
+    image: "https://opengraph.githubassets.com/1/Umrzoq-backend-ai/movielens-analytics",
     links: {
       github: "https://github.com/umrzoq-backend-ai",
       demo: null,
@@ -324,6 +330,7 @@ export const projects = [
     description:
       "A collection of machine learning projects covering classification, regression, clustering, and more. Built using Scikit-learn, Pandas, and NumPy with real-world datasets.",
     techTags: ["Python", "Scikit-learn", "Pandas", "NumPy", "ML"],
+    image: "https://opengraph.githubassets.com/1/Umrzoq-backend-ai/ml-projects",
     links: {
       github: "https://github.com/umrzoq-backend-ai",
       demo: null,
@@ -338,6 +345,7 @@ export const projects = [
     description:
       "Projects completed during data science training at School 21 Uzbekistan, covering data preprocessing, visualization, model training, and evaluation across various domains.",
     techTags: ["Python", "Jupyter", "Pandas", "Matplotlib", "Scikit-learn"],
+    image: "https://opengraph.githubassets.com/1/Umrzoq-backend-ai/ds-bootcamp",
     links: {
       github: "https://github.com/umrzoq-backend-ai",
       demo: null,

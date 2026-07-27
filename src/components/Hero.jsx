@@ -10,6 +10,7 @@ const HERO_VIDEO = heroVideo;
 const Hero = () => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: true, easing: 'ease-out' });
@@ -25,6 +26,14 @@ const Hero = () => {
         videoRef.current.pause();
         setIsPlaying(false);
       }
+    }
+  };
+
+  const toggleMute = (e) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
     }
   };
 
@@ -62,6 +71,30 @@ const Hero = () => {
 
       {/* Dark overlay — makes text readable over any background */}
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/10 to-black/20" />
+
+      {/* ── SOUND TOGGLE BUTTON ── */}
+      {HERO_VIDEO && (
+        <button
+          onClick={toggleMute}
+          aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+          className="absolute top-6 right-6 z-30 w-10 h-10 rounded-full bg-black/50 border border-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-[#ff2a2a] transition-all duration-300"
+        >
+          {isMuted ? (
+            /* muted icon */
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+            </svg>
+          ) : (
+            /* unmuted icon */
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M15.536 8.464a5 5 0 010 7.072M12 6v12m-3.536-9.536A5 5 0 005.929 12a5 5 0 002.535 4.464M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+            </svg>
+          )}
+        </button>
+      )}
 
       {/* ── LEFT FLOATING SOCIAL BAR ── */}
       <div className="hidden lg:flex flex-col gap-6 fixed left-6 top-1/2 -translate-y-1/2 z-50 mix-blend-difference">
