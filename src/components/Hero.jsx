@@ -3,6 +3,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { heroContent, socialLinks } from '../data/portfolioData';
 import heroVideo from '../assets/hero video/Self-introduction_video_Junior_D…_202607260839.mp4';
+import heroPoster from '../assets/hero video/hero-poster.jpg';
 
 const HERO_IMAGE = null;
 const HERO_VIDEO = heroVideo;
@@ -12,8 +13,34 @@ const Hero = () => {
   const modalVideoRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
 
+  // Brauzer autoplay siyosati: React muted xossasini to'liq bog'lash
   useEffect(() => {
-    AOS.init({ duration: 1000, once: true, easing: 'ease-out' });
+    const video = bgVideoRef.current;
+    if (!video) return;
+
+    video.defaultMuted = true;
+    video.muted = true;
+
+    const playVideo = () => {
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise.catch((err) => {
+          console.warn("Background video autoplay blocked by browser policy:", err);
+        });
+      }
+    };
+
+    if (video.readyState >= 2) {
+      playVideo();
+    } else {
+      video.addEventListener('loadeddata', playVideo);
+      video.addEventListener('canplay', playVideo);
+    }
+
+    return () => {
+      video.removeEventListener('loadeddata', playVideo);
+      video.removeEventListener('canplay', playVideo);
+    };
   }, []);
 
   // "Play Reel" bosganda modal ochiladi — video ovoz bilan ijro etadi
@@ -45,14 +72,18 @@ const Hero = () => {
   return (
     <section className="relative w-full h-screen overflow-hidden bg-black">
 
-      {/* ── BACKGROUND VIDEO (muted, loop — brauzer qoidasi) ── */}
+      {/* ── BACKGROUND VIDEO (muted, loop — brauzer qoidasi + poster zaxira) ── */}
       {HERO_VIDEO ? (
         <video
           ref={bgVideoRef}
+          src={HERO_VIDEO}
           autoPlay
           loop
           muted
+          defaultMuted
           playsInline
+          preload="auto"
+          poster={heroPoster}
           className="absolute top-0 left-0 w-full h-full object-cover z-0"
         >
           <source src={HERO_VIDEO} type="video/mp4" />
@@ -207,7 +238,9 @@ const Hero = () => {
             {/* Video — controls bilan, ovozli */}
             <video
               ref={modalVideoRef}
+              src={HERO_VIDEO}
               controls
+              autoPlay
               playsInline
               className="w-full aspect-video bg-black"
             >

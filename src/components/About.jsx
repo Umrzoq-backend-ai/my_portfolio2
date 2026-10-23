@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { aboutContent } from '../data/portfolioData';
+import profileImg from '../assets/about/image.png';
 
 // Tech stack SVG icons rendered inline for crisp rendering
 const PythonIcon = () => (
@@ -72,13 +73,29 @@ const About = () => {
               <div className="absolute -top-3 left-1/2 w-16 h-6 bg-gray-900 rounded-t-xl transform -translate-x-1/2 flex justify-center items-center">
                 <div className="w-8 h-2 bg-black/30 rounded-full shadow-inner"></div>
               </div>
-              {/* Image Container — Avatar Placeholder */}
-              <div className="w-full aspect-[3/4] overflow-hidden rounded-xl bg-gradient-to-br from-gray-700 to-gray-900 border-2 border-transparent flex flex-col items-center justify-center gap-3">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#ff2a2a] to-red-800 flex items-center justify-center text-white text-4xl font-black shadow-lg">
-                  U
+              {/* Image Container — Avatar Badge */}
+              <div className="w-full aspect-[3/4] overflow-hidden rounded-xl bg-gray-800 border border-white/10 relative group">
+                <img
+                  src={profileImg}
+                  alt="Umrzoq Yulchiyev"
+                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    if (e.currentTarget.nextElementSibling) {
+                      e.currentTarget.nextElementSibling.classList.remove('hidden');
+                    }
+                  }}
+                />
+                {/* Fallback if image fails to load */}
+                <div className="hidden absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900 flex flex-col items-center justify-center gap-3">
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#ff2a2a] to-red-800 flex items-center justify-center text-white text-3xl font-black shadow-lg">
+                    U
+                  </div>
                 </div>
-                <span className="text-white/60 text-sm font-bold tracking-wide">Umrzoq Yulchiyev</span>
-                <span className="text-white/40 text-xs">Data Scientist & Backend Dev</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 pointer-events-none">
+                  <span className="text-white text-sm font-bold tracking-wide">Umrzoq Yulchiyev</span>
+                  <span className="text-white/70 text-xs">Data Scientist & Backend Dev</span>
+                </div>
               </div>
             </div>
           </div>

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 import Preloader from './components/Preloader'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -23,12 +25,17 @@ function App() {
   });
 
   useEffect(() => {
+    AOS.init({ duration: 1000, once: true, easing: 'ease-out' });
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem('theme', dark ? 'dark' : 'light');
     if (dark) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
+    AOS.refresh();
   }, [dark]);
 
   const toggle = () => setDark((d) => !d);

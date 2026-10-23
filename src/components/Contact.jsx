@@ -1,23 +1,13 @@
 import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
 import { emailjsConfig, personalInfo, socialLinks } from '../data/portfolioData';
 
 const Contact = () => {
-  const ref = useRef(null);
   const formRef = useRef(null);
   const [status, setStatus] = useState('idle'); // idle, sending, success, error
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-  
-  // Parallax translation for the big text
-  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "30%"]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (status === 'sending') return; // Prevent duplicate submissions
+    if (status === 'sending') return;
 
     setStatus('sending');
 
@@ -34,7 +24,7 @@ const Contact = () => {
       return;
     }
 
-    // Check if EmailJS is configured (checking both placeholder values and falsy states)
+    // Check if EmailJS is configured
     const isConfigured = 
       emailjsConfig.serviceId && 
       emailjsConfig.serviceId !== 'YOUR_EMAILJS_SERVICE_ID' &&
@@ -44,7 +34,7 @@ const Contact = () => {
       emailjsConfig.publicKey !== 'YOUR_EMAILJS_PUBLIC_KEY';
 
     if (!isConfigured) {
-      // EmailJS not configured — fallback to prefilled mailto
+      // EmailJS fallback to prefilled mailto
       const mailtoLink = `mailto:${personalInfo.emails.primary}?subject=Portfolio Contact from ${firstName} ${lastName}&body=${encodeURIComponent(`From: ${firstName} ${lastName}\nEmail: ${email}\n\n${message}`)}`;
       window.open(mailtoLink, '_blank');
       setStatus('success');
@@ -73,159 +63,186 @@ const Contact = () => {
   };
 
   return (
-    <section ref={ref} id="contact" className="bg-[#0a0a0a] w-full min-h-screen relative overflow-hidden flex items-end pt-32 pb-0 md:pb-0 border-t border-gray-900">
-      {/* Huge Background Text */}
-      <motion.div 
-        style={{ y }}
-        className="absolute top-0 left-0 w-full h-full flex flex-col justify-start items-center overflow-hidden pointer-events-none z-0 pt-16 md:pt-12"
+    <section 
+      id="contact" 
+      className="bg-[#0a0a0a] w-full min-h-screen relative overflow-hidden flex flex-col justify-center items-center pt-24 pb-28 px-6 md:px-12 border-t border-white/10"
+    >
+      {/* Subtle, elegant background watermark */}
+      <div 
+        aria-hidden="true" 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-center items-center pointer-events-none select-none z-0"
       >
-        <h1 
-          className="text-[25vw] leading-[0.75] font-black text-white uppercase tracking-tighter select-none scale-y-[1.6] origin-top"
-          style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}
+        <span 
+          className="text-[14vw] font-black uppercase tracking-tighter text-transparent select-none"
+          style={{ 
+            WebkitTextStroke: '1.5px rgba(255, 255, 255, 0.04)',
+            fontFamily: "'Impact', 'Arial Black', sans-serif" 
+          }}
         >
-          Contact
-        </h1>
-      </motion.div>
+          CONTACT
+        </span>
+      </div>
 
-      {/* Form Card Overlay */}
-      <div className="relative z-10 w-full flex justify-end items-end">
+      <div className="max-w-5xl w-full mx-auto relative z-10">
+        
+        {/* Section Header */}
+        <div data-aos="fade-up" className="text-center mb-12">
+          <div className="inline-block border border-white/20 rounded-full px-5 py-1.5 text-sm text-white/70 font-bold mb-4 shadow-sm bg-white/5 backdrop-blur-sm">
+            Get In Touch
+          </div>
+          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight uppercase mb-4">
+            Let's Build Something Great
+          </h2>
+          <p className="text-white/60 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+            Have a project in mind, looking to collaborate, or want to discuss machine learning and backend opportunities? Drop a message!
+          </p>
+        </div>
+
+        {/* Form Card */}
         <div 
           data-aos="fade-up"
-          className="bg-[#ff2a2a] w-full md:w-[85%] lg:w-[75%] p-8 md:p-16 text-white flex flex-col justify-between"
+          data-aos-delay="150"
+          className="bg-gradient-to-br from-[#ff2a2a] to-[#d61e1e] rounded-3xl p-8 md:p-14 text-white shadow-[0_25px_60px_rgba(255,42,42,0.25)] border border-red-400/20"
         >
-          <div className="flex flex-col sm:flex-row justify-between items-start gap-8 mb-12">
-            <div className="text-xs font-bold tracking-[0.2em] uppercase opacity-90">
-              Reach Me
+          {/* Card Top Row */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10 pb-6 border-b border-white/20">
+            <div>
+              <span className="text-xs font-mono font-bold tracking-widest uppercase text-white/80 block mb-1">
+                Direct Communication
+              </span>
+              <p className="text-white text-base font-bold">
+                Email: <a href={`mailto:${personalInfo.emails.primary}`} className="underline hover:text-black transition-colors">{personalInfo.emails.primary}</a>
+              </p>
             </div>
+
             {/* Telegram Quick Link */}
             <a 
               href={socialLinks.telegram} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="flex items-center gap-2 text-xs font-black uppercase tracking-wider bg-white/10 hover:bg-white hover:text-red-600 border border-white/20 px-4 py-2 rounded-full transition-all duration-300"
+              className="flex items-center gap-2 text-xs font-black uppercase tracking-wider bg-black/25 hover:bg-white hover:text-[#ff2a2a] border border-white/30 px-5 py-2.5 rounded-full transition-all duration-300 shadow-sm"
             >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.012 9.482c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L6.514 14.43l-2.948-.924c-.64-.203-.653-.64.136-.949l11.51-4.435c.534-.194 1.001.13.35.126z"/></svg>
+              <svg className="w-4 h-4 fill-currentColor" viewBox="0 0 24 24">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.012 9.482c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L6.514 14.43l-2.948-.924c-.64-.203-.653-.64.136-.949l11.51-4.435c.534-.194 1.001.13.35.126z"/>
+              </svg>
               DM on Telegram
             </a>
           </div>
 
-          <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-12 md:gap-16 w-full">
-            <div className="flex flex-col md:flex-row gap-12 md:gap-20 w-full">
-              {/* Left Column */}
-              <div className="flex-1 flex flex-col gap-10">
-                <div className="relative">
+          {/* Form */}
+          <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-8 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+              
+              {/* Left Column: Inputs */}
+              <div className="flex flex-col gap-6">
+                <div>
+                  <label htmlFor="firstName" className="block text-xs font-mono uppercase tracking-wider text-white/80 mb-2">
+                    First Name *
+                  </label>
                   <input 
                     type="text" 
                     id="firstName" 
                     name="first_name"
-                    placeholder="First Name" 
+                    placeholder="e.g. John" 
                     required
-                    className="w-full bg-transparent border-b border-white/40 pb-3 text-lg focus:outline-none focus:border-white transition-colors placeholder-white font-medium rounded-none"
+                    className="w-full bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/30 focus:border-white rounded-xl px-4 py-3.5 text-base focus:outline-none transition-all placeholder-white/50 font-medium"
                   />
                 </div>
-                <div className="relative">
+
+                <div>
+                  <label htmlFor="lastName" className="block text-xs font-mono uppercase tracking-wider text-white/80 mb-2">
+                    Last Name
+                  </label>
                   <input 
                     type="text" 
                     id="lastName" 
                     name="last_name"
-                    placeholder="Last Name" 
-                    className="w-full bg-transparent border-b border-white/40 pb-3 text-lg focus:outline-none focus:border-white transition-colors placeholder-white font-medium rounded-none"
+                    placeholder="e.g. Doe" 
+                    className="w-full bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/30 focus:border-white rounded-xl px-4 py-3.5 text-base focus:outline-none transition-all placeholder-white/50 font-medium"
                   />
                 </div>
-                <div className="relative">
+
+                <div>
+                  <label htmlFor="email" className="block text-xs font-mono uppercase tracking-wider text-white/80 mb-2">
+                    Email Address *
+                  </label>
                   <input 
                     type="email" 
                     id="email" 
                     name="user_email"
-                    placeholder="Email" 
+                    placeholder="name@example.com" 
                     required
-                    className="w-full bg-transparent border-b border-white/40 pb-3 text-lg focus:outline-none focus:border-white transition-colors placeholder-white font-medium rounded-none"
+                    className="w-full bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/30 focus:border-white rounded-xl px-4 py-3.5 text-base focus:outline-none transition-all placeholder-white/50 font-medium"
                   />
                 </div>
               </div>
 
-              {/* Right Column */}
-              <div className="flex-1 flex flex-col">
-                <div className="relative h-full flex flex-col">
-                  <textarea 
-                    id="message" 
-                    name="message"
-                    placeholder="Type your message here" 
-                    required
-                    className="w-full h-full min-h-[120px] bg-transparent border-b border-white/40 pb-3 text-lg focus:outline-none focus:border-white transition-colors placeholder-white font-medium resize-none rounded-none"
-                  ></textarea>
-                </div>
+              {/* Right Column: Message */}
+              <div className="flex flex-col">
+                <label htmlFor="message" className="block text-xs font-mono uppercase tracking-wider text-white/80 mb-2">
+                  Your Message *
+                </label>
+                <textarea 
+                  id="message" 
+                  name="message"
+                  placeholder="Tell me about your project, team, or opportunity..." 
+                  required
+                  rows={6}
+                  className="w-full flex-1 min-h-[160px] bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/30 focus:border-white rounded-xl p-4 text-base focus:outline-none transition-all placeholder-white/50 font-medium resize-none"
+                ></textarea>
               </div>
+
             </div>
 
-            {/* Bottom Section */}
-            <div className="flex flex-col md:flex-row gap-12 mt-4">
-              {/* Left text */}
-              <div className="flex-1 flex items-start gap-4 text-sm font-medium text-white/90">
-                <input 
-                  type="checkbox" 
-                  id="permission" 
-                  className="mt-1 w-4 h-4 rounded-sm border-white/40 bg-transparent text-white focus:ring-white focus:ring-offset-0 focus:ring-offset-transparent cursor-pointer" 
-                  style={{ accentColor: "white" }}
-                />
-                <label htmlFor="permission" className="cursor-pointer max-w-[280px] leading-snug">
-                  I give permission to contact me at this email address.
-                </label>
-              </div>
+            {/* Bottom Actions Row */}
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-6 pt-4 border-t border-white/20">
+              <p className="text-xs text-white/80 font-medium max-w-sm text-center sm:text-left">
+                Typically respond within 24 hours. Messages reach my primary inbox directly.
+              </p>
 
-              {/* Right text & button */}
-              <div className="flex-1 flex flex-col gap-8 text-xs text-white/70 font-medium">
-                <p className="leading-relaxed max-w-[400px]">
-                  Your message will be sent directly to my inbox. I typically respond within 24-48 hours.
-                </p>
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-6">
-                  <p className="max-w-[250px] leading-relaxed">
-                    For urgent inquiries, reach me at <a href={`mailto:${personalInfo.emails.primary}`} className="underline hover:text-white transition-colors">{personalInfo.emails.primary}</a>
-                  </p>
-                  
-                  <button 
-                    type="submit" 
-                    disabled={status === 'sending'}
-                    className={`px-8 py-3 rounded-full border border-white/40 text-white font-bold flex items-center justify-center gap-3 transition-all duration-300 group whitespace-nowrap self-start sm:self-auto ${
-                      status === 'sending' 
-                        ? 'opacity-50 cursor-not-allowed bg-white/10' 
-                        : status === 'success'
-                        ? 'bg-green-600 border-green-500 text-white shadow-[0_0_20px_rgba(22,163,74,0.4)]'
-                        : status === 'error'
-                        ? 'bg-red-800 border-red-700 text-white'
-                        : 'hover:bg-white hover:text-[#ff2a2a]'
-                    }`}
-                  >
-                    {status === 'sending' ? (
-                      <span className="flex items-center gap-2">
-                        <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24" fill="none">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                        </svg>
-                        Sending...
-                      </span>
-                    ) : status === 'success' ? (
-                      <span className="flex items-center gap-2">
-                        Sent Successfully ✓
-                      </span>
-                    ) : status === 'error' ? (
-                      <span className="flex items-center gap-2">
-                        Failed — Try Again
-                      </span>
-                    ) : 'Send Message'}
-                    
-                    {status === 'idle' && (
-                      <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    )}
-                  </button>
-                </div>
-              </div>
+              <button 
+                type="submit" 
+                disabled={status === 'sending'}
+                className={`w-full sm:w-auto px-10 py-4 rounded-full font-bold flex items-center justify-center gap-3 transition-all duration-300 shadow-lg ${
+                  status === 'sending' 
+                    ? 'opacity-60 cursor-not-allowed bg-black/40 text-white' 
+                    : status === 'success'
+                    ? 'bg-green-600 text-white shadow-[0_0_20px_rgba(22,163,74,0.5)]'
+                    : status === 'error'
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black hover:bg-zinc-100 hover:scale-105 hover:shadow-2xl'
+                }`}
+              >
+                {status === 'sending' ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Sending...
+                  </span>
+                ) : status === 'success' ? (
+                  <span className="flex items-center gap-2">
+                    Sent Successfully ✓
+                  </span>
+                ) : status === 'error' ? (
+                  <span className="flex items-center gap-2">
+                    Failed — Try Again
+                  </span>
+                ) : (
+                  <>
+                    <span>Send Message</span>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </>
+                )}
+              </button>
             </div>
           </form>
 
         </div>
+
       </div>
     </section>
   );
