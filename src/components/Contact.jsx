@@ -1,11 +1,9 @@
 import React, { useRef, useState, useContext } from 'react';
-import { emailjsConfig, personalInfo, socialLinks, contactContent } from '../data/portfolioData';
+import { emailjsConfig, personalInfo, socialLinks } from '../data/portfolioData';
 import { ThemeContext } from '../App';
-import { LanguageContext } from '../context/LanguageContext';
 
 const Contact = () => {
   const { dark } = useContext(ThemeContext);
-  const { lang, t } = useContext(LanguageContext);
   const formRef = useRef(null);
   const [status, setStatus] = useState('idle'); // idle, sending, success, error
 
@@ -73,7 +71,7 @@ const Contact = () => {
         dark ? 'bg-[#0a0a0a] text-white border-white/10' : 'bg-gray-100 text-gray-900 border-gray-200'
       }`}
     >
-      {/* Subtle background watermark */}
+      {/* Background watermark */}
       <div 
         aria-hidden="true" 
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-center items-center pointer-events-none select-none z-0"
@@ -96,17 +94,17 @@ const Contact = () => {
           <div className={`inline-block border rounded-full px-5 py-1.5 text-sm font-bold mb-4 shadow-sm ${
             dark ? 'border-white/20 text-white/70 bg-white/5 backdrop-blur-sm' : 'border-gray-300 text-gray-600 bg-white'
           }`}>
-            {t(contactContent.badge)}
+            Get In Touch
           </div>
           <h2 className={`text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 ${
             dark ? 'text-white' : 'text-gray-900'
           }`}>
-            {t(contactContent.heading)}
+            Let's Build Something Great
           </h2>
           <p className={`text-base md:text-lg max-w-xl mx-auto leading-relaxed ${
             dark ? 'text-white/60' : 'text-gray-600'
           }`}>
-            {t(contactContent.description)}
+            Have a project in mind, looking to collaborate, or want to discuss machine learning and backend opportunities? Drop a message!
           </p>
         </div>
 
@@ -120,7 +118,7 @@ const Contact = () => {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10 pb-6 border-b border-white/20">
             <div>
               <span className="text-xs font-mono font-bold tracking-widest uppercase text-white/80 block mb-1">
-                {t(contactContent.directLabel)}
+                Direct Communication
               </span>
               <p className="text-white text-base font-bold">
                 Email: <a href={`mailto:${personalInfo.emails.primary}`} className="underline hover:text-black transition-colors">{personalInfo.emails.primary}</a>
@@ -137,7 +135,7 @@ const Contact = () => {
               <svg className="w-4 h-4 fill-currentColor" viewBox="0 0 24 24">
                 <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.012 9.482c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L6.514 14.43l-2.948-.924c-.64-.203-.653-.64.136-.949l11.51-4.435c.534-.194 1.001.13.35.126z"/>
               </svg>
-              {t(contactContent.telegramBtn)}
+              Chat on Telegram
             </a>
           </div>
 
@@ -149,13 +147,13 @@ const Contact = () => {
               <div className="flex flex-col gap-6">
                 <div>
                   <label htmlFor="firstName" className="block text-xs font-mono uppercase tracking-wider text-white/90 mb-2 font-bold">
-                    {t(contactContent.form.firstNameLabel)}
+                    First Name *
                   </label>
                   <input 
                     type="text" 
                     id="firstName" 
                     name="first_name"
-                    placeholder={t(contactContent.form.firstNamePlaceholder)} 
+                    placeholder="Enter your first name" 
                     required
                     className="w-full bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/30 focus:border-white rounded-xl px-4 py-3.5 text-base focus:outline-none transition-all placeholder-white/50 font-medium"
                   />
@@ -163,26 +161,26 @@ const Contact = () => {
 
                 <div>
                   <label htmlFor="lastName" className="block text-xs font-mono uppercase tracking-wider text-white/90 mb-2 font-bold">
-                    {t(contactContent.form.lastNameLabel)}
+                    Last Name
                   </label>
                   <input 
                     type="text" 
                     id="lastName" 
                     name="last_name"
-                    placeholder={t(contactContent.form.lastNamePlaceholder)} 
+                    placeholder="Enter your last name" 
                     className="w-full bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/30 focus:border-white rounded-xl px-4 py-3.5 text-base focus:outline-none transition-all placeholder-white/50 font-medium"
                   />
                 </div>
 
                 <div>
                   <label htmlFor="email" className="block text-xs font-mono uppercase tracking-wider text-white/90 mb-2 font-bold">
-                    {t(contactContent.form.emailLabel)}
+                    Email Address *
                   </label>
                   <input 
                     type="email" 
                     id="email" 
                     name="user_email"
-                    placeholder={t(contactContent.form.emailPlaceholder)} 
+                    placeholder="name@example.com" 
                     required
                     className="w-full bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/30 focus:border-white rounded-xl px-4 py-3.5 text-base focus:outline-none transition-all placeholder-white/50 font-medium"
                   />
@@ -192,12 +190,12 @@ const Contact = () => {
               {/* Right Column: Message */}
               <div className="flex flex-col">
                 <label htmlFor="message" className="block text-xs font-mono uppercase tracking-wider text-white/90 mb-2 font-bold">
-                  {t(contactContent.form.messageLabel)}
+                  Your Message *
                 </label>
                 <textarea 
                   id="message" 
                   name="message"
-                  placeholder={t(contactContent.form.messagePlaceholder)} 
+                  placeholder="Tell me about your project, idea, or opportunity..." 
                   required
                   rows={6}
                   className="w-full flex-1 min-h-[160px] bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/30 focus:border-white rounded-xl p-4 text-base focus:outline-none transition-all placeholder-white/50 font-medium resize-none"
@@ -209,11 +207,7 @@ const Contact = () => {
             {/* Bottom Actions Row */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-6 pt-4 border-t border-white/20">
               <p className="text-xs text-white/80 font-medium max-w-sm text-center sm:text-left">
-                {lang === 'uz' 
-                  ? 'Odatda 24 soat ichida javob beraman. Xabarlar to‘g‘ridan-to‘g‘ri pochtamga yetib keladi.' 
-                  : lang === 'ru' 
-                  ? 'Обычно отвечаю в течение 24 часов. Сообщения приходят напрямую на мою почту.' 
-                  : 'Typically respond within 24 hours. Messages reach my primary inbox directly.'}
+                Typically respond within 24 hours. Messages reach my primary inbox directly.
               </p>
 
               <button 
@@ -235,19 +229,19 @@ const Contact = () => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    {t(contactContent.form.sendingBtn)}
+                    Sending...
                   </span>
                 ) : status === 'success' ? (
                   <span className="flex items-center gap-2">
-                    {t(contactContent.form.successMsg)}
+                    Sent Successfully ✓
                   </span>
                 ) : status === 'error' ? (
                   <span className="flex items-center gap-2">
-                    {t(contactContent.form.errorMsg)}
+                    Failed — Try Again
                   </span>
                 ) : (
                   <>
-                    <span>{t(contactContent.form.submitBtn)}</span>
+                    <span>Send Message</span>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>

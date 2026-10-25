@@ -1,8 +1,7 @@
-import React, { useRef, useEffect, useState, useContext } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { heroContent, socialLinks } from '../data/portfolioData';
-import { LanguageContext } from '../context/LanguageContext';
 import heroVideo from '../assets/hero video/Self-introduction_video_Junior_D…_202607260839.mp4';
 import heroPoster from '../assets/hero video/hero-poster.jpg';
 
@@ -10,12 +9,11 @@ const HERO_IMAGE = null;
 const HERO_VIDEO = heroVideo;
 
 const Hero = () => {
-  const { t } = useContext(LanguageContext);
   const bgVideoRef = useRef(null);
   const modalVideoRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Brauzer autoplay siyosati: React muted xossasini to'liq bog'lash
+  // Browser autoplay policy: ensure muted
   useEffect(() => {
     const video = bgVideoRef.current;
     if (!video) return;
@@ -45,7 +43,6 @@ const Hero = () => {
     };
   }, []);
 
-  // "Play Reel" bosganda modal ochiladi — video ovoz bilan ijro etadi
   const openModal = (e) => {
     e.stopPropagation();
     setModalOpen(true);
@@ -74,7 +71,7 @@ const Hero = () => {
   return (
     <section className="relative w-full h-screen overflow-hidden bg-black">
 
-      {/* ── BACKGROUND VIDEO (muted, loop — brauzer qoidasi + poster zaxira) ── */}
+      {/* ── BACKGROUND VIDEO ── */}
       {HERO_VIDEO ? (
         <video
           ref={bgVideoRef}
@@ -151,16 +148,16 @@ const Hero = () => {
           {/* Heading */}
           <h1 data-aos="fade-up"
             className="text-white text-3xl md:text-5xl font-bold mb-4 tracking-tight drop-shadow-lg">
-            {t(heroContent.greeting)}, <br />
+            {heroContent.greeting}, <br />
             <span className="text-transparent [-webkit-text-stroke:1.5px_white]">
-              {t(heroContent.titleHighlight)}
+              {heroContent.titleHighlight}
             </span>
           </h1>
 
           {/* Subtitle */}
           <p data-aos="fade-up" data-aos-delay="200"
             className="text-white text-sm md:text-lg font-semibold mb-8 max-w-md drop-shadow-md">
-            {t(heroContent.subtitle)}
+            {heroContent.subtitle}
           </p>
 
           {/* Buttons */}
@@ -168,23 +165,23 @@ const Hero = () => {
             className="flex flex-row flex-wrap items-center gap-3 w-full">
             <a href={heroContent.ctaPrimary.href}
               className="px-4 py-2 md:px-6 md:py-2 text-xs md:text-base rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-md">
-              {t(heroContent.ctaPrimary)}
+              {heroContent.ctaPrimary.text}
             </a>
             <a href={heroContent.ctaSecondary.href}
               className="px-4 py-2 md:px-6 md:py-2 text-xs md:text-base rounded-full bg-black/40 border border-white text-white font-semibold hover:bg-black/60 transition-all duration-300 backdrop-blur-md">
-              {t(heroContent.ctaSecondary)}
+              {heroContent.ctaSecondary.text}
             </a>
             <a href={heroContent.ctaResume.href} download
               className="px-4 py-2 md:px-6 md:py-2 text-xs md:text-base rounded-full bg-transparent border border-white/50 text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-md flex items-center gap-2">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              {t(heroContent.ctaResume)}
+              {heroContent.ctaResume.text}
             </a>
           </div>
         </div>
 
-        {/* Right: Play Reel — modal ochadi, ovoz bilan */}
+        {/* Right: Play Reel */}
         {HERO_VIDEO && (
           <div
             data-aos="zoom-in"
@@ -198,7 +195,7 @@ const Hero = () => {
               </svg>
             </div>
             <span className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">
-              {t(heroContent.playReel)}
+              Play Reel
             </span>
           </div>
         )}
@@ -216,7 +213,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* ── VIDEO MODAL — ovoz bilan to'liq ijro ── */}
+      {/* ── VIDEO MODAL ── */}
       {modalOpen && (
         <div
           className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
@@ -226,7 +223,6 @@ const Hero = () => {
             className="relative w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Yopish tugmasi */}
             <button
               onClick={closeModal}
               className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/70 border border-white/20 flex items-center justify-center text-white hover:bg-[#ff2a2a] transition-all duration-200"
@@ -237,7 +233,6 @@ const Hero = () => {
               </svg>
             </button>
 
-            {/* Video — controls bilan, ovozli */}
             <video
               ref={modalVideoRef}
               src={HERO_VIDEO}

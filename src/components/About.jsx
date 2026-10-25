@@ -1,10 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { aboutContent } from '../data/portfolioData';
-import { LanguageContext } from '../context/LanguageContext';
 import { ThemeContext } from '../App';
 import profileImg from '../assets/about/umrzoq-developer.jpg';
 
-// Tech stack SVG icons rendered inline for crisp rendering
+// Tech stack SVG icons rendered inline
 const PythonIcon = () => (
   <div className="flex flex-col items-center gap-2">
     <svg className="w-16 h-16 md:w-20 md:h-20" viewBox="0 0 128 128">
@@ -56,7 +55,6 @@ const MLIcon = () => (
 );
 
 const About = () => {
-  const { t } = useContext(LanguageContext);
   const { dark } = useContext(ThemeContext);
 
   return (
@@ -99,7 +97,7 @@ const About = () => {
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 pointer-events-none">
                   <span className="text-white text-sm font-bold tracking-wide">Umrzoq Yulchiyev</span>
-                  <span className="text-white/70 text-xs">{t(aboutContent.badgeRole)}</span>
+                  <span className="text-white/70 text-xs">Data Scientist & Backend Dev</span>
                 </div>
               </div>
             </div>
@@ -110,10 +108,10 @@ const About = () => {
         {/* Right Side: Info Content */}
         <div data-aos="fade-left" data-aos-delay="200" className="flex-1 text-white mt-8 md:mt-0 relative z-20">
           
-          <h2 className="text-4xl md:text-5xl font-black text-black mb-4">{t(aboutContent.heading)}</h2>
+          <h2 className="text-4xl md:text-5xl font-black text-black mb-4">{aboutContent.heading}</h2>
           <p 
             className="text-lg font-bold mb-12 leading-relaxed max-w-3xl text-red-50"
-            dangerouslySetInnerHTML={{ __html: t(aboutContent.bio) }}
+            dangerouslySetInnerHTML={{ __html: aboutContent.bio }}
           />
 
           {/* Horizontal Skills Row */}

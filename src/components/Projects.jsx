@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { projects, projectsContent, socialLinks } from '../data/portfolioData';
+import { projects, socialLinks } from '../data/portfolioData';
 import { ThemeContext } from '../App';
-import { LanguageContext } from '../context/LanguageContext';
 
 const GitHubIcon = () => (
   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -60,9 +59,7 @@ const WindowHeader = ({ url, hasLiveDemo, isTelegram, dark }) => (
 );
 
 // Flagship Featured Card (Tahlilchi AI, Intra Group, Telegram AI Tutor, Portfolio)
-const FlagshipCard = ({ project, aosDelay, dark, lang, t }) => {
-  const featuresList = (project.features && (project.features[lang] || project.features.uz || project.features.en || project.features.ru || [])) || [];
-
+const FlagshipCard = ({ project, aosDelay, dark }) => {
   return (
     <div
       data-aos="fade-up"
@@ -70,7 +67,7 @@ const FlagshipCard = ({ project, aosDelay, dark, lang, t }) => {
       className={`relative rounded-3xl p-[1px] transition-all duration-500 group mb-8 ${
         dark
           ? 'bg-gradient-to-br from-[#ff2a2a]/60 via-purple-600/30 to-[#ff2a2a]/40 hover:from-[#ff2a2a] hover:via-purple-500/50 hover:to-[#ff2a2a] shadow-[0_20px_50px_rgba(255,42,42,0.15)] hover:shadow-[0_25px_60px_rgba(255,42,42,0.3)]'
-          : 'bg-gradient-to-br from-[#ff2a2a]/30 via-red-200 to-gray-200 shadow-xl shadow-gray-200/60 hover:shadow-2xl hover:border-[#ff2a2a]'
+          : 'bg-gradient-to-br from-[#ff2a2a]/30 via-red-200 to-gray-200 shadow-xl shadow-gray-200/60 hover:shadow-2xl'
       }`}
     >
       <div className={`rounded-3xl overflow-hidden h-full flex flex-col justify-between transition-colors ${
@@ -101,18 +98,18 @@ const FlagshipCard = ({ project, aosDelay, dark, lang, t }) => {
                   ? 'bg-[#ff2a2a]/20 text-red-300 border-[#ff2a2a]/40'
                   : 'bg-red-50 text-[#ff2a2a] border-red-200 shadow-sm'
               }`}>
-                {t(project.badge)}
+                {project.badge}
               </span>
               {project.role && (
                 <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono font-medium border ${
                   dark ? 'bg-white/10 text-white/80 border-white/15' : 'bg-gray-100 text-gray-700 border-gray-200'
                 }`}>
-                  <span className="text-[#ff2a2a] font-bold">{t(projectsContent.buttons.roleLabel)}</span> {t(project.role)}
+                  <span className="text-[#ff2a2a] font-bold">Role:</span> {project.role}
                 </span>
               )}
               {project.stats && (
                 <span className={`text-xs font-mono font-medium hidden sm:inline ${dark ? 'text-white/50' : 'text-gray-500'}`}>
-                  • {t(project.stats)}
+                  • {project.stats}
                 </span>
               )}
             </div>
@@ -124,7 +121,7 @@ const FlagshipCard = ({ project, aosDelay, dark, lang, t }) => {
           <h3 className={`text-2xl sm:text-3xl md:text-4xl font-black tracking-tight mb-2 transition-colors ${
             dark ? 'text-white group-hover:text-red-100' : 'text-gray-900 group-hover:text-[#ff2a2a]'
           }`}>
-            {t(project.title)}
+            {project.title}
           </h3>
           
           {project.subtitle && (
@@ -147,10 +144,10 @@ const FlagshipCard = ({ project, aosDelay, dark, lang, t }) => {
                 <span className="text-xl shrink-0 mt-0.5">💼</span>
                 <div className="text-xs sm:text-sm">
                   <span className="font-bold text-blue-600 dark:text-blue-300 uppercase tracking-wider text-[11px] block mb-1">
-                    {t(projectsContent.buttons.hrScope)}
+                    HR & Recruiter Scope (Key Technical Summary):
                   </span>
                   <span className="leading-relaxed font-medium">
-                    {t(project.hrHighlights)}
+                    {project.hrHighlights}
                   </span>
                 </div>
               </div>
@@ -159,21 +156,21 @@ const FlagshipCard = ({ project, aosDelay, dark, lang, t }) => {
             <p className={`text-sm md:text-base leading-relaxed mb-6 font-medium ${
               dark ? 'text-white/70' : 'text-gray-600'
             }`}>
-              {t(project.description)}
+              {project.description}
             </p>
 
             {/* Key Features Checklist */}
-            {featuresList.length > 0 && (
+            {project.features && project.features.length > 0 && (
               <div className={`mb-6 rounded-2xl p-4 sm:p-5 border ${
                 dark ? 'bg-white/[0.03] border-white/10' : 'bg-gray-50 border-gray-200'
               }`}>
                 <h4 className="text-xs font-bold font-mono uppercase tracking-wider mb-3 text-[#ff2a2a] flex items-center gap-2">
-                  <span>⚡</span> {t(projectsContent.buttons.keyFeatures)}
+                  <span>⚡</span> Key Features & Architecture
                 </h4>
                 <ul className={`grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm font-medium ${
                   dark ? 'text-white/80' : 'text-gray-700'
                 }`}>
-                  {featuresList.map((feat, idx) => (
+                  {project.features.map((feat, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <span className="text-emerald-500 font-bold shrink-0">✓</span>
                       <span>{feat}</span>
@@ -213,7 +210,7 @@ const FlagshipCard = ({ project, aosDelay, dark, lang, t }) => {
                 className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#ff2a2a] hover:bg-red-600 text-white font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-[0_0_25px_rgba(255,42,42,0.4)] group/demo"
               >
                 <ExternalLinkIcon />
-                <span>{t(projectsContent.buttons.liveDemo)}</span>
+                <span>Open Live Demo</span>
                 <span className="w-2 h-2 rounded-full bg-white animate-ping ml-1" />
               </a>
             )}
@@ -251,7 +248,7 @@ const FlagshipCard = ({ project, aosDelay, dark, lang, t }) => {
                 }`}
               >
                 <GitHubIcon />
-                <span>{t(projectsContent.buttons.githubCode)}</span>
+                <span>GitHub Code</span>
               </a>
             )}
 
@@ -268,7 +265,7 @@ const FlagshipCard = ({ project, aosDelay, dark, lang, t }) => {
                 }`}
               >
                 <ExternalLinkIcon />
-                <span>{t(projectsContent.buttons.backendApi)}</span>
+                <span>Backend API</span>
               </a>
             )}
           </div>
@@ -279,7 +276,7 @@ const FlagshipCard = ({ project, aosDelay, dark, lang, t }) => {
 };
 
 // Standard Project Card
-const StandardCard = ({ project, aosDelay, dark, t }) => (
+const StandardCard = ({ project, aosDelay, dark }) => (
   <div
     data-aos="fade-up"
     data-aos-delay={aosDelay}
@@ -310,7 +307,7 @@ const StandardCard = ({ project, aosDelay, dark, t }) => (
                 ? 'text-red-400 bg-red-500/10 border-red-500/20'
                 : 'text-[#ff2a2a] bg-red-50 border-red-200 shadow-sm'
             }`}>
-              {t(project.badge)}
+              {project.badge}
             </span>
             <span className={`text-3xl font-black font-serif italic ${dark ? 'text-white/15' : 'text-gray-200'}`}>
               {project.number}
@@ -320,7 +317,7 @@ const StandardCard = ({ project, aosDelay, dark, t }) => (
           <h3 className={`text-xl sm:text-2xl font-black tracking-tight mb-1 transition-colors ${
             dark ? 'text-white group-hover:text-red-300' : 'text-gray-900 group-hover:text-[#ff2a2a]'
           }`}>
-            {t(project.title)}
+            {project.title}
           </h3>
 
           {project.subtitle && (
@@ -332,7 +329,7 @@ const StandardCard = ({ project, aosDelay, dark, t }) => (
           <p className={`text-sm leading-relaxed mb-6 font-medium ${
             dark ? 'text-white/60' : 'text-gray-600'
           }`}>
-            {t(project.description)}
+            {project.description}
           </p>
 
           {/* Tech Tags */}
@@ -367,7 +364,7 @@ const StandardCard = ({ project, aosDelay, dark, t }) => (
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#ff2a2a] hover:bg-red-600 text-white font-bold text-xs transition-all shadow-[0_0_15px_rgba(255,42,42,0.3)]"
             >
               <ExternalLinkIcon />
-              <span>{t(projectsContent.buttons.liveDemo)}</span>
+              <span>Live Demo</span>
             </a>
           ) : project.links.telegramBot ? (
             <a
@@ -381,13 +378,13 @@ const StandardCard = ({ project, aosDelay, dark, t }) => (
               }`}
             >
               <TelegramIcon />
-              <span>{project.links.botUsername || t(projectsContent.buttons.telegramBot)}</span>
+              <span>{project.links.botUsername || 'Telegram Bot'}</span>
             </a>
           ) : (
             <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono border ${
               dark ? 'bg-white/5 text-white/30 border-white/10' : 'bg-gray-100 text-gray-400 border-gray-200'
             }`}>
-              {t(projectsContent.buttons.comingSoon)}
+              Source Code Only
             </span>
           )}
 
@@ -412,16 +409,21 @@ const StandardCard = ({ project, aosDelay, dark, t }) => (
   </div>
 );
 
+const filterTabs = [
+  { id: 'all', label: 'All Projects' },
+  { id: 'ai', label: 'AI & Machine Learning' },
+  { id: 'fullstack', label: 'Web & Mini Apps' },
+  { id: 'tools', label: 'CLI & Tools' },
+];
+
 const Projects = () => {
   const { dark } = useContext(ThemeContext);
-  const { lang, t } = useContext(LanguageContext);
   const [filter, setFilter] = useState('all');
 
   const filteredProjects = filter === 'all'
     ? projects
     : projects.filter((p) => p.category === filter);
 
-  // Divide into flagship (featured) and standard
   const flagshipProjects = filteredProjects.filter((p) => p.isFlagship);
   const otherProjects = filteredProjects.filter((p) => !p.isFlagship);
 
@@ -449,23 +451,23 @@ const Projects = () => {
           <div className={`inline-block border rounded-full px-5 py-1.5 text-sm font-bold mb-6 shadow-sm ${
             dark ? 'border-white/20 text-white/60 bg-white/5 backdrop-blur-sm' : 'border-gray-300 text-gray-600 bg-white'
           }`}>
-            {t(projectsContent.badge)}
+            Featured Projects & Live Apps
           </div>
           <h2 className={`text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-6 tracking-tight ${
             dark ? 'text-white' : 'text-gray-900'
           }`}>
-            {t(projectsContent.heading)}
+            Work that speaks <br className="hidden md:block" />for itself
           </h2>
           <p className={`text-base md:text-lg max-w-xl font-medium leading-relaxed ${
             dark ? 'text-white/60' : 'text-gray-600'
           }`}>
-            {t(projectsContent.description)}
+            Multimodal AI platforms, real-time audio broadcasting, Telegram Mini Apps, and production-grade machine learning solutions.
           </p>
         </div>
 
         {/* Filter Tabs */}
         <div data-aos="fade-up" data-aos-delay="100" className="flex items-center gap-2 overflow-x-auto pb-4 mb-10 scrollbar-none">
-          {projectsContent.filterTabs.map((tab) => (
+          {filterTabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setFilter(tab.id)}
@@ -477,7 +479,7 @@ const Projects = () => {
                     : 'bg-white hover:bg-gray-100 text-gray-700 border border-gray-200 shadow-sm hover:text-gray-900'
               }`}
             >
-              {t(tab)}
+              {tab.label}
             </button>
           ))}
         </div>
@@ -491,8 +493,6 @@ const Projects = () => {
                 project={project} 
                 aosDelay={String((index + 1) * 100)} 
                 dark={dark}
-                lang={lang}
-                t={t}
               />
             ))}
           </div>
@@ -507,7 +507,6 @@ const Projects = () => {
                 project={project} 
                 aosDelay={String((index + 1) * 100)} 
                 dark={dark}
-                t={t}
               />
             ))}
           </div>
@@ -526,7 +525,7 @@ const Projects = () => {
             }`}
           >
             <GitHubIcon />
-            <span>{t(projectsContent.buttons.viewAllGithub)}</span>
+            <span>Explore All Repositories on GitHub</span>
             <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>

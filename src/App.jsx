@@ -16,7 +16,6 @@ import SoftSkills from './components/SoftSkills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ChatBot from './components/ChatBot';
-import { LanguageProvider } from './context/LanguageContext';
 
 export const ThemeContext = React.createContext({ dark: true, toggle: () => {} });
 
@@ -43,28 +42,26 @@ function App() {
 
   return (
     <ThemeContext.Provider value={{ dark, toggle }}>
-      <LanguageProvider>
-        <div
-          className={dark ? 'bg-[#0a0a0a] text-white' : 'bg-gray-50 text-gray-900'}
-          style={{ minHeight: '100vh', transition: 'background-color 0.3s ease, color 0.3s ease' }}
-        >
-          <Preloader />
-          <Navbar />
-          <Hero />
-          <About />
-          <TechnicalSkills />
-          <Services />
-          <Projects />
-          <ContentCreator />
-          <Internships />
-          <Leadership />
-          <Certificates />
-          <SoftSkills />
-          <Contact />
-          <Footer />
-          <ChatBot />
-        </div>
-      </LanguageProvider>
+      <div
+        className={dark ? 'bg-[#0a0a0a] text-white' : 'bg-gray-50 text-gray-900'}
+        style={{ minHeight: '100vh', transition: 'background-color 0.3s ease, color 0.3s ease' }}
+      >
+        <Preloader />
+        <Navbar />
+        <Hero />
+        <About />
+        <TechnicalSkills />
+        <Services />
+        <Projects />
+        <ContentCreator />
+        <Internships />
+        <Leadership />
+        <Certificates />
+        <SoftSkills />
+        <Contact />
+        <Footer />
+        <ChatBot />
+      </div>
     </ThemeContext.Provider>
   );
 }

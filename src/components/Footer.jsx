@@ -1,24 +1,22 @@
 import React, { useContext } from 'react';
 import { personalInfo, socialLinks, footerContent } from '../data/portfolioData';
 import { ThemeContext } from '../App';
-import { LanguageContext } from '../context/LanguageContext';
+
+const navLinks = [
+  { name: 'Home', href: '#home' },
+  { name: 'About', href: '#about' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Process', href: '#process' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'Contact', href: '#contact' },
+];
 
 const Footer = () => {
   const { dark } = useContext(ThemeContext);
-  const { lang, t } = useContext(LanguageContext);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  const navLinks = [
-    { name: { uz: 'Asosiy', en: 'Home', ru: 'Главная' }, href: '#home' },
-    { name: { uz: 'Men haqimda', en: 'About', ru: 'О себе' }, href: '#about' },
-    { name: { uz: 'Ko‘nikmalar', en: 'Skills', ru: 'Навыки' }, href: '#skills' },
-    { name: { uz: 'Jarayon', en: 'Process', ru: 'Процесс' }, href: '#process' },
-    { name: { uz: 'Loyihalar', en: 'Projects', ru: 'Проекты' }, href: '#projects' },
-    { name: { uz: 'Aloqa', en: 'Contact', ru: 'Контакты' }, href: '#contact' },
-  ];
 
   return (
     <footer className={`border-t relative overflow-hidden font-sans transition-colors duration-300 ${
@@ -47,11 +45,11 @@ const Footer = () => {
               </h2>
               <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green-500/10 text-emerald-600 dark:text-green-400 border border-green-500/20">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                {t(footerContent.statusBadge)}
+                Available for work
               </span>
             </div>
             <p className={`text-sm md:text-base font-medium max-w-md ${dark ? 'text-white/60' : 'text-gray-600'}`}>
-              {t(personalInfo.title)} · {t(footerContent.subtitle)}
+              {personalInfo.title} · Building scalable AI and backend solutions with Python.
             </p>
           </div>
 
@@ -60,7 +58,7 @@ const Footer = () => {
               href={`mailto:${personalInfo.emails.primary}?subject=Hiring Inquiry`}
               className="px-6 py-3 rounded-full bg-[#ff2a2a] text-white font-semibold text-sm hover:bg-red-600 hover:shadow-[0_0_25px_rgba(255,42,42,0.4)] transition-all duration-300 shadow-md"
             >
-              {t(footerContent.getInTouch)}
+              Get In Touch
             </a>
             <button
               onClick={scrollToTop}
@@ -89,31 +87,27 @@ const Footer = () => {
           {/* Column 1: About & Education */}
           <div>
             <h3 className="text-xs font-black uppercase tracking-widest mb-4 font-mono text-[#ff2a2a]">
-              {lang === 'uz' ? 'Ta’lim & Yo‘nalish' : lang === 'ru' ? 'Образование и фокус' : 'Education & Focus'}
+              Education & Focus
             </h3>
             <p className={`text-sm font-semibold mb-2 ${dark ? 'text-white/80' : 'text-gray-800'}`}>
-              {t(footerContent.credential)}
+              {footerContent.credential}
             </p>
             <p className={`text-xs leading-relaxed mb-4 ${dark ? 'text-white/50' : 'text-gray-600'}`}>
-              {lang === 'uz' 
-                ? 'Data Science, algoritmlar, mashinali o‘rganish va zamonaviy backend arxitekturalari.' 
-                : lang === 'ru' 
-                ? 'Изучение Data Science, алгоритмов, моделей машинного обучения и надежного бэкенда.' 
-                : 'Studying data science, algorithms, machine learning models, and modern backend architectures.'}
+              Studying data science, algorithms, machine learning models, and modern backend architectures.
             </p>
             <div className={`text-xs font-mono ${dark ? 'text-white/40' : 'text-gray-500'}`}>
-              📍 {t(personalInfo.location)}
+              📍 {personalInfo.location}
             </div>
           </div>
 
           {/* Column 2: Navigation */}
           <div>
             <h3 className="text-xs font-black uppercase tracking-widest mb-4 font-mono text-[#ff2a2a]">
-              {lang === 'uz' ? 'Bo‘limlar' : lang === 'ru' ? 'Навигация' : 'Navigation'}
+              Navigation
             </h3>
             <ul className="space-y-2.5 text-sm font-medium">
-              {navLinks.map((link, idx) => (
-                <li key={idx}>
+              {navLinks.map((link) => (
+                <li key={link.name}>
                   <a
                     href={link.href}
                     className={`transition-colors duration-200 flex items-center gap-2 group ${
@@ -123,7 +117,7 @@ const Footer = () => {
                     <span className={`w-1.5 h-1.5 rounded-full transition-colors ${
                       dark ? 'bg-white/20 group-hover:bg-[#ff2a2a]' : 'bg-gray-300 group-hover:bg-[#ff2a2a]'
                     }`} />
-                    {t(link.name)}
+                    {link.name}
                   </a>
                 </li>
               ))}
@@ -133,7 +127,7 @@ const Footer = () => {
           {/* Column 3: Direct Contact */}
           <div>
             <h3 className="text-xs font-black uppercase tracking-widest mb-4 font-mono text-[#ff2a2a]">
-              {lang === 'uz' ? 'Bog‘lanish' : lang === 'ru' ? 'Контакты' : 'Contact Directly'}
+              Contact Directly
             </h3>
             <div className="space-y-3 text-sm font-medium">
               <div>
@@ -157,9 +151,7 @@ const Footer = () => {
                 </a>
               </div>
               <div>
-                <span className={`text-xs block font-mono ${dark ? 'text-white/40' : 'text-gray-500'}`}>
-                  {lang === 'uz' ? 'Telefon:' : lang === 'ru' ? 'Телефон:' : 'Phone:'}
-                </span>
+                <span className={`text-xs block font-mono ${dark ? 'text-white/40' : 'text-gray-500'}`}>Phone:</span>
                 <span className={dark ? 'text-white/70' : 'text-gray-700'}>
                   {personalInfo.phone}
                 </span>
@@ -170,14 +162,10 @@ const Footer = () => {
           {/* Column 4: Social Connect */}
           <div>
             <h3 className="text-xs font-black uppercase tracking-widest mb-4 font-mono text-[#ff2a2a]">
-              {lang === 'uz' ? 'Ijtimoiy Tarmoqlar' : lang === 'ru' ? 'Социальные сети' : 'Social Profiles'}
+              Social Profiles
             </h3>
             <p className={`text-xs leading-relaxed mb-4 ${dark ? 'text-white/50' : 'text-gray-600'}`}>
-              {lang === 'uz' 
-                ? 'Ochiq kodli loyihalarim va professional tarmoqlarim:' 
-                : lang === 'ru' 
-                ? 'Мой открытый код и профессиональные профили:' 
-                : 'Explore my open-source code and professional networks:'}
+              Explore my open-source code and professional networks:
             </p>
             <div className="flex flex-col gap-2.5">
               {/* GitHub */}
@@ -240,7 +228,7 @@ const Footer = () => {
           dark ? 'border-white/10 text-white/50' : 'border-gray-200 text-gray-500'
         }`}>
           <p>
-            {t(footerContent.copyright)}
+            {footerContent.copyright}
           </p>
           <div className="flex items-center gap-6">
             <span>Built with React 19 & TailwindCSS</span>

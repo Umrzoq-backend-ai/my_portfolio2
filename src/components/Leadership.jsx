@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import { leadershipList } from '../data/portfolioData';
 import { ThemeContext } from '../App';
-import { LanguageContext } from '../context/LanguageContext';
 
-const LeadershipItem = ({ item, index, dark, t }) => {
+const LeadershipItem = ({ item, index, dark }) => {
   const isEven = index % 2 === 0;
 
   return (
@@ -29,22 +28,22 @@ const LeadershipItem = ({ item, index, dark, t }) => {
                 ? 'bg-[#ff2a2a]/20 text-[#ff2a2a] border-[#ff2a2a]/30'
                 : 'bg-red-50 text-[#ff2a2a] border-red-200 shadow-sm'
             }`}>
-              {t(item.badge)}
+              {item.badge}
             </span>
           </div>
           
           <h3 className={`text-xl font-black mb-1 tracking-tight transition-colors ${
             dark ? 'text-white group-hover:text-[#ff2a2a]' : 'text-gray-900 group-hover:text-[#ff2a2a]'
           }`}>
-            {t(item.title)}
+            {item.title}
           </h3>
           <p className="text-[#ff2a2a] text-xs font-bold font-mono tracking-wider uppercase mb-4">
-            {t(item.role)}
+            {item.role}
           </p>
           <p className={`text-sm leading-relaxed font-medium ${
             dark ? 'text-white/60' : 'text-gray-600'
           }`}>
-            {t(item.description)}
+            {item.description}
           </p>
         </div>
       </div>
@@ -57,7 +56,6 @@ const LeadershipItem = ({ item, index, dark, t }) => {
 
 const Leadership = () => {
   const { dark } = useContext(ThemeContext);
-  const { lang, t } = useContext(LanguageContext);
 
   return (
     <section 
@@ -81,21 +79,17 @@ const Leadership = () => {
           <div className={`inline-block border rounded-full px-5 py-1.5 text-sm font-bold mb-6 shadow-sm ${
             dark ? 'border-white/20 text-white/60 bg-white/5 backdrop-blur-sm' : 'border-gray-300 text-gray-600 bg-white'
           }`}>
-            {lang === 'uz' ? 'Faoliyat' : lang === 'ru' ? 'Активность' : 'Activities'}
+            Activities
           </div>
           <h2 className={`text-4xl md:text-5xl font-black tracking-tight mb-4 uppercase ${
             dark ? 'text-white' : 'text-gray-900'
           }`}>
-            {lang === 'uz' ? 'Liderlik & Ishtirok' : lang === 'ru' ? 'Лидерство и активность' : 'Leadership & Engagement'}
+            Leadership & Engagement
           </h2>
           <p className={`text-base md:text-lg max-w-lg mx-auto leading-relaxed ${
             dark ? 'text-white/50' : 'text-gray-600'
           }`}>
-            {lang === 'uz' 
-              ? 'Xakatonlar, ta’lim dasturlari va texnologik tadbirlardagi faol ishtirokim.' 
-              : lang === 'ru' 
-              ? 'Участие в хакатонах, образовательных программах и технологических саммитах.' 
-              : 'Hackathons, coding schools, and active participation in tech summits.'}
+            Coordinating events, leading team operations, and participating in tech summits.
           </p>
         </div>
 
@@ -108,11 +102,10 @@ const Leadership = () => {
           <div className="w-full">
             {leadershipList.map((item, index) => (
               <LeadershipItem 
-                key={index} 
+                key={item.title} 
                 item={item} 
                 index={index} 
                 dark={dark} 
-                t={t} 
               />
             ))}
           </div>

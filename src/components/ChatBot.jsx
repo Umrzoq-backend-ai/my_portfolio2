@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { chatbotConfig, chatbotFaqs } from '../data/portfolioData';
+import { chatbotData } from '../data/portfolioData';
 import { ThemeContext } from '../App';
-import { LanguageContext } from '../context/LanguageContext';
 import umrzoqAvatar from '../assets/about/umrzoq-developer.jpg';
 
-// ── Smart Multi-turn Intent & Keyword Engine with Language Support ──────────────────
-const findBestFaq = (input, lang = 'uz') => {
+// ── Smart Multi-turn Intent & Keyword Engine ──────────────────
+const findBestFaq = (input) => {
   const clean = input.toLowerCase().replace(/[?!.,;:#@$%^&*()_+=~`[\]{}|\\/<>]/g, ' ').trim();
   if (!clean) return null;
 
@@ -14,7 +13,7 @@ const findBestFaq = (input, lang = 'uz') => {
   let bestFaq = null;
   let highestScore = 0;
 
-  for (const faq of chatbotFaqs) {
+  for (const faq of chatbotData.faqs) {
     let score = 0;
     for (const kw of faq.keywords) {
       const lowerKw = kw.toLowerCase();
@@ -39,46 +38,22 @@ const findBestFaq = (input, lang = 'uz') => {
   }
 
   if (highestScore > 0 && bestFaq) {
-    const text = (bestFaq.answer && (bestFaq.answer[lang] || bestFaq.answer.uz || bestFaq.answer.en || bestFaq.answer.ru)) || '';
-    const actions = (bestFaq.actions && (bestFaq.actions[lang] || bestFaq.actions.uz || bestFaq.actions.en || bestFaq.actions.ru)) || [];
-    return { text, actions };
+    return {
+      text: bestFaq.answer,
+      actions: bestFaq.actions || [],
+    };
   }
 
-  // Fallback responses by language
-  const fallbacks = {
-    uz: {
-      text: "Kechirasiz, savolingizni to‘liq tushunmadim. Umrzoq Yulchiyevning asosiy loyihalari yoki tajribasi bilan quyidagi tugmalar orqali tanishib chiqishingiz mumkin:",
-      actions: [
-        { text: "🧠 Tahlilchi AI", url: "https://tahlilchi-ai-ruddy.vercel.app" },
-        { text: "🎙️ INTRA GROUP Radio", url: "https://frontend-tau-seven-19.vercel.app" },
-        { text: "🤖 Telegram AI Tutor", url: "https://t.me/umrzoq_21?start=ai_tutor" },
-        { text: "📄 Resume (PDF)", url: "/Umrzoq_Yulchiyev_Resume.pdf" },
-        { text: "💬 Telegramda Bog'lanish", url: "https://t.me/umrzoq_21" },
-      ],
-    },
-    en: {
-      text: "Sorry, I didn't quite catch that. You can explore Umrzoq's flagship projects or direct contact links below:",
-      actions: [
-        { text: "🧠 Tahlilchi AI", url: "https://tahlilchi-ai-ruddy.vercel.app" },
-        { text: "🎙️ INTRA GROUP Radio", url: "https://frontend-tau-seven-19.vercel.app" },
-        { text: "🤖 Telegram AI Tutor", url: "https://t.me/umrzoq_21?start=ai_tutor" },
-        { text: "📄 Download Resume", url: "/Umrzoq_Yulchiyev_Resume.pdf" },
-        { text: "💬 Chat on Telegram", url: "https://t.me/umrzoq_21" },
-      ],
-    },
-    ru: {
-      text: "Извините, я не совсем понял ваш запрос. Вы можете ознакомиться с ключевыми проектами Умрзока или связаться с ним напрямую:",
-      actions: [
-        { text: "🧠 Tahlilchi AI", url: "https://tahlilchi-ai-ruddy.vercel.app" },
-        { text: "🎙️ INTRA GROUP Радио", url: "https://frontend-tau-seven-19.vercel.app" },
-        { text: "🤖 Telegram AI Tutor", url: "https://t.me/umrzoq_21?start=ai_tutor" },
-        { text: "📄 Скачать резюме", url: "/Umrzoq_Yulchiyev_Resume.pdf" },
-        { text: "💬 Написать в Telegram", url: "https://t.me/umrzoq_21" },
-      ],
-    },
+  return {
+    text: chatbotData.fallback,
+    actions: [
+      { text: "🧠 Tahlilchi AI", url: "https://tahlilchi-ai-ruddy.vercel.app" },
+      { text: "🎙️ INTRA GROUP Radio", url: "https://frontend-tau-seven-19.vercel.app" },
+      { text: "🤖 Telegram AI Tutor", url: "https://t.me/umrzoq_21?start=ai_tutor" },
+      { text: "📄 Resume (PDF)", url: "/Umrzoq_Yulchiyev_Resume.pdf" },
+      { text: "💬 Telegramda Bog'lanish", url: "https://t.me/umrzoq_21" },
+    ],
   };
-
-  return fallbacks[lang] || fallbacks.uz;
 };
 
 // ── Message Bubble Component ─────────────────────────────────
@@ -111,7 +86,7 @@ const MessageBubble = ({ msg, dark, onSelectPrompt }) => {
           {msg.text}
         </div>
 
-        {/* Clickable High-Tech Action Buttons */}
+        {/* Clickable Action Buttons */}
         {isBot && msg.actions && msg.actions.length > 0 && (
           <div className={`mt-3 pt-3 border-t flex flex-wrap gap-2 ${dark ? 'border-white/10' : 'border-gray-200'}`}>
             {msg.actions.map((action, idx) => (
@@ -173,7 +148,6 @@ const SuggestionPill = ({ text, onClick, dark }) => (
 // ── Main ChatBot Component ───────────────────────────────────
 const ChatBot = () => {
   const { dark } = useContext(ThemeContext);
-  const { lang } = useContext(LanguageContext);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -183,8 +157,6 @@ const ChatBot = () => {
   
   const messagesContainerRef = useRef(null);
   const inputRef = useRef(null);
-
-  const currentConfig = chatbotConfig[lang] || chatbotConfig.uz;
 
   // Navbar AI icon or external custom event trigger
   useEffect(() => {
@@ -235,33 +207,21 @@ const ChatBot = () => {
     scrollToSmart();
   }, [messages, isTyping]);
 
-  // Auto-greeting on first open or language change
+  // Auto-greeting on first open
   useEffect(() => {
-    if (isOpen && (!hasGreeted || messages.length === 0)) {
+    if (isOpen && !hasGreeted) {
       setIsTyping(true);
       const timer = setTimeout(() => {
         setIsTyping(false);
         setMessages([
           {
             role: 'bot',
-            text: currentConfig.greeting,
+            text: chatbotData.greeting,
             actions: [
-              { 
-                text: lang === 'uz' ? "🧠 Tahlilchi AI" : lang === 'ru' ? "🧠 Tahlilchi AI" : "🧠 Tahlilchi AI", 
-                url: "https://tahlilchi-ai-ruddy.vercel.app" 
-              },
-              { 
-                text: lang === 'uz' ? "🎙️ INTRA GROUP Demoni" : lang === 'ru' ? "🎙️ Демо INTRA GROUP" : "🎙️ INTRA GROUP Demo", 
-                url: "https://frontend-tau-seven-19.vercel.app" 
-              },
-              { 
-                text: lang === 'uz' ? "🤖 Telegram AI Tutor" : lang === 'ru' ? "🤖 Telegram AI Tutor" : "🤖 Telegram AI Tutor", 
-                url: "https://t.me/umrzoq_21?start=ai_tutor" 
-              },
-              { 
-                text: lang === 'uz' ? "💼 HR & Ish Taklifi" : lang === 'ru' ? "💼 Для HR & Вакансий" : "💼 HR & Hiring Scope", 
-                url: "https://t.me/umrzoq_21" 
-              },
+              { text: "🧠 Tahlilchi AI Haqida", url: "https://tahlilchi-ai-ruddy.vercel.app" },
+              { text: "🎙️ INTRA GROUP Demoni", url: "https://frontend-tau-seven-19.vercel.app" },
+              { text: "🤖 Telegram AI Tutor", url: "https://t.me/umrzoq_21?start=ai_tutor" },
+              { text: "💼 HR & Ish Taklifi", url: "https://t.me/umrzoq_21" },
             ],
             id: Date.now(),
           },
@@ -274,7 +234,7 @@ const ChatBot = () => {
       setUnread(0);
       setTimeout(() => inputRef.current?.focus(), 150);
     }
-  }, [isOpen, hasGreeted, lang]);
+  }, [isOpen, hasGreeted]);
 
   // Initial nudge notification after 3.5s
   useEffect(() => {
@@ -298,7 +258,7 @@ const ChatBot = () => {
 
     setTimeout(() => {
       setIsTyping(false);
-      const res = findBestFaq(userText, lang);
+      const res = findBestFaq(userText);
       setMessages((prev) => [
         ...prev,
         {
@@ -388,7 +348,7 @@ const ChatBot = () => {
               </div>
               <p className="text-[11px] text-green-600 dark:text-green-500 font-medium flex items-center gap-1">
                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                {lang === 'uz' ? 'Online · Tayyor' : lang === 'ru' ? 'В сети · Готов' : 'Online · Ready'}
+                Online · Tayyor
               </p>
             </div>
           </div>
@@ -454,7 +414,7 @@ const ChatBot = () => {
             dark ? 'border-white/10 bg-[#111111]' : 'border-gray-200 bg-gray-100'
           }`}
         >
-          {currentConfig.suggestions.map((suggestion) => (
+          {chatbotData.suggestions.map((suggestion) => (
             <SuggestionPill
               key={suggestion}
               text={suggestion}
@@ -476,7 +436,7 @@ const ChatBot = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKey}
-            placeholder={currentConfig.placeholder}
+            placeholder={chatbotData.placeholder}
             className={`flex-1 rounded-full px-4 py-2.5 text-xs sm:text-sm outline-none border transition-colors focus:border-[#ff2a2a] ${
               dark
                 ? 'bg-[#1f1f1f] border-white/10 text-white placeholder-white/30'

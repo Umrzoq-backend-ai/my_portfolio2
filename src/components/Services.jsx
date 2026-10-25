@@ -2,7 +2,6 @@ import React, { useRef, useState, useContext } from 'react';
 import { motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
 import { skillsContent } from '../data/portfolioData';
 import { ThemeContext } from '../App';
-import { LanguageContext } from '../context/LanguageContext';
 
 const TagCard = ({ number, title, text, className, aosDelay, aosType, pathLength, containerRef, dark }) => {
   const ref = useRef(null);
@@ -41,7 +40,7 @@ const TagCard = ({ number, title, text, className, aosDelay, aosType, pathLength
             : 'bg-white border border-gray-200 shadow-[0_15px_40px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)]'
       }`}
     >
-      {/* The hole punch */}
+      {/* Hole punch */}
       <div className={`w-5 h-5 rounded-full shadow-[inset_0_2px_4px_rgba(0,0,0,0.3)] absolute top-4 border z-10 flex items-center justify-center ${
         dark ? 'bg-zinc-800 border-zinc-700' : 'bg-gradient-to-br from-gray-300 to-gray-100 border-gray-300'
       }`}>
@@ -76,7 +75,6 @@ const TagCard = ({ number, title, text, className, aosDelay, aosType, pathLength
 
 const Services = () => {
   const { dark } = useContext(ThemeContext);
-  const { t } = useContext(LanguageContext);
   const containerRef = useRef(null);
   
   const { scrollYProgress } = useScroll({
@@ -103,22 +101,21 @@ const Services = () => {
           <div className={`inline-block border rounded-full px-5 py-1.5 text-sm font-bold mb-8 shadow-sm ${
             dark ? 'border-white/20 text-white/70 bg-white/5' : 'border-gray-300 text-gray-600 bg-white'
           }`}>
-            {t(skillsContent.badge)}
+            {skillsContent.badge}
           </div>
           <h2 className={`text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-6 tracking-tight relative ${
             dark ? 'text-white' : 'text-gray-900'
           }`}>
-            {t(skillsContent.heading)}
+            {skillsContent.heading}
             {/* Hand-drawn arrow */}
             <svg className={`absolute -bottom-10 right-10 w-12 h-12 ${dark ? 'text-white/40' : 'text-gray-800'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" className="hidden" />
               <path d="M4 4 Q 10 10 15 15 M 15 15 L 10 15 M 15 15 L 15 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </h2>
           <p className={`text-base md:text-lg max-w-sm font-medium leading-relaxed ${
             dark ? 'text-white/60' : 'text-gray-500'
           }`}>
-            {t(skillsContent.description)}
+            {skillsContent.description}
           </p>
         </div>
 
@@ -128,7 +125,6 @@ const Services = () => {
           viewBox="0 0 1000 1350" 
           preserveAspectRatio="none"
         >
-          {/* Faint background path */}
           <path 
             d="M 650,200 C 400,300 200,400 300,600 C 400,800 750,750 700,950 C 650,1150 400,1150 300,1200" 
             fill="none" 
@@ -136,8 +132,6 @@ const Services = () => {
             strokeWidth="2" 
             strokeDasharray="8 10" 
           />
-
-          {/* Mask to reveal the dashed path based on scroll */}
           <mask id="path-mask">
             <motion.path 
               d="M 650,200 C 400,300 200,400 300,600 C 400,800 750,750 700,950 C 650,1150 400,1150 300,1200" 
@@ -147,8 +141,6 @@ const Services = () => {
               style={{ pathLength }}
             />
           </mask>
-
-          {/* The actual dashed line that gets revealed */}
           <path 
             d="M 650,200 C 400,300 200,400 300,600 C 400,800 750,750 700,950 C 650,1150 400,1150 300,1200" 
             fill="none" 
@@ -212,8 +204,8 @@ const Services = () => {
               <TagCard 
                 key={card.number}
                 number={card.number}
-                title={t(card.title)}
-                text={t(card.text)}
+                title={card.title}
+                text={card.text}
                 className={positions[index]}
                 aosType={aosTypes[index]}
                 aosDelay={aosDelays[index]}
@@ -232,7 +224,7 @@ const Services = () => {
               dark ? 'text-white/60' : 'text-gray-600'
             }`}
           >
-            {t(skillsContent.endText)}
+            {skillsContent.endText}
           </div>
 
         </div>

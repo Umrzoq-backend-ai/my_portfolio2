@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { technicalSkills } from '../data/portfolioData';
 import { ThemeContext } from '../App';
-import { LanguageContext } from '../context/LanguageContext';
 
 const SkillProgress = ({ name, level, isVisible, dark }) => (
   <div className="mb-4">
@@ -22,7 +21,7 @@ const SkillProgress = ({ name, level, isVisible, dark }) => (
   </div>
 );
 
-const SkillCard = ({ category, index, isVisible, dark, t }) => (
+const SkillCard = ({ category, index, isVisible, dark }) => (
   <div 
     data-aos="fade-up"
     data-aos-delay={index * 100}
@@ -35,7 +34,7 @@ const SkillCard = ({ category, index, isVisible, dark, t }) => (
     <h3 className={`text-lg font-black tracking-tight mb-6 pb-2 border-b uppercase ${
       dark ? 'text-white border-white/10' : 'text-gray-900 border-gray-200'
     }`}>
-      {t(category.title)}
+      {category.title}
     </h3>
     <div>
       {category.skills.map((skill) => (
@@ -53,7 +52,6 @@ const SkillCard = ({ category, index, isVisible, dark, t }) => (
 
 const TechnicalSkills = () => {
   const { dark } = useContext(ThemeContext);
-  const { t } = useContext(LanguageContext);
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -100,17 +98,17 @@ const TechnicalSkills = () => {
               ? 'border-white/20 text-white/60 bg-white/5 backdrop-blur-sm' 
               : 'border-gray-200 text-gray-600 bg-white'
           }`}>
-            {t(technicalSkills.badge)}
+            Technical Stack
           </div>
           <h2 className={`text-4xl md:text-5xl font-black tracking-tight mb-4 uppercase ${
             dark ? 'text-white' : 'text-gray-900'
           }`}>
-            {t(technicalSkills.heading)}
+            My Skillset
           </h2>
           <p className={`text-base md:text-lg max-w-xl mx-auto leading-relaxed ${
             dark ? 'text-white/60' : 'text-gray-600'
           }`}>
-            {t(technicalSkills.description)}
+            A comprehensive overview of my programming languages, frameworks, databases, and engineering concepts.
           </p>
         </div>
 
@@ -118,12 +116,11 @@ const TechnicalSkills = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {technicalSkills.categories.map((category, index) => (
             <SkillCard 
-              key={index} 
+              key={category.title} 
               category={category} 
               index={index} 
               isVisible={isVisible} 
               dark={dark} 
-              t={t} 
             />
           ))}
         </div>

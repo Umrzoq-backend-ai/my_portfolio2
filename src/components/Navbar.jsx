@@ -1,49 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { personalInfo, navContent } from '../data/portfolioData';
+import { personalInfo } from '../data/portfolioData';
 import { ThemeContext } from '../App';
-import { LanguageContext } from '../context/LanguageContext';
 
-const languages = [
-  { code: 'uz', label: 'UZ', flag: '🇺🇿' },
-  { code: 'en', label: 'EN', flag: '🇬🇧' },
-  { code: 'ru', label: 'RU', flag: '🇷🇺' },
+const navLinks = [
+  { name: 'Home', href: '#home' },
+  { name: 'About', href: '#about' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'Contact', href: '#contact' },
 ];
-
-const LanguageSwitcher = ({ lang, setLang, dark }) => (
-  <div
-    className={`inline-flex items-center p-0.5 sm:p-1 rounded-full border transition-all ${
-      dark
-        ? 'bg-white/5 border-white/15'
-        : 'bg-gray-100 border-gray-200'
-    }`}
-  >
-    {languages.map((item) => {
-      const active = lang === item.code;
-      return (
-        <button
-          key={item.code}
-          type="button"
-          onClick={() => setLang(item.code)}
-          aria-label={`Switch to ${item.label}`}
-          className={`px-2 sm:px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all duration-200 flex items-center gap-1 ${
-            active
-              ? 'bg-[#ff2a2a] text-white shadow-sm'
-              : dark
-                ? 'text-white/60 hover:text-white'
-                : 'text-gray-600 hover:text-gray-900'
-          }`}
-        >
-          <span className="text-xs">{item.flag}</span>
-          <span className="hidden sm:inline font-mono">{item.label}</span>
-        </button>
-      );
-    })}
-  </div>
-);
 
 const Navbar = () => {
   const { dark, toggle } = useContext(ThemeContext);
-  const { lang, setLang, t } = useContext(LanguageContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [hireModal, setHireModal] = useState(false);
@@ -89,7 +57,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isOpen ? (dark ? 'bg-[#111]' : 'bg-white') : navBg} py-3 sm:py-4`}>
+      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isOpen ? (dark ? 'bg-[#111]' : 'bg-white') : navBg} py-3.5 sm:py-4`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex justify-between items-center">
 
           {/* Brand Logo */}
@@ -99,23 +67,20 @@ const Navbar = () => {
 
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-            {navContent.links.map((link) => (
+            {navLinks.map((link) => (
               <a
-                key={link.id}
-                href={`#${link.id}`}
+                key={link.name}
+                href={link.href}
                 className={`font-semibold text-sm relative group transition-colors duration-300 ${subTextColor} hover:text-[#ff2a2a]`}
               >
-                {t(link)}
+                {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#ff2a2a] transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </div>
 
-          {/* Right Controls: Language Selector + Dark Toggle + AI Chat + Hire Me */}
+          {/* Right Controls: Theme Toggle + AI Chat + Hire Me */}
           <div className="hidden md:flex items-center gap-3">
-            {/* Language Switcher */}
-            <LanguageSwitcher lang={lang} setLang={setLang} dark={dark} />
-
             {/* Dark / Light Toggle */}
             <button
               onClick={toggle}
@@ -160,16 +125,14 @@ const Navbar = () => {
             {/* Hire Me CTA Button */}
             <button
               onClick={() => setHireModal(true)}
-              className="px-5 py-2 rounded-full bg-[#ff2a2a] text-white font-bold text-xs sm:text-sm hover:bg-red-600 hover:shadow-[0_0_20px_rgba(255,42,42,0.4)] transition-all duration-300 active:scale-95"
+              className="px-5 py-2 rounded-full bg-[#ff2a2a] text-white font-bold text-xs sm:text-sm hover:bg-red-600 hover:shadow-[0_0_20px_rgba(255,42,42,0.4)] transition-all duration-300 active:scale-95 shadow-md"
             >
-              {t(navContent.hireMe)}
+              Hire Me
             </button>
           </div>
 
-          {/* Mobile Right Controls: Language Switcher + Toggle + Hamburger */}
+          {/* Mobile Right Controls: Toggle + Hamburger */}
           <div className="md:hidden flex items-center gap-2">
-            <LanguageSwitcher lang={lang} setLang={setLang} dark={dark} />
-
             <button
               onClick={toggle}
               aria-label="Toggle theme"
@@ -208,23 +171,23 @@ const Navbar = () => {
         <div
           className={`md:hidden absolute top-full left-0 w-full transition-all duration-300 overflow-hidden ${
             isOpen
-              ? `max-h-[420px] py-4 opacity-100 shadow-2xl border-b ${
+              ? `max-h-[380px] py-4 opacity-100 shadow-2xl border-b ${
                   dark ? 'bg-[#111111] border-white/10' : 'bg-white border-gray-200'
                 }`
               : 'max-h-0 opacity-0'
           }`}
         >
           <div className="flex flex-col px-6 space-y-3">
-            {navContent.links.map((link) => (
+            {navLinks.map((link) => (
               <a
-                key={link.id}
-                href={`#${link.id}`}
+                key={link.name}
+                href={link.href}
                 onClick={() => setIsOpen(false)}
                 className={`font-bold text-base py-2 border-b transition-colors ${
                   dark ? 'text-white border-white/10 hover:text-[#ff2a2a]' : 'text-gray-800 border-gray-100 hover:text-[#ff2a2a]'
                 }`}
               >
-                {t(link)}
+                {link.name}
               </a>
             ))}
 
@@ -245,9 +208,9 @@ const Navbar = () => {
                   setIsOpen(false);
                   setHireModal(true);
                 }}
-                className="flex-1 py-2.5 rounded-full bg-[#ff2a2a] text-white font-bold text-xs hover:bg-red-600 transition-all"
+                className="flex-1 py-2.5 rounded-full bg-[#ff2a2a] text-white font-bold text-xs hover:bg-red-600 transition-all shadow-md"
               >
-                {t(navContent.hireMe)}
+                Hire Me
               </button>
             </div>
           </div>
@@ -261,54 +224,44 @@ const Navbar = () => {
           onClick={() => setHireModal(false)}
         >
           <div
-            onClick={(e) => e.stopPropagation()}
-            className={`w-full max-w-md rounded-3xl shadow-2xl overflow-hidden transition-all border ${
-              dark ? 'bg-[#121212] border-white/15 text-white' : 'bg-white border-gray-200 text-gray-900'
+            className={`w-full max-w-lg rounded-3xl p-6 sm:p-8 shadow-2xl border transition-all ${
+              dark ? 'bg-[#141414] border-white/15 text-white' : 'bg-white border-gray-200 text-gray-900'
             }`}
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
-            <div className="bg-[#ff2a2a] p-6 text-white relative">
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <h3 className="text-xl sm:text-2xl font-black tracking-tight mb-1">
+                  Let's Work Together
+                </h3>
+                <p className="text-xs sm:text-sm opacity-60">
+                  Fill out the form or reach out directly on Telegram
+                </p>
+              </div>
               <button
                 onClick={() => setHireModal(false)}
-                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/30 flex items-center justify-center text-white hover:bg-black/50 transition-colors"
-                aria-label="Close modal"
+                className="w-8 h-8 rounded-full border flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity"
               >
                 ✕
               </button>
-              <h3 className="text-xl font-black">
-                {lang === 'uz' ? 'Hamkorlik Taklifi' : lang === 'ru' ? 'Предложение о работе' : 'Let’s Work Together'}
-              </h3>
-              <p className="text-white/80 text-xs mt-1">
-                {lang === 'uz' ? 'Qisqa xabar qoldiring, tezda aloqaga chiqaman.' : lang === 'ru' ? 'Оставьте сообщение, я свяжусь в ближайшее время.' : 'Send a brief message, and I will reply promptly.'}
-              </p>
             </div>
 
-            {/* Form */}
             {sent ? (
-              <div className="p-8 text-center">
-                <div className="w-12 h-12 rounded-full bg-green-500/20 text-green-500 text-2xl flex items-center justify-center mx-auto mb-3">
-                  ✓
-                </div>
-                <p className="font-bold text-base">
-                  {lang === 'uz' ? 'Xabar tayyorlandi!' : lang === 'ru' ? 'Сообщение подготовлено!' : 'Message ready!'}
-                </p>
-                <p className="text-xs opacity-60 mt-1">
-                  {lang === 'uz' ? 'Pochta mijozi orqali yuborilmoqda...' : lang === 'ru' ? 'Открывается почтовый клиент...' : 'Opening your email client...'}
-                </p>
+              <div className="py-8 text-center text-green-500 font-bold text-base flex flex-col items-center gap-2">
+                <span className="text-3xl">✓</span>
+                Message sent successfully!
               </div>
             ) : (
-              <form onSubmit={handleFormSubmit} className="p-6 space-y-4">
+              <form onSubmit={handleFormSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold mb-1 opacity-80">
-                    {lang === 'uz' ? 'Ismingiz *' : lang === 'ru' ? 'Ваше имя *' : 'Your Name *'}
-                  </label>
+                  <label className="block text-xs font-bold mb-1 opacity-80">Full Name *</label>
                   <input
                     type="text"
                     name="name"
                     required
                     value={form.name}
                     onChange={handleFormChange}
-                    placeholder={lang === 'uz' ? 'Masalan: Alisher' : lang === 'ru' ? 'Например: Алексей' : 'e.g. John Doe'}
+                    placeholder="e.g. Alex Smith"
                     className={`w-full px-3.5 py-2.5 rounded-xl border text-sm outline-none transition-colors ${
                       dark
                         ? 'bg-[#1a1a1a] border-white/10 text-white focus:border-[#ff2a2a]'
@@ -318,9 +271,7 @@ const Navbar = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold mb-1 opacity-80">
-                    {lang === 'uz' ? 'Elektron pochta *' : lang === 'ru' ? 'Email *' : 'Email *'}
-                  </label>
+                  <label className="block text-xs font-bold mb-1 opacity-80">Email Address *</label>
                   <input
                     type="email"
                     name="email"
@@ -337,22 +288,14 @@ const Navbar = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold mb-1 opacity-80">
-                    {lang === 'uz' ? 'Xabar *' : lang === 'ru' ? 'Сообщение *' : 'Message *'}
-                  </label>
+                  <label className="block text-xs font-bold mb-1 opacity-80">Message *</label>
                   <textarea
                     name="message"
                     required
                     rows={3}
                     value={form.message}
                     onChange={handleFormChange}
-                    placeholder={
-                      lang === 'uz'
-                        ? 'Loyiha yoki vakansiya haqida...'
-                        : lang === 'ru'
-                        ? 'О проекте или вакансии...'
-                        : 'Tell me about the role or project...'
-                    }
+                    placeholder="Tell me about the role or project..."
                     className={`w-full px-3.5 py-2.5 rounded-xl border text-sm outline-none transition-colors resize-none ${
                       dark
                         ? 'bg-[#1a1a1a] border-white/10 text-white focus:border-[#ff2a2a]'
@@ -369,13 +312,13 @@ const Navbar = () => {
                       dark ? 'border-white/20 text-white/70 hover:bg-white/10' : 'border-gray-200 text-gray-700 hover:bg-gray-100'
                     }`}
                   >
-                    {lang === 'uz' ? 'Bekor qilish' : lang === 'ru' ? 'Отмена' : 'Cancel'}
+                    Cancel
                   </button>
                   <button
                     type="submit"
                     className="flex-1 py-2.5 rounded-xl font-bold text-xs bg-[#ff2a2a] text-white hover:bg-red-600 transition-colors shadow-md"
                   >
-                    {lang === 'uz' ? 'Yuborish' : lang === 'ru' ? 'Отправить' : 'Send'}
+                    Send Message
                   </button>
                 </div>
               </form>

@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import { softSkillsList } from '../data/portfolioData';
 import { ThemeContext } from '../App';
-import { LanguageContext } from '../context/LanguageContext';
 
-const SoftSkillCard = ({ skill, index, dark, t }) => (
+const SoftSkillCard = ({ skill, index, dark }) => (
   <div 
     data-aos="fade-up"
     data-aos-delay={index * 100}
@@ -22,12 +21,12 @@ const SoftSkillCard = ({ skill, index, dark, t }) => (
       <h3 className={`text-lg font-black tracking-tight mb-2 uppercase ${
         dark ? 'text-white' : 'text-gray-900'
       }`}>
-        {t(skill.name)}
+        {skill.name}
       </h3>
       <p className={`text-sm font-medium leading-relaxed ${
         dark ? 'text-white/60' : 'text-gray-600'
       }`}>
-        {t(skill.desc)}
+        {skill.desc}
       </p>
     </div>
   </div>
@@ -35,7 +34,6 @@ const SoftSkillCard = ({ skill, index, dark, t }) => (
 
 const SoftSkills = () => {
   const { dark } = useContext(ThemeContext);
-  const { lang, t } = useContext(LanguageContext);
 
   return (
     <section className={`pt-24 pb-32 px-6 md:px-12 w-full relative overflow-hidden font-sans transition-colors duration-300 ${
@@ -58,21 +56,17 @@ const SoftSkills = () => {
           <div className={`inline-block border rounded-full px-5 py-1.5 text-sm font-bold mb-6 shadow-sm ${
             dark ? 'border-white/20 text-white/70 bg-white/5' : 'border-gray-300 text-gray-600 bg-white'
           }`}>
-            {lang === 'uz' ? 'Asosiy Ko‘nikmalar' : lang === 'ru' ? 'Ключевые качества' : 'Core Competencies'}
+            Core Competencies
           </div>
           <h2 className={`text-4xl md:text-5xl font-black tracking-tight mb-4 uppercase ${
             dark ? 'text-white' : 'text-gray-900'
           }`}>
-            {lang === 'uz' ? 'Moslashuvchanlik & Soft Skills' : lang === 'ru' ? 'Гибкие навыки (Soft Skills)' : 'Professional Soft Skills'}
+            Professional Soft Skills
           </h2>
           <p className={`text-base md:text-lg max-w-lg mx-auto leading-relaxed ${
             dark ? 'text-white/60' : 'text-gray-600'
           }`}>
-            {lang === 'uz' 
-              ? 'Jamoada ishlash, muammolarni tizimli hal qilish va samarali muloqot qilish xususiyatlarim.' 
-              : lang === 'ru' 
-              ? 'Умение работать в команде, системно решать проблемы и продуктивно коммуницировать.' 
-              : 'Essential traits that make me an effective engineer, coordinator, and communicator.'}
+            Essential traits that make me an effective engineer, coordinator, and communicator.
           </p>
         </div>
 
@@ -80,11 +74,10 @@ const SoftSkills = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {softSkillsList.map((skill, index) => (
             <SoftSkillCard 
-              key={index} 
+              key={skill.name} 
               skill={skill} 
               index={index} 
               dark={dark} 
-              t={t} 
             />
           ))}
         </div>
