@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { aboutContent } from '../data/portfolioData';
-import profileImg from '../assets/about/image.png';
+import profileImg from '../assets/about/umrzoq-developer.jpg';
 
 // Tech stack SVG icons rendered inline for crisp rendering
 const PythonIcon = () => (
@@ -78,7 +78,7 @@ const About = () => {
                 <img
                   src={profileImg}
                   alt="Umrzoq Yulchiyev"
-                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                     if (e.currentTarget.nextElementSibling) {
