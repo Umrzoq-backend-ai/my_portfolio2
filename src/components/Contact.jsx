@@ -1,7 +1,11 @@
-import React, { useRef, useState } from 'react';
-import { emailjsConfig, personalInfo, socialLinks } from '../data/portfolioData';
+import React, { useRef, useState, useContext } from 'react';
+import { emailjsConfig, personalInfo, socialLinks, contactContent } from '../data/portfolioData';
+import { ThemeContext } from '../App';
+import { LanguageContext } from '../context/LanguageContext';
 
 const Contact = () => {
+  const { dark } = useContext(ThemeContext);
+  const { lang, t } = useContext(LanguageContext);
   const formRef = useRef(null);
   const [status, setStatus] = useState('idle'); // idle, sending, success, error
 
@@ -65,9 +69,11 @@ const Contact = () => {
   return (
     <section 
       id="contact" 
-      className="bg-[#0a0a0a] w-full min-h-screen relative overflow-hidden flex flex-col justify-center items-center pt-24 pb-28 px-6 md:px-12 border-t border-white/10"
+      className={`w-full min-h-screen relative overflow-hidden flex flex-col justify-center items-center pt-24 pb-28 px-6 md:px-12 border-t transition-colors duration-300 ${
+        dark ? 'bg-[#0a0a0a] text-white border-white/10' : 'bg-gray-100 text-gray-900 border-gray-200'
+      }`}
     >
-      {/* Subtle, elegant background watermark */}
+      {/* Subtle background watermark */}
       <div 
         aria-hidden="true" 
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-center items-center pointer-events-none select-none z-0"
@@ -75,7 +81,7 @@ const Contact = () => {
         <span 
           className="text-[14vw] font-black uppercase tracking-tighter text-transparent select-none"
           style={{ 
-            WebkitTextStroke: '1.5px rgba(255, 255, 255, 0.04)',
+            WebkitTextStroke: dark ? '1.5px rgba(255, 255, 255, 0.04)' : '1.5px rgba(0, 0, 0, 0.04)',
             fontFamily: "'Impact', 'Arial Black', sans-serif" 
           }}
         >
@@ -87,14 +93,20 @@ const Contact = () => {
         
         {/* Section Header */}
         <div data-aos="fade-up" className="text-center mb-12">
-          <div className="inline-block border border-white/20 rounded-full px-5 py-1.5 text-sm text-white/70 font-bold mb-4 shadow-sm bg-white/5 backdrop-blur-sm">
-            Get In Touch
+          <div className={`inline-block border rounded-full px-5 py-1.5 text-sm font-bold mb-4 shadow-sm ${
+            dark ? 'border-white/20 text-white/70 bg-white/5 backdrop-blur-sm' : 'border-gray-300 text-gray-600 bg-white'
+          }`}>
+            {t(contactContent.badge)}
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight uppercase mb-4">
-            Let's Build Something Great
+          <h2 className={`text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 ${
+            dark ? 'text-white' : 'text-gray-900'
+          }`}>
+            {t(contactContent.heading)}
           </h2>
-          <p className="text-white/60 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-            Have a project in mind, looking to collaborate, or want to discuss machine learning and backend opportunities? Drop a message!
+          <p className={`text-base md:text-lg max-w-xl mx-auto leading-relaxed ${
+            dark ? 'text-white/60' : 'text-gray-600'
+          }`}>
+            {t(contactContent.description)}
           </p>
         </div>
 
@@ -108,7 +120,7 @@ const Contact = () => {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10 pb-6 border-b border-white/20">
             <div>
               <span className="text-xs font-mono font-bold tracking-widest uppercase text-white/80 block mb-1">
-                Direct Communication
+                {t(contactContent.directLabel)}
               </span>
               <p className="text-white text-base font-bold">
                 Email: <a href={`mailto:${personalInfo.emails.primary}`} className="underline hover:text-black transition-colors">{personalInfo.emails.primary}</a>
@@ -125,7 +137,7 @@ const Contact = () => {
               <svg className="w-4 h-4 fill-currentColor" viewBox="0 0 24 24">
                 <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.012 9.482c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L6.514 14.43l-2.948-.924c-.64-.203-.653-.64.136-.949l11.51-4.435c.534-.194 1.001.13.35.126z"/>
               </svg>
-              DM on Telegram
+              {t(contactContent.telegramBtn)}
             </a>
           </div>
 
@@ -136,41 +148,41 @@ const Contact = () => {
               {/* Left Column: Inputs */}
               <div className="flex flex-col gap-6">
                 <div>
-                  <label htmlFor="firstName" className="block text-xs font-mono uppercase tracking-wider text-white/80 mb-2">
-                    First Name *
+                  <label htmlFor="firstName" className="block text-xs font-mono uppercase tracking-wider text-white/90 mb-2 font-bold">
+                    {t(contactContent.form.firstNameLabel)}
                   </label>
                   <input 
                     type="text" 
                     id="firstName" 
                     name="first_name"
-                    placeholder="e.g. John" 
+                    placeholder={t(contactContent.form.firstNamePlaceholder)} 
                     required
                     className="w-full bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/30 focus:border-white rounded-xl px-4 py-3.5 text-base focus:outline-none transition-all placeholder-white/50 font-medium"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="lastName" className="block text-xs font-mono uppercase tracking-wider text-white/80 mb-2">
-                    Last Name
+                  <label htmlFor="lastName" className="block text-xs font-mono uppercase tracking-wider text-white/90 mb-2 font-bold">
+                    {t(contactContent.form.lastNameLabel)}
                   </label>
                   <input 
                     type="text" 
                     id="lastName" 
                     name="last_name"
-                    placeholder="e.g. Doe" 
+                    placeholder={t(contactContent.form.lastNamePlaceholder)} 
                     className="w-full bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/30 focus:border-white rounded-xl px-4 py-3.5 text-base focus:outline-none transition-all placeholder-white/50 font-medium"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-xs font-mono uppercase tracking-wider text-white/80 mb-2">
-                    Email Address *
+                  <label htmlFor="email" className="block text-xs font-mono uppercase tracking-wider text-white/90 mb-2 font-bold">
+                    {t(contactContent.form.emailLabel)}
                   </label>
                   <input 
                     type="email" 
                     id="email" 
                     name="user_email"
-                    placeholder="name@example.com" 
+                    placeholder={t(contactContent.form.emailPlaceholder)} 
                     required
                     className="w-full bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/30 focus:border-white rounded-xl px-4 py-3.5 text-base focus:outline-none transition-all placeholder-white/50 font-medium"
                   />
@@ -179,13 +191,13 @@ const Contact = () => {
 
               {/* Right Column: Message */}
               <div className="flex flex-col">
-                <label htmlFor="message" className="block text-xs font-mono uppercase tracking-wider text-white/80 mb-2">
-                  Your Message *
+                <label htmlFor="message" className="block text-xs font-mono uppercase tracking-wider text-white/90 mb-2 font-bold">
+                  {t(contactContent.form.messageLabel)}
                 </label>
                 <textarea 
                   id="message" 
                   name="message"
-                  placeholder="Tell me about your project, team, or opportunity..." 
+                  placeholder={t(contactContent.form.messagePlaceholder)} 
                   required
                   rows={6}
                   className="w-full flex-1 min-h-[160px] bg-white/10 hover:bg-white/15 focus:bg-white/20 border border-white/30 focus:border-white rounded-xl p-4 text-base focus:outline-none transition-all placeholder-white/50 font-medium resize-none"
@@ -197,7 +209,11 @@ const Contact = () => {
             {/* Bottom Actions Row */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-6 pt-4 border-t border-white/20">
               <p className="text-xs text-white/80 font-medium max-w-sm text-center sm:text-left">
-                Typically respond within 24 hours. Messages reach my primary inbox directly.
+                {lang === 'uz' 
+                  ? 'Odatda 24 soat ichida javob beraman. Xabarlar to‘g‘ridan-to‘g‘ri pochtamga yetib keladi.' 
+                  : lang === 'ru' 
+                  ? 'Обычно отвечаю в течение 24 часов. Сообщения приходят напрямую на мою почту.' 
+                  : 'Typically respond within 24 hours. Messages reach my primary inbox directly.'}
               </p>
 
               <button 
@@ -219,19 +235,19 @@ const Contact = () => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    Sending...
+                    {t(contactContent.form.sendingBtn)}
                   </span>
                 ) : status === 'success' ? (
                   <span className="flex items-center gap-2">
-                    Sent Successfully ✓
+                    {t(contactContent.form.successMsg)}
                   </span>
                 ) : status === 'error' ? (
                   <span className="flex items-center gap-2">
-                    Failed — Try Again
+                    {t(contactContent.form.errorMsg)}
                   </span>
                 ) : (
                   <>
-                    <span>Send Message</span>
+                    <span>{t(contactContent.form.submitBtn)}</span>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>

@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { aboutContent } from '../data/portfolioData';
+import { LanguageContext } from '../context/LanguageContext';
+import { ThemeContext } from '../App';
 import profileImg from '../assets/about/umrzoq-developer.jpg';
 
 // Tech stack SVG icons rendered inline for crisp rendering
@@ -54,6 +56,9 @@ const MLIcon = () => (
 );
 
 const About = () => {
+  const { t } = useContext(LanguageContext);
+  const { dark } = useContext(ThemeContext);
+
   return (
     <section id="about" className="bg-[#ff2a2a] pt-20 pb-40 px-6 md:px-12 w-full relative overflow-hidden font-sans">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-16 items-start">
@@ -94,7 +99,7 @@ const About = () => {
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3 pointer-events-none">
                   <span className="text-white text-sm font-bold tracking-wide">Umrzoq Yulchiyev</span>
-                  <span className="text-white/70 text-xs">Data Scientist & Backend Dev</span>
+                  <span className="text-white/70 text-xs">{t(aboutContent.badgeRole)}</span>
                 </div>
               </div>
             </div>
@@ -105,10 +110,10 @@ const About = () => {
         {/* Right Side: Info Content */}
         <div data-aos="fade-left" data-aos-delay="200" className="flex-1 text-white mt-8 md:mt-0 relative z-20">
           
-          <h2 className="text-4xl md:text-5xl font-black text-black mb-4">{aboutContent.heading}</h2>
+          <h2 className="text-4xl md:text-5xl font-black text-black mb-4">{t(aboutContent.heading)}</h2>
           <p 
             className="text-lg font-bold mb-12 leading-relaxed max-w-3xl text-red-50"
-            dangerouslySetInnerHTML={{ __html: aboutContent.bio }}
+            dangerouslySetInnerHTML={{ __html: t(aboutContent.bio) }}
           />
 
           {/* Horizontal Skills Row */}
@@ -127,9 +132,9 @@ const About = () => {
         </div>
       </div>
 
-      {/* Torn paper divider at bottom */}
+      {/* Torn paper divider at bottom — seamlessly matches TechnicalSkills in dark & light mode */}
       <div className="absolute bottom-0 left-0 w-full pointer-events-none z-30 transform translate-y-1">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-12 md:h-20 fill-white">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-12 md:h-20" style={{ fill: dark ? '#0a0a0a' : '#f9fafb' }}>
           <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.62,189.5,99.8,242.79,81.82,282.88,63.6,321.39,56.44Z"></path>
         </svg>
       </div>

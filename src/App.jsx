@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react'
-import AOS from 'aos'
-import 'aos/dist/aos.css'
-import Preloader from './components/Preloader'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import TechnicalSkills from './components/TechnicalSkills'
-import Services from './components/Services'
-import Projects from './components/Projects'
-import ContentCreator from './components/ContentCreator'
-import Internships from './components/Internships'
-import Leadership from './components/Leadership'
-import Certificates from './components/Certificates'
-import SoftSkills from './components/SoftSkills'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
-import ChatBot from './components/ChatBot'
+import React, { useState, useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import Preloader from './components/Preloader';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import About from './components/About';
+import TechnicalSkills from './components/TechnicalSkills';
+import Services from './components/Services';
+import Projects from './components/Projects';
+import ContentCreator from './components/ContentCreator';
+import Internships from './components/Internships';
+import Leadership from './components/Leadership';
+import Certificates from './components/Certificates';
+import SoftSkills from './components/SoftSkills';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
+import ChatBot from './components/ChatBot';
+import { LanguageProvider } from './context/LanguageContext';
 
 export const ThemeContext = React.createContext({ dark: true, toggle: () => {} });
 
@@ -42,25 +43,30 @@ function App() {
 
   return (
     <ThemeContext.Provider value={{ dark, toggle }}>
-      <div className={dark ? 'bg-[#0a0a0a]' : 'bg-white'} style={{ minHeight: '100vh', transition: 'background 0.3s' }}>
-        <Preloader />
-        <Navbar />
-        <Hero />
-        <About />
-        <TechnicalSkills />
-        <Services />
-        <Projects />
-        <ContentCreator />
-        <Internships />
-        <Leadership />
-        <Certificates />
-        <SoftSkills />
-        <Contact />
-        <Footer />
-        <ChatBot />
-      </div>
+      <LanguageProvider>
+        <div
+          className={dark ? 'bg-[#0a0a0a] text-white' : 'bg-gray-50 text-gray-900'}
+          style={{ minHeight: '100vh', transition: 'background-color 0.3s ease, color 0.3s ease' }}
+        >
+          <Preloader />
+          <Navbar />
+          <Hero />
+          <About />
+          <TechnicalSkills />
+          <Services />
+          <Projects />
+          <ContentCreator />
+          <Internships />
+          <Leadership />
+          <Certificates />
+          <SoftSkills />
+          <Contact />
+          <Footer />
+          <ChatBot />
+        </div>
+      </LanguageProvider>
     </ThemeContext.Provider>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,15 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { technicalSkills } from '../data/portfolioData';
+import { ThemeContext } from '../App';
+import { LanguageContext } from '../context/LanguageContext';
 
-const SkillProgress = ({ name, level, isVisible }) => (
+const SkillProgress = ({ name, level, isVisible, dark }) => (
   <div className="mb-4">
     <div className="flex justify-between items-center mb-1">
-      <span className="text-white text-sm font-semibold tracking-wide">{name}</span>
-      <span className="text-red-400 text-xs font-bold font-mono transition-all duration-700">
+      <span className={`text-sm font-semibold tracking-wide ${dark ? 'text-white' : 'text-gray-900'}`}>
+        {name}
+      </span>
+      <span className="text-red-500 text-xs font-bold font-mono transition-all duration-700">
         {isVisible ? `${level}%` : '0%'}
       </span>
     </div>
-    <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden border border-white/5">
+    <div className={`w-full h-1.5 rounded-full overflow-hidden border ${dark ? 'bg-white/5 border-white/5' : 'bg-gray-200 border-gray-200'}`}>
       <div 
         className="h-full bg-gradient-to-r from-red-600 to-red-400 rounded-full transition-all duration-1000 ease-out"
         style={{ width: isVisible ? `${level}%` : '0%' }}
@@ -18,24 +22,38 @@ const SkillProgress = ({ name, level, isVisible }) => (
   </div>
 );
 
-const SkillCard = ({ category, index, isVisible }) => (
+const SkillCard = ({ category, index, isVisible, dark, t }) => (
   <div 
     data-aos="fade-up"
     data-aos-delay={index * 100}
-    className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 hover:scale-[1.02] hover:border-red-500/30 hover:shadow-[0_20px_50px_rgba(255,42,42,0.1)] transition-all duration-500"
+    className={`rounded-2xl p-6 transition-all duration-500 hover:scale-[1.02] ${
+      dark
+        ? 'bg-white/5 backdrop-blur-md border border-white/10 hover:border-red-500/30 hover:shadow-[0_20px_50px_rgba(255,42,42,0.1)]'
+        : 'bg-white border border-gray-200 shadow-md shadow-gray-200/50 hover:border-red-400/40 hover:shadow-[0_15px_35px_rgba(255,42,42,0.08)]'
+    }`}
   >
-    <h3 className="text-white text-lg font-black tracking-tight mb-6 pb-2 border-b border-white/10 uppercase">
-      {category.title}
+    <h3 className={`text-lg font-black tracking-tight mb-6 pb-2 border-b uppercase ${
+      dark ? 'text-white border-white/10' : 'text-gray-900 border-gray-200'
+    }`}>
+      {t(category.title)}
     </h3>
     <div>
       {category.skills.map((skill) => (
-        <SkillProgress key={skill.name} name={skill.name} level={skill.level} isVisible={isVisible} />
+        <SkillProgress 
+          key={skill.name} 
+          name={skill.name} 
+          level={skill.level} 
+          isVisible={isVisible} 
+          dark={dark} 
+        />
       ))}
     </div>
   </div>
 );
 
 const TechnicalSkills = () => {
+  const { dark } = useContext(ThemeContext);
+  const { t } = useContext(LanguageContext);
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -61,31 +79,52 @@ const TechnicalSkills = () => {
     <section 
       id="skills" 
       ref={sectionRef}
-      className="bg-[#0a0a0a] pt-24 pb-28 px-6 md:px-12 w-full relative overflow-hidden font-sans"
+      className={`pt-24 pb-28 px-6 md:px-12 w-full relative overflow-hidden font-sans transition-colors duration-300 ${
+        dark ? 'bg-[#0a0a0a] text-white' : 'bg-gray-50 text-gray-900'
+      }`}
     >
       {/* Background visual elements */}
-      <div className="absolute top-1/4 left-10 w-96 h-96 bg-red-600/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-red-500/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className={`absolute top-1/4 left-10 w-96 h-96 rounded-full blur-[120px] pointer-events-none ${
+        dark ? 'bg-red-600/10' : 'bg-red-500/5'
+      }`} />
+      <div className={`absolute bottom-1/4 right-10 w-96 h-96 rounded-full blur-[120px] pointer-events-none ${
+        dark ? 'bg-red-500/10' : 'bg-red-400/5'
+      }`} />
 
       <div className="max-w-6xl mx-auto relative z-10">
         
         {/* Header */}
         <div data-aos="fade-up" className="mb-16 text-center">
-          <div className="inline-block border border-white/20 rounded-full px-5 py-1.5 text-sm text-white/60 font-bold mb-6 shadow-sm bg-white/5 backdrop-blur-sm">
-            Technical Stack
+          <div className={`inline-block rounded-full px-5 py-1.5 text-sm font-bold mb-6 shadow-sm border ${
+            dark 
+              ? 'border-white/20 text-white/60 bg-white/5 backdrop-blur-sm' 
+              : 'border-gray-200 text-gray-600 bg-white'
+          }`}>
+            {t(technicalSkills.badge)}
           </div>
-          <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4 uppercase">
-            My Skillset
+          <h2 className={`text-4xl md:text-5xl font-black tracking-tight mb-4 uppercase ${
+            dark ? 'text-white' : 'text-gray-900'
+          }`}>
+            {t(technicalSkills.heading)}
           </h2>
-          <p className="text-white/50 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-            A comprehensive overview of my programming languages, frameworks, databases, and engineering concepts.
+          <p className={`text-base md:text-lg max-w-xl mx-auto leading-relaxed ${
+            dark ? 'text-white/60' : 'text-gray-600'
+          }`}>
+            {t(technicalSkills.description)}
           </p>
         </div>
 
         {/* Skills Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {technicalSkills.categories.map((category, index) => (
-            <SkillCard key={category.title} category={category} index={index} isVisible={isVisible} />
+            <SkillCard 
+              key={index} 
+              category={category} 
+              index={index} 
+              isVisible={isVisible} 
+              dark={dark} 
+              t={t} 
+            />
           ))}
         </div>
 

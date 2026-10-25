@@ -1,9 +1,49 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { personalInfo } from '../data/portfolioData';
+import { personalInfo, navContent } from '../data/portfolioData';
 import { ThemeContext } from '../App';
+import { LanguageContext } from '../context/LanguageContext';
+
+const languages = [
+  { code: 'uz', label: 'UZ', flag: '🇺🇿' },
+  { code: 'en', label: 'EN', flag: '🇬🇧' },
+  { code: 'ru', label: 'RU', flag: '🇷🇺' },
+];
+
+const LanguageSwitcher = ({ lang, setLang, dark }) => (
+  <div
+    className={`inline-flex items-center p-0.5 sm:p-1 rounded-full border transition-all ${
+      dark
+        ? 'bg-white/5 border-white/15'
+        : 'bg-gray-100 border-gray-200'
+    }`}
+  >
+    {languages.map((item) => {
+      const active = lang === item.code;
+      return (
+        <button
+          key={item.code}
+          type="button"
+          onClick={() => setLang(item.code)}
+          aria-label={`Switch to ${item.label}`}
+          className={`px-2 sm:px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-bold transition-all duration-200 flex items-center gap-1 ${
+            active
+              ? 'bg-[#ff2a2a] text-white shadow-sm'
+              : dark
+                ? 'text-white/60 hover:text-white'
+                : 'text-gray-600 hover:text-gray-900'
+          }`}
+        >
+          <span className="text-xs">{item.flag}</span>
+          <span className="hidden sm:inline font-mono">{item.label}</span>
+        </button>
+      );
+    })}
+  </div>
+);
 
 const Navbar = () => {
   const { dark, toggle } = useContext(ThemeContext);
+  const { lang, setLang, t } = useContext(LanguageContext);
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [hireModal, setHireModal] = useState(false);
@@ -11,18 +51,15 @@ const Navbar = () => {
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => setIsScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Prevent body scroll when modal open
   useEffect(() => {
     document.body.style.overflow = hireModal ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [hireModal]);
-
-  const navLinks = ['Home', 'About', 'Skills', 'Projects', 'Contact'];
 
   const handleFormChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -30,7 +67,6 @@ const Navbar = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // mailto fallback — opens default email client
     const subject = encodeURIComponent(`Hiring Inquiry from ${form.name}`);
     const body = encodeURIComponent(
       `Hello Umrzoq,\n\nMy name is ${form.name}.\nEmail: ${form.email}\n\n${form.message}\n\nBest Regards,\n${form.name}`
@@ -45,40 +81,42 @@ const Navbar = () => {
   };
 
   const navBg = dark
-    ? isScrolled ? 'bg-black/80 backdrop-blur-md' : 'bg-transparent'
-    : isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-white/70 backdrop-blur-sm';
+    ? isScrolled ? 'bg-black/90 backdrop-blur-md border-b border-white/10' : 'bg-transparent'
+    : isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200' : 'bg-transparent';
 
   const textColor = dark ? 'text-white' : isScrolled ? 'text-gray-900' : 'text-white';
-  const subTextColor = dark ? 'text-white/70' : isScrolled ? 'text-gray-600' : 'text-white/80';
+  const subTextColor = dark ? 'text-white/70' : isScrolled ? 'text-gray-600' : 'text-white/90';
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isOpen ? (dark ? 'bg-[#111]' : 'bg-white') : navBg} py-4`}>
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+      <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isOpen ? (dark ? 'bg-[#111]' : 'bg-white') : navBg} py-3 sm:py-4`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex justify-between items-center">
 
-          {/* Logo */}
-          <a href="#" className={`text-2xl font-black tracking-tight whitespace-nowrap ${textColor}`}>
+          {/* Brand Logo */}
+          <a href="#" className={`text-xl sm:text-2xl font-black tracking-tight whitespace-nowrap ${textColor}`}>
             {personalInfo.brandName}<span className="text-[#ff2a2a]">.</span>
           </a>
 
-          {/* Desktop nav links */}
-          <div className="hidden md:flex space-x-8">
-            {navLinks.map((link) => (
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+            {navContent.links.map((link) => (
               <a
-                key={link}
-                href={`#${link.toLowerCase()}`}
-                className={`font-medium relative group transition-colors duration-300 ${subTextColor} hover:${dark ? 'text-white' : 'text-gray-900'}`}
+                key={link.id}
+                href={`#${link.id}`}
+                className={`font-semibold text-sm relative group transition-colors duration-300 ${subTextColor} hover:text-[#ff2a2a]`}
               >
-                {link}
+                {t(link)}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#ff2a2a] transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </div>
 
-          {/* Right: dark toggle + AI icon + Hire Me */}
+          {/* Right Controls: Language Selector + Dark Toggle + AI Chat + Hire Me */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Language Switcher */}
+            <LanguageSwitcher lang={lang} setLang={setLang} dark={dark} />
 
-            {/* Dark / Light toggle */}
+            {/* Dark / Light Toggle */}
             <button
               onClick={toggle}
               aria-label="Toggle dark/light mode"
@@ -101,10 +139,9 @@ const Navbar = () => {
               )}
             </button>
 
-            {/* AI Chat icon */}
+            {/* AI Chat trigger */}
             <button
               onClick={() => {
-                // ChatBot floating button trigger — dispatch custom event
                 window.dispatchEvent(new CustomEvent('openChatBot'));
               }}
               aria-label="Open AI Assistant"
@@ -120,17 +157,19 @@ const Navbar = () => {
               </svg>
             </button>
 
-            {/* Hire Me button */}
+            {/* Hire Me CTA Button */}
             <button
               onClick={() => setHireModal(true)}
-              className="px-6 py-2.5 rounded-full bg-[#ff2a2a] text-white font-semibold hover:bg-red-600 hover:shadow-[0_0_20px_rgba(255,42,42,0.4)] transition-all duration-300"
+              className="px-5 py-2 rounded-full bg-[#ff2a2a] text-white font-bold text-xs sm:text-sm hover:bg-red-600 hover:shadow-[0_0_20px_rgba(255,42,42,0.4)] transition-all duration-300 active:scale-95"
             >
-              Hire Me
+              {t(navContent.hireMe)}
             </button>
           </div>
 
-          {/* Mobile: toggle + hamburger */}
+          {/* Mobile Right Controls: Language Switcher + Toggle + Hamburger */}
           <div className="md:hidden flex items-center gap-2">
+            <LanguageSwitcher lang={lang} setLang={setLang} dark={dark} />
+
             <button
               onClick={toggle}
               aria-label="Toggle theme"
@@ -148,50 +187,67 @@ const Navbar = () => {
                 </svg>
               )}
             </button>
-            <button onClick={() => setIsOpen(!isOpen)} className={`p-2 ${textColor}`}>
+
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className={`p-2 rounded-lg ${dark ? 'text-white' : 'text-gray-900'}`}
+              aria-label="Toggle menu"
+            >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {isOpen
-                  ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                }
+                {isOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
               </svg>
             </button>
           </div>
         </div>
 
-        {/* Mobile menu */}
-        <div className={`md:hidden absolute top-full left-0 w-full transition-all duration-300 overflow-hidden ${
-          isOpen
-            ? `max-h-96 py-4 opacity-100 shadow-2xl ${dark ? 'bg-[#111]' : 'bg-white'}`
-            : 'max-h-0 opacity-0'
-        }`}>
-          <div className="flex flex-col px-6 space-y-4">
-            {navLinks.map((link) => (
+        {/* Mobile Navigation Drawer */}
+        <div
+          className={`md:hidden absolute top-full left-0 w-full transition-all duration-300 overflow-hidden ${
+            isOpen
+              ? `max-h-[420px] py-4 opacity-100 shadow-2xl border-b ${
+                  dark ? 'bg-[#111111] border-white/10' : 'bg-white border-gray-200'
+                }`
+              : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="flex flex-col px-6 space-y-3">
+            {navContent.links.map((link) => (
               <a
-                key={link}
-                href={`#${link.toLowerCase()}`}
+                key={link.id}
+                href={`#${link.id}`}
                 onClick={() => setIsOpen(false)}
-                className={`font-bold text-lg border-b pb-2 transition-colors ${
-                  dark ? 'text-white border-white/20 hover:text-[#ff2a2a]' : 'text-gray-800 border-gray-200 hover:text-[#ff2a2a]'
+                className={`font-bold text-base py-2 border-b transition-colors ${
+                  dark ? 'text-white border-white/10 hover:text-[#ff2a2a]' : 'text-gray-800 border-gray-100 hover:text-[#ff2a2a]'
                 }`}
               >
-                {link}
+                {t(link)}
               </a>
             ))}
-            <div className="flex gap-3 pt-2 pb-4">
+
+            <div className="flex gap-3 pt-3">
               <button
-                onClick={() => { setIsOpen(false); window.dispatchEvent(new CustomEvent('openChatBot')); }}
-                className={`flex-1 py-2.5 rounded-full border font-semibold text-sm transition-all ${
-                  dark ? 'border-white/30 text-white hover:bg-white/10' : 'border-gray-300 text-gray-700 hover:bg-gray-100'
+                onClick={() => {
+                  setIsOpen(false);
+                  window.dispatchEvent(new CustomEvent('openChatBot'));
+                }}
+                className={`flex-1 py-2.5 rounded-full border font-bold text-xs transition-all ${
+                  dark ? 'border-white/20 text-white hover:bg-white/10' : 'border-gray-300 text-gray-700 hover:bg-gray-100'
                 }`}
               >
-                🤖 AI Chat
+                🤖 AI Assistant
               </button>
               <button
-                onClick={() => { setIsOpen(false); setHireModal(true); }}
-                className="flex-1 py-2.5 rounded-full bg-[#ff2a2a] text-white font-bold text-sm hover:bg-red-600 transition-all"
+                onClick={() => {
+                  setIsOpen(false);
+                  setHireModal(true);
+                }}
+                className="flex-1 py-2.5 rounded-full bg-[#ff2a2a] text-white font-bold text-xs hover:bg-red-600 transition-all"
               >
-                Hire Me
+                {t(navContent.hireMe)}
               </button>
             </div>
           </div>
@@ -201,128 +257,129 @@ const Navbar = () => {
       {/* ── HIRE ME MODAL ── */}
       {hireModal && (
         <div
-          className="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-[200] bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setHireModal(false)}
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className={`w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transition-all ${
-              dark ? 'bg-[#111] border border-white/10' : 'bg-white border border-gray-200'
+            className={`w-full max-w-md rounded-3xl shadow-2xl overflow-hidden transition-all border ${
+              dark ? 'bg-[#121212] border-white/15 text-white' : 'bg-white border-gray-200 text-gray-900'
             }`}
           >
-            {/* Modal header */}
-            <div className="bg-[#ff2a2a] px-6 py-5 flex items-center justify-between">
-              <div>
-                <h2 className="text-white text-xl font-black">Hire Me 🚀</h2>
-                <p className="text-white/80 text-sm mt-0.5">Let's work together!</p>
-              </div>
+            {/* Header */}
+            <div className="bg-[#ff2a2a] p-6 text-white relative">
               <button
                 onClick={() => setHireModal(false)}
-                className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-all"
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/30 flex items-center justify-center text-white hover:bg-black/50 transition-colors"
+                aria-label="Close modal"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                ✕
               </button>
+              <h3 className="text-xl font-black">
+                {lang === 'uz' ? 'Hamkorlik Taklifi' : lang === 'ru' ? 'Предложение о работе' : 'Let’s Work Together'}
+              </h3>
+              <p className="text-white/80 text-xs mt-1">
+                {lang === 'uz' ? 'Qisqa xabar qoldiring, tezda aloqaga chiqaman.' : lang === 'ru' ? 'Оставьте сообщение, я свяжусь в ближайшее время.' : 'Send a brief message, and I will reply promptly.'}
+              </p>
             </div>
 
-            {/* Modal body */}
-            <div className="px-6 py-6">
-              {sent ? (
-                <div className="text-center py-8">
-                  <div className="text-5xl mb-4">✅</div>
-                  <p className={`text-lg font-bold ${dark ? 'text-white' : 'text-gray-900'}`}>
-                    Email client ochildi!
-                  </p>
-                  <p className={`text-sm mt-1 ${dark ? 'text-white/60' : 'text-gray-500'}`}>
-                    Xabaringizni yuboring — tez orada javob beraman.
-                  </p>
+            {/* Form */}
+            {sent ? (
+              <div className="p-8 text-center">
+                <div className="w-12 h-12 rounded-full bg-green-500/20 text-green-500 text-2xl flex items-center justify-center mx-auto mb-3">
+                  ✓
                 </div>
-              ) : (
-                <form onSubmit={handleFormSubmit} className="space-y-4">
-                  <div>
-                    <label className={`block text-sm font-semibold mb-1.5 ${dark ? 'text-white/80' : 'text-gray-700'}`}>
-                      Ismingiz / Your Name
-                    </label>
-                    <input
-                      name="name"
-                      value={form.name}
-                      onChange={handleFormChange}
-                      required
-                      placeholder="John Smith"
-                      className={`w-full px-4 py-2.5 rounded-xl border text-sm outline-none transition-all focus:border-[#ff2a2a] ${
-                        dark
-                          ? 'bg-white/5 border-white/10 text-white placeholder-white/30'
-                          : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400'
-                      }`}
-                    />
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-semibold mb-1.5 ${dark ? 'text-white/80' : 'text-gray-700'}`}>
-                      Email
-                    </label>
-                    <input
-                      name="email"
-                      type="email"
-                      value={form.email}
-                      onChange={handleFormChange}
-                      required
-                      placeholder="you@company.com"
-                      className={`w-full px-4 py-2.5 rounded-xl border text-sm outline-none transition-all focus:border-[#ff2a2a] ${
-                        dark
-                          ? 'bg-white/5 border-white/10 text-white placeholder-white/30'
-                          : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400'
-                      }`}
-                    />
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-semibold mb-1.5 ${dark ? 'text-white/80' : 'text-gray-700'}`}>
-                      Xabar / Message
-                    </label>
-                    <textarea
-                      name="message"
-                      value={form.message}
-                      onChange={handleFormChange}
-                      required
-                      rows={4}
-                      placeholder="Loyiha haqida, ish taklifi yoki boshqa..."
-                      className={`w-full px-4 py-2.5 rounded-xl border text-sm outline-none transition-all focus:border-[#ff2a2a] resize-none ${
-                        dark
-                          ? 'bg-white/5 border-white/10 text-white placeholder-white/30'
-                          : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400'
-                      }`}
-                    />
-                  </div>
+                <p className="font-bold text-base">
+                  {lang === 'uz' ? 'Xabar tayyorlandi!' : lang === 'ru' ? 'Сообщение подготовлено!' : 'Message ready!'}
+                </p>
+                <p className="text-xs opacity-60 mt-1">
+                  {lang === 'uz' ? 'Pochta mijozi orqali yuborilmoqda...' : lang === 'ru' ? 'Открывается почтовый клиент...' : 'Opening your email client...'}
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleFormSubmit} className="p-6 space-y-4">
+                <div>
+                  <label className="block text-xs font-bold mb-1 opacity-80">
+                    {lang === 'uz' ? 'Ismingiz *' : lang === 'ru' ? 'Ваше имя *' : 'Your Name *'}
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={form.name}
+                    onChange={handleFormChange}
+                    placeholder={lang === 'uz' ? 'Masalan: Alisher' : lang === 'ru' ? 'Например: Алексей' : 'e.g. John Doe'}
+                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm outline-none transition-colors ${
+                      dark
+                        ? 'bg-[#1a1a1a] border-white/10 text-white focus:border-[#ff2a2a]'
+                        : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#ff2a2a]'
+                    }`}
+                  />
+                </div>
 
-                  {/* Quick contact links */}
-                  <div className={`flex gap-3 pt-1 pb-1 border-t ${dark ? 'border-white/10' : 'border-gray-100'}`}>
-                    <a
-                      href="https://t.me/umrzoq_21"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-xs font-semibold text-[#ff2a2a] hover:underline"
-                    >
-                      📱 Telegram
-                    </a>
-                    <a
-                      href="https://linkedin.com/in/umrzoqyulchiyevcode"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-xs font-semibold text-[#ff2a2a] hover:underline"
-                    >
-                      💼 LinkedIn
-                    </a>
-                  </div>
+                <div>
+                  <label className="block text-xs font-bold mb-1 opacity-80">
+                    {lang === 'uz' ? 'Elektron pochta *' : lang === 'ru' ? 'Email *' : 'Email *'}
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={form.email}
+                    onChange={handleFormChange}
+                    placeholder="example@gmail.com"
+                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm outline-none transition-colors ${
+                      dark
+                        ? 'bg-[#1a1a1a] border-white/10 text-white focus:border-[#ff2a2a]'
+                        : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#ff2a2a]'
+                    }`}
+                  />
+                </div>
 
+                <div>
+                  <label className="block text-xs font-bold mb-1 opacity-80">
+                    {lang === 'uz' ? 'Xabar *' : lang === 'ru' ? 'Сообщение *' : 'Message *'}
+                  </label>
+                  <textarea
+                    name="message"
+                    required
+                    rows={3}
+                    value={form.message}
+                    onChange={handleFormChange}
+                    placeholder={
+                      lang === 'uz'
+                        ? 'Loyiha yoki vakansiya haqida...'
+                        : lang === 'ru'
+                        ? 'О проекте или вакансии...'
+                        : 'Tell me about the role or project...'
+                    }
+                    className={`w-full px-3.5 py-2.5 rounded-xl border text-sm outline-none transition-colors resize-none ${
+                      dark
+                        ? 'bg-[#1a1a1a] border-white/10 text-white focus:border-[#ff2a2a]'
+                        : 'bg-gray-50 border-gray-200 text-gray-900 focus:border-[#ff2a2a]'
+                    }`}
+                  />
+                </div>
+
+                <div className="pt-2 flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setHireModal(false)}
+                    className={`flex-1 py-2.5 rounded-xl font-bold text-xs border ${
+                      dark ? 'border-white/20 text-white/70 hover:bg-white/10' : 'border-gray-200 text-gray-700 hover:bg-gray-100'
+                    }`}
+                  >
+                    {lang === 'uz' ? 'Bekor qilish' : lang === 'ru' ? 'Отмена' : 'Cancel'}
+                  </button>
                   <button
                     type="submit"
-                    className="w-full py-3 rounded-xl bg-[#ff2a2a] text-white font-bold text-sm hover:bg-red-600 hover:shadow-[0_0_20px_rgba(255,42,42,0.4)] transition-all duration-300"
+                    className="flex-1 py-2.5 rounded-xl font-bold text-xs bg-[#ff2a2a] text-white hover:bg-red-600 transition-colors shadow-md"
                   >
-                    📨 Xabar yuborish / Send Message
+                    {lang === 'uz' ? 'Yuborish' : lang === 'ru' ? 'Отправить' : 'Send'}
                   </button>
-                </form>
-              )}
-            </div>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       )}

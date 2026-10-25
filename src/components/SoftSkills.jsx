@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
 import { softSkillsList } from '../data/portfolioData';
 import { ThemeContext } from '../App';
+import { LanguageContext } from '../context/LanguageContext';
 
-const SoftSkillCard = ({ skill, index, dark }) => (
+const SoftSkillCard = ({ skill, index, dark, t }) => (
   <div 
     data-aos="fade-up"
     data-aos-delay={index * 100}
     className={`rounded-3xl p-6 hover:scale-[1.03] transition-all duration-500 group flex flex-col items-center text-center justify-between min-h-[220px] ${
       dark
         ? 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#ff2a2a]/40 hover:shadow-[0_20px_45px_rgba(255,42,42,0.15)]'
-        : 'bg-[#f8f8f8] border border-gray-200 hover:bg-white hover:border-[#ff2a2a]/30 hover:shadow-[0_20px_45px_rgba(255,42,42,0.08)]'
+        : 'bg-white border border-gray-200 shadow-md shadow-gray-200/50 hover:bg-white hover:border-[#ff2a2a]/30 hover:shadow-xl'
     }`}
   >
     <div className="flex flex-col items-center">
@@ -21,12 +22,12 @@ const SoftSkillCard = ({ skill, index, dark }) => (
       <h3 className={`text-lg font-black tracking-tight mb-2 uppercase ${
         dark ? 'text-white' : 'text-gray-900'
       }`}>
-        {skill.name}
+        {t(skill.name)}
       </h3>
       <p className={`text-sm font-medium leading-relaxed ${
-        dark ? 'text-white/60' : 'text-gray-500'
+        dark ? 'text-white/60' : 'text-gray-600'
       }`}>
-        {skill.desc}
+        {t(skill.desc)}
       </p>
     </div>
   </div>
@@ -34,12 +35,13 @@ const SoftSkillCard = ({ skill, index, dark }) => (
 
 const SoftSkills = () => {
   const { dark } = useContext(ThemeContext);
+  const { lang, t } = useContext(LanguageContext);
 
   return (
     <section className={`pt-24 pb-32 px-6 md:px-12 w-full relative overflow-hidden font-sans transition-colors duration-300 ${
       dark 
         ? 'bg-[#0a0a0a] bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:60px_60px]'
-        : 'bg-white bg-[linear-gradient(to_right,#80808006_1px,transparent_1px),linear-gradient(to_bottom,#80808006_1px,transparent_1px)] bg-[size:60px_60px]'
+        : 'bg-gray-50 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:60px_60px]'
     }`}>
       
       {/* Top paper divider (torn SVG transition from red Certificates section) */}
@@ -56,24 +58,34 @@ const SoftSkills = () => {
           <div className={`inline-block border rounded-full px-5 py-1.5 text-sm font-bold mb-6 shadow-sm ${
             dark ? 'border-white/20 text-white/70 bg-white/5' : 'border-gray-300 text-gray-600 bg-white'
           }`}>
-            Core Competencies
+            {lang === 'uz' ? 'Asosiy Ko‘nikmalar' : lang === 'ru' ? 'Ключевые качества' : 'Core Competencies'}
           </div>
           <h2 className={`text-4xl md:text-5xl font-black tracking-tight mb-4 uppercase ${
             dark ? 'text-white' : 'text-gray-900'
           }`}>
-            Professional Soft Skills
+            {lang === 'uz' ? 'Moslashuvchanlik & Soft Skills' : lang === 'ru' ? 'Гибкие навыки (Soft Skills)' : 'Professional Soft Skills'}
           </h2>
           <p className={`text-base md:text-lg max-w-lg mx-auto leading-relaxed ${
-            dark ? 'text-white/60' : 'text-gray-500'
+            dark ? 'text-white/60' : 'text-gray-600'
           }`}>
-            Essential traits that make me an effective engineer, coordinator, and communicator.
+            {lang === 'uz' 
+              ? 'Jamoada ishlash, muammolarni tizimli hal qilish va samarali muloqot qilish xususiyatlarim.' 
+              : lang === 'ru' 
+              ? 'Умение работать в команде, системно решать проблемы и продуктивно коммуницировать.' 
+              : 'Essential traits that make me an effective engineer, coordinator, and communicator.'}
           </p>
         </div>
 
         {/* Soft Skills Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {softSkillsList.map((skill, index) => (
-            <SoftSkillCard key={skill.name} skill={skill} index={index} dark={dark} />
+            <SoftSkillCard 
+              key={index} 
+              skill={skill} 
+              index={index} 
+              dark={dark} 
+              t={t} 
+            />
           ))}
         </div>
 

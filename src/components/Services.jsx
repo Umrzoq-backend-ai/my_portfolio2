@@ -2,6 +2,7 @@ import React, { useRef, useState, useContext } from 'react';
 import { motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
 import { skillsContent } from '../data/portfolioData';
 import { ThemeContext } from '../App';
+import { LanguageContext } from '../context/LanguageContext';
 
 const TagCard = ({ number, title, text, className, aosDelay, aosType, pathLength, containerRef, dark }) => {
   const ref = useRef(null);
@@ -75,6 +76,7 @@ const TagCard = ({ number, title, text, className, aosDelay, aosType, pathLength
 
 const Services = () => {
   const { dark } = useContext(ThemeContext);
+  const { t } = useContext(LanguageContext);
   const containerRef = useRef(null);
   
   const { scrollYProgress } = useScroll({
@@ -101,12 +103,12 @@ const Services = () => {
           <div className={`inline-block border rounded-full px-5 py-1.5 text-sm font-bold mb-8 shadow-sm ${
             dark ? 'border-white/20 text-white/70 bg-white/5' : 'border-gray-300 text-gray-600 bg-white'
           }`}>
-            {skillsContent.badge}
+            {t(skillsContent.badge)}
           </div>
           <h2 className={`text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] mb-6 tracking-tight relative ${
             dark ? 'text-white' : 'text-gray-900'
           }`}>
-            {skillsContent.heading}
+            {t(skillsContent.heading)}
             {/* Hand-drawn arrow */}
             <svg className={`absolute -bottom-10 right-10 w-12 h-12 ${dark ? 'text-white/40' : 'text-gray-800'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" className="hidden" />
@@ -116,7 +118,7 @@ const Services = () => {
           <p className={`text-base md:text-lg max-w-sm font-medium leading-relaxed ${
             dark ? 'text-white/60' : 'text-gray-500'
           }`}>
-            {skillsContent.description}
+            {t(skillsContent.description)}
           </p>
         </div>
 
@@ -210,8 +212,8 @@ const Services = () => {
               <TagCard 
                 key={card.number}
                 number={card.number}
-                title={card.title}
-                text={card.text}
+                title={t(card.title)}
+                text={t(card.text)}
                 className={positions[index]}
                 aosType={aosTypes[index]}
                 aosDelay={aosDelays[index]}
@@ -230,7 +232,7 @@ const Services = () => {
               dark ? 'text-white/60' : 'text-gray-600'
             }`}
           >
-            {skillsContent.endText}
+            {t(skillsContent.endText)}
           </div>
 
         </div>

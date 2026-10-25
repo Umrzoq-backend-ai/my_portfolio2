@@ -1,7 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useContext } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { heroContent, socialLinks } from '../data/portfolioData';
+import { LanguageContext } from '../context/LanguageContext';
 import heroVideo from '../assets/hero video/Self-introduction_video_Junior_D…_202607260839.mp4';
 import heroPoster from '../assets/hero video/hero-poster.jpg';
 
@@ -9,6 +10,7 @@ const HERO_IMAGE = null;
 const HERO_VIDEO = heroVideo;
 
 const Hero = () => {
+  const { t } = useContext(LanguageContext);
   const bgVideoRef = useRef(null);
   const modalVideoRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -149,16 +151,16 @@ const Hero = () => {
           {/* Heading */}
           <h1 data-aos="fade-up"
             className="text-white text-3xl md:text-5xl font-bold mb-4 tracking-tight drop-shadow-lg">
-            {heroContent.greeting}, <br />
+            {t(heroContent.greeting)}, <br />
             <span className="text-transparent [-webkit-text-stroke:1.5px_white]">
-              {heroContent.titleHighlight}
+              {t(heroContent.titleHighlight)}
             </span>
           </h1>
 
           {/* Subtitle */}
           <p data-aos="fade-up" data-aos-delay="200"
             className="text-white text-sm md:text-lg font-semibold mb-8 max-w-md drop-shadow-md">
-            {heroContent.subtitle}
+            {t(heroContent.subtitle)}
           </p>
 
           {/* Buttons */}
@@ -166,18 +168,18 @@ const Hero = () => {
             className="flex flex-row flex-wrap items-center gap-3 w-full">
             <a href={heroContent.ctaPrimary.href}
               className="px-4 py-2 md:px-6 md:py-2 text-xs md:text-base rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-md">
-              {heroContent.ctaPrimary.text}
+              {t(heroContent.ctaPrimary)}
             </a>
             <a href={heroContent.ctaSecondary.href}
               className="px-4 py-2 md:px-6 md:py-2 text-xs md:text-base rounded-full bg-black/40 border border-white text-white font-semibold hover:bg-black/60 transition-all duration-300 backdrop-blur-md">
-              {heroContent.ctaSecondary.text}
+              {t(heroContent.ctaSecondary)}
             </a>
             <a href={heroContent.ctaResume.href} download
               className="px-4 py-2 md:px-6 md:py-2 text-xs md:text-base rounded-full bg-transparent border border-white/50 text-white font-semibold hover:bg-white hover:text-black transition-all duration-300 backdrop-blur-md flex items-center gap-2">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              {heroContent.ctaResume.text}
+              {t(heroContent.ctaResume)}
             </a>
           </div>
         </div>
@@ -196,7 +198,7 @@ const Hero = () => {
               </svg>
             </div>
             <span className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">
-              Play Reel
+              {t(heroContent.playReel)}
             </span>
           </div>
         )}
