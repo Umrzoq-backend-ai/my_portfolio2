@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { chatbotData } from '../data/portfolioData';
 import { ThemeContext } from '../App';
+import umrzoqAvatar from '../assets/about/umrzoq-developer.jpg';
 
 // ── Smart Multi-turn Intent & Keyword Engine ──────────────────
 const findBestFaq = (input) => {
@@ -62,8 +63,12 @@ const MessageBubble = ({ msg, dark, onSelectPrompt }) => {
   return (
     <div className={`flex items-start gap-2.5 ${isBot ? 'justify-start' : 'justify-end'} group`}>
       {isBot && (
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#ff2a2a] to-red-700 flex items-center justify-center text-white text-xs font-black shrink-0 shadow-md shadow-red-500/20 mt-1">
-          AI
+        <div className="w-8 h-8 rounded-full overflow-hidden border border-[#ff2a2a]/60 shrink-0 shadow-md shadow-red-500/20 mt-1 bg-black">
+          <img
+            src={umrzoqAvatar}
+            alt="Umrzoq"
+            className="w-full h-full object-cover object-top"
+          />
         </div>
       )}
 
@@ -279,22 +284,22 @@ const ChatBot = () => {
         className={`fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full shadow-[0_10px_30px_rgba(255,42,42,0.4)] flex items-center justify-center transition-all duration-300 transform ${
           isOpen
             ? 'scale-0 opacity-0 pointer-events-none'
-            : 'scale-100 opacity-100 pointer-events-auto bg-[#ff2a2a] hover:scale-110 active:scale-95'
+            : 'scale-100 opacity-100 pointer-events-auto hover:scale-110 active:scale-95'
         }`}
       >
         {unread > 0 && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-white text-[#ff2a2a] text-[11px] font-black rounded-full flex items-center justify-center shadow-md animate-bounce">
+          <span className="absolute -top-1 -right-1 z-10 w-5 h-5 bg-[#ff2a2a] text-white text-[11px] font-black rounded-full flex items-center justify-center shadow-md animate-bounce border-2 border-black">
             {unread}
           </span>
         )}
-        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+        <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-[#ff2a2a] shadow-lg bg-black">
+          <img
+            src={umrzoqAvatar}
+            alt="Umrzoq AI Assistant"
+            className="w-full h-full object-cover object-top"
           />
-        </svg>
+          <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-black rounded-full" />
+        </div>
       </button>
 
       {/* ── HIGH-TECH CHAT MODAL WINDOW ── */}
@@ -317,8 +322,12 @@ const ChatBot = () => {
         >
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#ff2a2a] to-red-500 flex items-center justify-center text-white font-black text-sm shadow-md shadow-red-500/30">
-                U
+              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#ff2a2a] flex items-center justify-center shadow-md shadow-red-500/30 bg-black">
+                <img
+                  src={umrzoqAvatar}
+                  alt="Umrzoq Yulchiyev"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#151515] rounded-full" />
             </div>
@@ -369,8 +378,12 @@ const ChatBot = () => {
 
           {isTyping && (
             <div className="flex items-start gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#ff2a2a] to-red-700 flex items-center justify-center text-white text-xs font-black shrink-0 shadow-md">
-                AI
+              <div className="w-8 h-8 rounded-full overflow-hidden border border-[#ff2a2a]/60 shrink-0 shadow-md bg-black">
+                <img
+                  src={umrzoqAvatar}
+                  alt="Umrzoq"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               <div
                 className={`px-4 py-3 rounded-2xl rounded-tl-sm border ${
