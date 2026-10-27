@@ -70,7 +70,7 @@ const SettingsTab = ({ onShowToast }) => {
 
     const res = changeCredentials(
       passForm.oldPassword,
-      passForm.newUsername || 'admin',
+      passForm.newUsername || 'zoltanma',
       passForm.newPassword
     );
 
@@ -92,10 +92,10 @@ const SettingsTab = ({ onShowToast }) => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <span>⚙️</span>
+          <h2 className="text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+            <span className="text-[#ff2a2a]">⚙️</span>
             <span>Tizim Sozlamalari, Zaxira & Eksport</span>
           </h2>
           <p className="text-xs text-white/50">
@@ -107,22 +107,22 @@ const SettingsTab = ({ onShowToast }) => {
       {/* Grid of Settings */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         
-        {/* Card 1: One-Click Production Code Generator */}
-        <div className="p-6 rounded-2xl bg-gradient-to-br from-[#15122b] to-[#0c0c18] border border-purple-500/30 space-y-4 shadow-xl">
+        {/* Card 1: One-Click Production Code Generator matching Portfolio style */}
+        <div className="p-6 rounded-2xl bg-[#121212]/95 border border-red-500/30 space-y-4 shadow-xl">
           <div className="flex items-center gap-2.5">
-            <span className="text-2xl">💾</span>
+            <span className="text-2xl text-[#ff2a2a]">💾</span>
             <div>
-              <h3 className="text-base font-bold text-white">portfolioData.js Faylini Yuklab Olish</h3>
-              <p className="text-xs text-purple-300/80">GitHub va Vercel uchun tayyor kod fayli</p>
+              <h3 className="text-base font-black text-white">portfolioData.js Faylini Yuklab Olish</h3>
+              <p className="text-xs text-red-300 font-mono">GitHub va Vercel uchun doimiy kod fayli</p>
             </div>
           </div>
           <p className="text-xs text-white/70 leading-relaxed">
-            Admin paneldagi barcha kiritilgan o'zgarishlar (loyihalar, ko'nikmalar, matnlar, chatbot bilimlari) bilan to'ldirilgan haqiqiy <code>portfolioData.js</code> faylini 1 klik bilan yuklab oling. Bu faylni loyihangizdagi <code>src/data/portfolioData.js</code> o'rniga joylashtirib, GitHub ga commit qilsangiz, barcha o'zgarishlar Vercel'da doimiy saqlanib qoladi!
+            Admin paneldagi barcha kiritilgan o'zgarishlar bilan to'ldirilgan haqiqiy <code>portfolioData.js</code> faylini 1 klik bilan yuklab oling. Bu faylni loyihangizdagi <code>src/data/portfolioData.js</code> o'rniga joylashtirib, GitHub ga commit qilsangiz, barcha o'zgarishlar Vercel'da doimiy saqlanib qoladi!
           </p>
           <button
             type="button"
             onClick={generatePortfolioDataJS}
-            className="w-full py-3 px-5 rounded-xl bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 hover:from-purple-500 hover:via-violet-500 hover:to-indigo-500 text-white font-semibold text-xs shadow-lg shadow-purple-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-3.5 px-5 rounded-xl bg-[#ff2a2a] hover:bg-red-600 text-white font-black text-xs shadow-lg shadow-red-600/30 hover:shadow-red-600/50 transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>⬇️</span>
             <span>portfolioData.js faylini yuklab olish</span>
@@ -130,11 +130,11 @@ const SettingsTab = ({ onShowToast }) => {
         </div>
 
         {/* Card 2: JSON Backup & Restore */}
-        <div className="p-6 rounded-2xl bg-[#0f0f20]/80 border border-white/5 space-y-4">
+        <div className="p-6 rounded-2xl bg-[#121212]/90 border border-white/5 space-y-4">
           <div className="flex items-center gap-2.5">
             <span className="text-2xl">📦</span>
             <div>
-              <h3 className="text-base font-bold text-white">JSON Zaxira (Backup & Restore)</h3>
+              <h3 className="text-base font-black text-white">JSON Zaxira (Backup & Restore)</h3>
               <p className="text-xs text-white/50">Ma'lumotlarni saqlash yoki boshqa qurilmaga ko'chirish</p>
             </div>
           </div>
@@ -146,13 +146,13 @@ const SettingsTab = ({ onShowToast }) => {
             <button
               type="button"
               onClick={exportDataJSON}
-              className="py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-white font-semibold text-xs border border-white/10 transition-colors flex items-center justify-center gap-2"
+              className="py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs border border-white/10 transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>📥</span>
               <span>JSON Eksport Qilish</span>
             </button>
 
-            <label className="py-2.5 px-4 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 font-semibold text-xs border border-purple-500/30 transition-colors flex items-center justify-center gap-2 cursor-pointer">
+            <label className="py-2.5 px-4 rounded-xl bg-red-500/15 hover:bg-red-500/25 text-red-300 font-bold text-xs border border-red-500/30 transition-colors flex items-center justify-center gap-2 cursor-pointer">
               <span>📤</span>
               <span>JSON Import Qilish</span>
               <input
@@ -166,11 +166,11 @@ const SettingsTab = ({ onShowToast }) => {
         </div>
 
         {/* Card 3: Change Admin Credentials */}
-        <div className="p-6 rounded-2xl bg-[#0f0f20]/80 border border-white/5 space-y-4">
+        <div className="p-6 rounded-2xl bg-[#121212]/90 border border-white/5 space-y-4">
           <div className="flex items-center gap-2.5">
-            <span className="text-2xl">🔐</span>
+            <span className="text-2xl text-[#ff2a2a]">🔐</span>
             <div>
-              <h3 className="text-base font-bold text-white">Admin Kirish Parolini O'zgartirish</h3>
+              <h3 className="text-base font-black text-white">Admin Kirish Parolini O'zgartirish</h3>
               <p className="text-xs text-white/50">Admin panelga kirish xavfsizligini ta'minlash</p>
             </div>
           </div>
@@ -190,57 +190,57 @@ const SettingsTab = ({ onShowToast }) => {
 
           <form onSubmit={handleChangePassword} className="space-y-3">
             <div>
-              <label className="block text-xs font-medium text-white/70 mb-1">Amaldagi Parol *</label>
+              <label className="block text-xs font-semibold text-white/70 mb-1">Amaldagi Parol *</label>
               <input
                 type="password"
                 required
                 value={passForm.oldPassword}
                 onChange={(e) => setPassForm({ ...passForm, oldPassword: e.target.value })}
-                placeholder="Standart: admin123"
-                className="w-full px-3.5 py-2 rounded-xl bg-[#141428] border border-white/10 text-xs text-white"
+                placeholder="Standart: pdp.university"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1">Yangi Login nomi</label>
+                <label className="block text-xs font-semibold text-white/70 mb-1">Yangi Login nomi</label>
                 <input
                   type="text"
                   value={passForm.newUsername}
                   onChange={(e) => setPassForm({ ...passForm, newUsername: e.target.value })}
-                  placeholder="admin"
-                  className="w-full px-3.5 py-2 rounded-xl bg-[#141428] border border-white/10 text-xs text-white"
+                  placeholder="zoltanma"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1">Yangi Parol *</label>
+                <label className="block text-xs font-semibold text-white/70 mb-1">Yangi Parol *</label>
                 <input
                   type="password"
                   required
                   value={passForm.newPassword}
                   onChange={(e) => setPassForm({ ...passForm, newPassword: e.target.value })}
                   placeholder="Yangi kuchli parol"
-                  className="w-full px-3.5 py-2 rounded-xl bg-[#141428] border border-white/10 text-xs text-white"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-white/70 mb-1">Yangi Parolni Takrorlang *</label>
+              <label className="block text-xs font-semibold text-white/70 mb-1">Yangi Parolni Takrorlang *</label>
               <input
                 type="password"
                 required
                 value={passForm.confirmPassword}
                 onChange={(e) => setPassForm({ ...passForm, confirmPassword: e.target.value })}
                 placeholder="Takrorlang"
-                className="w-full px-3.5 py-2 rounded-xl bg-[#141428] border border-white/10 text-xs text-white"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-2.5 px-4 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 text-xs font-semibold border border-purple-500/30 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-2.5 px-4 rounded-xl bg-red-600/20 hover:bg-red-600/40 text-red-200 text-xs font-bold border border-red-500/30 transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>🔑</span>
               <span>Parolni Yangilash</span>
@@ -251,58 +251,58 @@ const SettingsTab = ({ onShowToast }) => {
         {/* Card 4: EmailJS & Factory Reset */}
         <div className="space-y-6">
           {/* EmailJS form */}
-          <form onSubmit={handleSaveEmailAndFooter} className="p-6 rounded-2xl bg-[#0f0f20]/80 border border-white/5 space-y-4">
+          <form onSubmit={handleSaveEmailAndFooter} className="p-6 rounded-2xl bg-[#121212]/90 border border-white/5 space-y-4">
             <div className="flex items-center gap-2.5">
               <span className="text-2xl">✉️</span>
               <div>
-                <h3 className="text-base font-bold text-white">EmailJS & Footer Sozlamalari</h3>
+                <h3 className="text-base font-black text-white">EmailJS & Footer Sozlamalari</h3>
                 <p className="text-xs text-white/50">Bog'lanish shakli uchun API kalitlar</p>
               </div>
             </div>
 
             <div className="space-y-2.5">
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1">EmailJS Service ID</label>
+                <label className="block text-xs font-semibold text-white/70 mb-1">EmailJS Service ID</label>
                 <input
                   type="text"
                   value={emailConfig.serviceId || ''}
                   onChange={(e) => setEmailConfig({ ...emailConfig, serviceId: e.target.value })}
-                  className="w-full px-3 py-1.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white font-mono"
+                  className="w-full px-3 py-1.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white font-mono focus:outline-none focus:border-[#ff2a2a]"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1">EmailJS Template ID</label>
+                <label className="block text-xs font-semibold text-white/70 mb-1">EmailJS Template ID</label>
                 <input
                   type="text"
                   value={emailConfig.templateId || ''}
                   onChange={(e) => setEmailConfig({ ...emailConfig, templateId: e.target.value })}
-                  className="w-full px-3 py-1.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white font-mono"
+                  className="w-full px-3 py-1.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white font-mono focus:outline-none focus:border-[#ff2a2a]"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1">EmailJS Public Key</label>
+                <label className="block text-xs font-semibold text-white/70 mb-1">EmailJS Public Key</label>
                 <input
                   type="text"
                   value={emailConfig.publicKey || ''}
                   onChange={(e) => setEmailConfig({ ...emailConfig, publicKey: e.target.value })}
-                  className="w-full px-3 py-1.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white font-mono"
+                  className="w-full px-3 py-1.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white font-mono focus:outline-none focus:border-[#ff2a2a]"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1">Footer Taglines (Vergul bilan)</label>
+                <label className="block text-xs font-semibold text-white/70 mb-1">Footer Taglines (Vergul bilan)</label>
                 <input
                   type="text"
                   value={taglinesInput}
                   onChange={(e) => setTaglinesInput(e.target.value)}
                   placeholder="Data Science, Python, FastAPI"
-                  className="w-full px-3 py-1.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white"
+                  className="w-full px-3 py-1.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                 />
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full py-2 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-white font-semibold text-xs border border-white/10 transition-colors"
+              className="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs border border-white/10 transition-colors cursor-pointer"
             >
               Saqlash
             </button>
@@ -310,7 +310,7 @@ const SettingsTab = ({ onShowToast }) => {
 
           {/* Reset Factory Defaults */}
           <div className="p-5 rounded-2xl bg-red-950/20 border border-red-500/20 space-y-3">
-            <h4 className="text-xs font-bold text-red-400 uppercase tracking-wider font-mono flex items-center gap-2">
+            <h4 className="text-xs font-black text-red-400 uppercase tracking-wider font-mono flex items-center gap-2">
               <span>⚠️</span> Dastlabki Zavod Holatiga Qaytarish
             </h4>
             <p className="text-xs text-white/60">
@@ -319,7 +319,7 @@ const SettingsTab = ({ onShowToast }) => {
             <button
               type="button"
               onClick={() => setIsResetConfirmOpen(true)}
-              className="py-2 px-4 rounded-xl bg-red-600/20 hover:bg-red-600/30 text-red-300 font-semibold text-xs border border-red-500/30 transition-colors"
+              className="py-2 px-4 rounded-xl bg-red-600/20 hover:bg-red-600/30 text-red-300 font-bold text-xs border border-red-500/30 transition-colors cursor-pointer"
             >
               Zavod Holatiga Qaytarish
             </button>
@@ -331,7 +331,7 @@ const SettingsTab = ({ onShowToast }) => {
       {/* Reset Confirmation Modal */}
       {isResetConfirmOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-[#101020] border border-red-500/40 rounded-2xl p-6 max-w-sm w-full space-y-4 shadow-2xl">
+          <div className="bg-[#121212] border border-red-500/40 rounded-2xl p-6 max-w-sm w-full space-y-4 shadow-2xl">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <span className="text-red-400">⚠️</span> Qayta tiklashni tasdiqlaysizmi?
             </h3>
@@ -342,14 +342,14 @@ const SettingsTab = ({ onShowToast }) => {
               <button
                 type="button"
                 onClick={() => setIsResetConfirmOpen(false)}
-                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/70 transition-colors"
+                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/70 transition-colors cursor-pointer"
               >
                 Bekor qilish
               </button>
               <button
                 type="button"
                 onClick={handleResetConfirm}
-                className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-xs font-semibold text-white shadow-lg shadow-red-600/30 transition-colors"
+                className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-xs font-bold text-white shadow-lg shadow-red-600/30 transition-colors cursor-pointer"
               >
                 Ha, qaytarilsin
               </button>

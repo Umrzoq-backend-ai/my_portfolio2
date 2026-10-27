@@ -35,10 +35,10 @@ const SoftSkillsTab = ({ onShowToast }) => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <span>🌟</span>
+          <h2 className="text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+            <span className="text-[#ff2a2a]">🌟</span>
             <span>Yumshoq Ko'nikmalar (Soft Skills)</span>
           </h2>
           <p className="text-xs text-white/50">
@@ -47,7 +47,7 @@ const SoftSkillsTab = ({ onShowToast }) => {
         </div>
         <button
           onClick={handleSave}
-          className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg shadow-purple-600/30 transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
+          className="px-6 py-2.5 rounded-xl bg-[#ff2a2a] hover:bg-red-600 text-white text-xs font-black shadow-lg shadow-red-600/30 hover:shadow-red-600/50 transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
         >
           <span>💾</span>
           <span>Ko'nikmalarni Saqlash</span>
@@ -59,14 +59,14 @@ const SoftSkillsTab = ({ onShowToast }) => {
         {skills.map((skill, idx) => (
           <div
             key={idx}
-            className="p-4 rounded-2xl bg-[#0f0f20]/80 border border-white/5 space-y-3 relative group"
+            className="p-5 rounded-2xl bg-[#121212]/90 border border-white/5 hover:border-red-500/30 space-y-3 relative group transition-all"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <select
                   value={skill.icon}
                   onChange={(e) => handleChange(idx, 'icon', e.target.value)}
-                  className="bg-[#141428] text-lg rounded-lg px-2 py-1 border border-white/10 text-white"
+                  className="bg-[#181818] text-lg rounded-xl px-2 py-1 border border-white/10 text-white cursor-pointer"
                 >
                   {EMOJI_OPTIONS.map((em, i) => (
                     <option key={i} value={em}>
@@ -78,13 +78,13 @@ const SoftSkillsTab = ({ onShowToast }) => {
                   type="text"
                   value={skill.name}
                   onChange={(e) => handleChange(idx, 'name', e.target.value)}
-                  className="text-xs font-bold text-white bg-transparent border-b border-transparent hover:border-purple-500/50 focus:border-purple-500 focus:outline-none px-1"
+                  className="text-xs font-bold text-white bg-transparent border-b border-transparent hover:border-[#ff2a2a]/50 focus:border-[#ff2a2a] focus:outline-none px-1"
                 />
               </div>
               <button
                 type="button"
                 onClick={() => handleDelete(idx)}
-                className="w-7 h-7 rounded-lg bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-400 text-xs flex items-center justify-center transition-colors"
+                className="w-7 h-7 rounded-lg bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-400 text-xs flex items-center justify-center transition-colors cursor-pointer"
               >
                 ✕
               </button>
@@ -94,15 +94,15 @@ const SoftSkillsTab = ({ onShowToast }) => {
               rows={2}
               value={skill.desc}
               onChange={(e) => handleChange(idx, 'desc', e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-[#131326] border border-white/10 text-xs text-white/80 focus:outline-none focus:border-purple-500"
+              className="w-full px-3 py-2 rounded-xl bg-[#181818] border border-white/10 text-xs text-white/80 focus:outline-none focus:border-[#ff2a2a]"
             />
           </div>
         ))}
       </div>
 
       {/* Add New Soft Skill Card */}
-      <form onSubmit={handleAdd} className="p-5 rounded-2xl bg-[#0a0a16] border border-dashed border-white/10 space-y-4">
-        <h3 className="text-xs font-bold text-purple-400 uppercase tracking-wider font-mono">
+      <form onSubmit={handleAdd} className="p-5 rounded-2xl bg-[#111111] border border-dashed border-white/10 space-y-4">
+        <h3 className="text-xs font-black text-[#ff2a2a] uppercase tracking-wider font-mono">
           Yangi Yumshoq Ko'nikma Qo'shish
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
@@ -110,7 +110,7 @@ const SoftSkillsTab = ({ onShowToast }) => {
             <select
               value={newSkill.icon}
               onChange={(e) => setNewSkill({ ...newSkill, icon: e.target.value })}
-              className="w-full bg-[#141428] text-lg rounded-xl px-3 py-2 border border-white/10 text-white"
+              className="w-full bg-[#181818] text-lg rounded-xl px-3 py-2 border border-white/10 text-white cursor-pointer"
             >
               {EMOJI_OPTIONS.map((em, i) => (
                 <option key={i} value={em}>
@@ -126,7 +126,7 @@ const SoftSkillsTab = ({ onShowToast }) => {
               value={newSkill.name}
               onChange={(e) => setNewSkill({ ...newSkill, name: e.target.value })}
               placeholder="Ko'nikma nomi (masalan: Adaptability)"
-              className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
             />
           </div>
           <div className="sm:col-span-4">
@@ -136,13 +136,13 @@ const SoftSkillsTab = ({ onShowToast }) => {
               value={newSkill.desc}
               onChange={(e) => setNewSkill({ ...newSkill, desc: e.target.value })}
               placeholder="Qisqacha tavsifi"
-              className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
             />
           </div>
           <div className="sm:col-span-2">
             <button
               type="submit"
-              className="w-full py-2.5 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 text-xs font-semibold border border-purple-500/30 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-red-600/20 hover:bg-red-600/40 text-red-200 text-xs font-bold border border-red-500/30 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <span>➕</span> Qo'shish
             </button>

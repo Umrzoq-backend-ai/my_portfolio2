@@ -55,10 +55,10 @@ const TechnicalSkillsTab = ({ onShowToast }) => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <span>⚡</span>
+          <h2 className="text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+            <span className="text-[#ff2a2a]">⚡</span>
             <span>Texnik Ko'nikmalar Boshqaruvi (Technical Skills)</span>
           </h2>
           <p className="text-xs text-white/50">
@@ -67,7 +67,7 @@ const TechnicalSkillsTab = ({ onShowToast }) => {
         </div>
         <button
           onClick={handleSave}
-          className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg shadow-purple-600/30 transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
+          className="px-6 py-2.5 rounded-xl bg-[#ff2a2a] hover:bg-red-600 text-white text-xs font-black shadow-lg shadow-red-600/30 hover:shadow-red-600/50 transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
         >
           <span>💾</span>
           <span>Ko'nikmalarni Saqlash</span>
@@ -79,28 +79,28 @@ const TechnicalSkillsTab = ({ onShowToast }) => {
         {categories.map((cat, catIdx) => (
           <div
             key={catIdx}
-            className="p-6 rounded-2xl bg-[#0f0f20]/80 border border-white/5 hover:border-white/10 transition-all space-y-4"
+            className="p-6 rounded-2xl bg-[#121212]/90 border border-white/5 hover:border-red-500/30 transition-all space-y-4 shadow-md"
           >
             {/* Category Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-white/5">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <input
                 type="text"
                 value={cat.title}
                 onChange={(e) => handleCategoryTitleChange(catIdx, e.target.value)}
-                className="text-sm font-bold text-white bg-transparent border-b border-transparent hover:border-purple-500/50 focus:border-purple-500 focus:outline-none px-1 py-0.5"
+                className="text-sm font-black text-white bg-transparent border-b border-transparent hover:border-[#ff2a2a]/50 focus:border-[#ff2a2a] focus:outline-none px-1 py-0.5"
               />
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => handleAddSkill(catIdx)}
-                  className="px-2.5 py-1 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 text-xs font-semibold"
+                  className="px-2.5 py-1 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-300 text-xs font-bold border border-red-500/30 cursor-pointer"
                 >
                   + Ko'nikma
                 </button>
                 <button
                   type="button"
                   onClick={() => handleDeleteCategory(catIdx)}
-                  className="w-7 h-7 rounded-lg bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-400 text-xs flex items-center justify-center"
+                  className="w-7 h-7 rounded-lg bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-400 text-xs flex items-center justify-center cursor-pointer"
                 >
                   ✕
                 </button>
@@ -110,29 +110,29 @@ const TechnicalSkillsTab = ({ onShowToast }) => {
             {/* Skills List */}
             <div className="space-y-3.5">
               {cat.skills?.map((skill, sIdx) => (
-                <div key={sIdx} className="space-y-1.5 p-2.5 rounded-xl bg-[#131326] border border-white/5">
+                <div key={sIdx} className="space-y-1.5 p-3 rounded-xl bg-[#181818] border border-white/5">
                   <div className="flex items-center justify-between gap-3">
                     <input
                       type="text"
                       value={skill.name}
                       onChange={(e) => handleSkillChange(catIdx, sIdx, 'name', e.target.value)}
-                      className="text-xs font-semibold text-white bg-transparent border-none focus:outline-none flex-1"
+                      className="text-xs font-bold text-white bg-transparent border-none focus:outline-none flex-1"
                     />
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono font-bold text-red-400 w-10 text-right">
+                      <span className="text-xs font-mono font-black text-[#ff2a2a] w-10 text-right">
                         {skill.level}%
                       </span>
                       <button
                         type="button"
                         onClick={() => handleDeleteSkill(catIdx, sIdx)}
-                        className="text-white/30 hover:text-red-400 text-xs ml-1"
+                        className="text-white/30 hover:text-red-400 text-xs ml-1 cursor-pointer"
                       >
                         ✕
                       </button>
                     </div>
                   </div>
 
-                  {/* Level Slider */}
+                  {/* Level Slider matching portfolio theme */}
                   <div className="flex items-center gap-3">
                     <input
                       type="range"
@@ -140,7 +140,7 @@ const TechnicalSkillsTab = ({ onShowToast }) => {
                       max="100"
                       value={skill.level}
                       onChange={(e) => handleSkillChange(catIdx, sIdx, 'level', e.target.value)}
-                      className="w-full h-1.5 bg-black/50 rounded-lg appearance-none cursor-pointer accent-red-500"
+                      className="w-full h-1.5 bg-black/60 rounded-lg appearance-none cursor-pointer accent-[#ff2a2a]"
                     />
                   </div>
                 </div>
@@ -157,19 +157,19 @@ const TechnicalSkillsTab = ({ onShowToast }) => {
       </div>
 
       {/* Add New Category Card */}
-      <form onSubmit={handleAddCategory} className="p-5 rounded-2xl bg-[#0a0a16] border border-dashed border-white/10 flex flex-col sm:flex-row items-center gap-4">
+      <form onSubmit={handleAddCategory} className="p-5 rounded-2xl bg-[#111111] border border-dashed border-white/10 flex flex-col sm:flex-row items-center gap-4">
         <div className="flex-1 w-full">
           <input
             type="text"
             value={newCategoryTitle}
             onChange={(e) => setNewCategoryTitle(e.target.value)}
             placeholder="Yangi ko'nikmalar guruhi nomi (masalan: Cloud & DevOps)"
-            className="w-full px-4 py-2.5 rounded-xl bg-[#131326] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+            className="w-full px-4 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
           />
         </div>
         <button
           type="submit"
-          className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 text-xs font-semibold border border-purple-500/30 transition-colors flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
+          className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-red-600/20 hover:bg-red-600/40 text-red-300 text-xs font-bold border border-red-500/30 transition-colors flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
         >
           <span>➕</span>
           <span>Yangi Guruh Qo'shish</span>

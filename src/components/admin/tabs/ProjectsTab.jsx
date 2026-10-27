@@ -20,15 +20,15 @@ const EMPTY_PROJECT = {
   },
   isFlagship: false,
   stats: 'Live Demo',
-  accent: 'from-purple-600/30 via-indigo-600/20 to-black',
+  accent: 'from-red-600/30 via-red-900/20 to-black',
 };
 
 const ACCENT_PRESETS = [
-  { label: 'Qizil / Binafsha', value: 'from-red-600/30 via-purple-600/20 to-black' },
-  { label: 'Moviy / Cyan', value: 'from-cyan-600/30 via-blue-600/20 to-black' },
-  { label: 'To‘q Sariq / Amber', value: 'from-amber-600/30 via-orange-600/20 to-black' },
-  { label: 'Yashil / Zumrad', value: 'from-emerald-600/30 via-teal-600/20 to-black' },
-  { label: 'Binafsha / Pushti', value: 'from-purple-600/30 via-pink-600/20 to-black' },
+  { label: 'Qizil / Qora (Flagship)', value: 'from-red-600/30 via-purple-600/20 to-black' },
+  { label: 'Moviy / Cyan (Intra)', value: 'from-cyan-600/30 via-blue-600/20 to-black' },
+  { label: 'To‘q Sariq / Amber (Tutor)', value: 'from-amber-600/30 via-orange-600/20 to-black' },
+  { label: 'Yashil / Zumrad (Tool)', value: 'from-emerald-600/30 via-teal-600/20 to-black' },
+  { label: 'Pushti / Rose', value: 'from-pink-600/30 via-rose-600/20 to-black' },
 ];
 
 const ProjectsTab = ({ onShowToast }) => {
@@ -131,10 +131,10 @@ const ProjectsTab = ({ onShowToast }) => {
   return (
     <div className="space-y-6">
       {/* Header and Add Button */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <span>🚀</span>
+          <h2 className="text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+            <span className="text-[#ff2a2a]">🚀</span>
             <span>Loyihalar Boshqaruvi (Projects CRUD)</span>
           </h2>
           <p className="text-xs text-white/50">
@@ -143,7 +143,7 @@ const ProjectsTab = ({ onShowToast }) => {
         </div>
         <button
           onClick={handleAddNew}
-          className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg shadow-purple-600/30 transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
+          className="px-5 py-2.5 rounded-xl bg-[#ff2a2a] hover:bg-red-600 text-white text-xs font-black shadow-lg shadow-red-600/30 hover:shadow-red-600/50 transition-all flex items-center gap-2 self-start sm:self-auto cursor-pointer"
         >
           <span>➕</span>
           <span>Yangi Loyiha Qo'shish</span>
@@ -157,27 +157,27 @@ const ProjectsTab = ({ onShowToast }) => {
             key={project.id || idx}
             className={`p-4 sm:p-5 rounded-2xl border transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-4 ${
               project.isFlagship
-                ? 'bg-[#121024] border-purple-500/40 shadow-lg shadow-purple-950/20'
-                : 'bg-[#0e0e1c] border-white/5 hover:border-white/20'
+                ? 'bg-[#151212] border-red-500/40 shadow-lg shadow-red-950/20'
+                : 'bg-[#111111] border-white/5 hover:border-red-500/30'
             }`}
           >
             {/* Left: Info */}
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center font-mono text-sm font-bold text-purple-400 flex-shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-black/50 border border-white/10 flex items-center justify-center font-mono text-sm font-black text-[#ff2a2a] flex-shrink-0">
                 {project.number || String(idx + 1).padStart(2, '0')}
               </div>
 
               <div className="space-y-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="text-base font-bold text-white">
+                  <h3 className="text-base font-black text-white">
                     {project.title}
                   </h3>
                   {project.isFlagship && (
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-1">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-red-500/15 text-red-400 border border-red-500/30 flex items-center gap-1">
                       <span>★</span> Flagship
                     </span>
                   )}
-                  <span className="px-2 py-0.5 rounded-md text-[10px] font-mono uppercase bg-white/5 text-purple-300 border border-white/10">
+                  <span className="px-2 py-0.5 rounded-md text-[10px] font-mono uppercase bg-white/5 text-white/70 border border-white/10">
                     {project.category || 'ai'}
                   </span>
                 </div>
@@ -189,7 +189,7 @@ const ProjectsTab = ({ onShowToast }) => {
                 {/* Tech tags preview */}
                 <div className="flex items-center gap-1.5 flex-wrap pt-1">
                   {project.techTags?.slice(0, 5).map((t, i) => (
-                    <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-black/40 text-white/70 border border-white/5">
+                    <span key={i} className="text-[10px] px-2 py-0.5 rounded bg-black/60 text-white/70 border border-white/5 font-mono">
                       {t}
                     </span>
                   ))}
@@ -210,7 +210,7 @@ const ProjectsTab = ({ onShowToast }) => {
                 disabled={idx === 0}
                 onClick={() => handleMove(idx, -1)}
                 title="Yuqoriga surish"
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none text-white/70 flex items-center justify-center text-xs transition-colors"
+                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none text-white/70 flex items-center justify-center text-xs transition-colors cursor-pointer"
               >
                 ▲
               </button>
@@ -221,7 +221,7 @@ const ProjectsTab = ({ onShowToast }) => {
                 disabled={idx === projectList.length - 1}
                 onClick={() => handleMove(idx, 1)}
                 title="Pastga surish"
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none text-white/70 flex items-center justify-center text-xs transition-colors"
+                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none text-white/70 flex items-center justify-center text-xs transition-colors cursor-pointer"
               >
                 ▼
               </button>
@@ -230,7 +230,7 @@ const ProjectsTab = ({ onShowToast }) => {
               <button
                 type="button"
                 onClick={() => handleEdit(idx)}
-                className="px-3 py-1.5 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 text-xs font-semibold border border-purple-500/30 transition-colors flex items-center gap-1"
+                className="px-3 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-300 text-xs font-bold border border-red-500/30 transition-colors flex items-center gap-1 cursor-pointer"
               >
                 <span>✏️</span>
                 <span>Tahrirlash</span>
@@ -240,7 +240,7 @@ const ProjectsTab = ({ onShowToast }) => {
               <button
                 type="button"
                 onClick={() => setDeleteConfirmIndex(idx)}
-                className="px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/25 text-red-400 text-xs font-semibold border border-red-500/20 transition-colors"
+                className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-400 text-xs font-bold border border-white/10 transition-colors cursor-pointer"
               >
                 🗑️
               </button>
@@ -252,7 +252,7 @@ const ProjectsTab = ({ onShowToast }) => {
       {/* Delete Confirmation Modal */}
       {deleteConfirmIndex !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-[#101020] border border-red-500/30 rounded-2xl p-6 max-w-sm w-full space-y-4 shadow-2xl">
+          <div className="bg-[#121212] border border-red-500/40 rounded-2xl p-6 max-w-sm w-full space-y-4 shadow-2xl">
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <span className="text-red-400">⚠️</span> Loyihani o'chirishni tasdiqlaysizmi?
             </h3>
@@ -263,14 +263,14 @@ const ProjectsTab = ({ onShowToast }) => {
               <button
                 type="button"
                 onClick={() => setDeleteConfirmIndex(null)}
-                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/70 transition-colors"
+                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/70 transition-colors cursor-pointer"
               >
                 Bekor qilish
               </button>
               <button
                 type="button"
                 onClick={() => handleDelete(deleteConfirmIndex)}
-                className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-xs font-semibold text-white shadow-lg shadow-red-600/30 transition-colors"
+                className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-xs font-bold text-white shadow-lg shadow-red-600/30 transition-colors cursor-pointer"
               >
                 Ha, o'chirilsin
               </button>
@@ -281,17 +281,17 @@ const ProjectsTab = ({ onShowToast }) => {
 
       {/* Create / Edit Modal Form */}
       {isModalOpen && formData && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto animate-fade-in">
-          <div className="bg-[#0e0e1c] border border-white/10 rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 shadow-2xl my-8 max-h-[90vh] overflow-y-auto custom-scrollbar">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto animate-fade-in">
+          <div className="bg-[#121212] border border-white/15 rounded-3xl max-w-3xl w-full p-6 sm:p-8 space-y-6 shadow-2xl my-8 max-h-[90vh] overflow-y-auto custom-scrollbar">
             {/* Modal Header */}
             <div className="flex items-center justify-between pb-4 border-b border-white/10">
-              <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                <span>{editingIndex !== null ? '✏️' : '➕'}</span>
+              <h3 className="text-lg font-black text-white uppercase tracking-tight flex items-center gap-2">
+                <span className="text-[#ff2a2a]">{editingIndex !== null ? '✏️' : '➕'}</span>
                 <span>{editingIndex !== null ? 'Loyihani Tahrirlash' : 'Yangi Loyiha Qo‘shish'}</span>
               </h3>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white flex items-center justify-center text-sm"
+                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white flex items-center justify-center text-sm cursor-pointer"
               >
                 ✕
               </button>
@@ -301,74 +301,74 @@ const ProjectsTab = ({ onShowToast }) => {
             <form onSubmit={handleFormSubmit} className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-white/70 mb-1.5">Loyiha Nomi (Title) *</label>
+                  <label className="block text-xs font-semibold text-white/70 mb-1.5">Loyiha Nomi (Title) *</label>
                   <input
                     type="text"
                     required
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-white/70 mb-1.5">Qisqa Sarlavha / Tech Subtitle</label>
+                  <label className="block text-xs font-semibold text-white/70 mb-1.5">Qisqa Sarlavha / Tech Subtitle</label>
                   <input
                     type="text"
                     value={formData.subtitle || ''}
                     onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
                     placeholder="FastAPI · React · Gemini AI"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-white/70 mb-1.5">Nishon (Badge)</label>
+                  <label className="block text-xs font-semibold text-white/70 mb-1.5">Nishon (Badge)</label>
                   <input
                     type="text"
                     value={formData.badge || ''}
                     onChange={(e) => setFormData({ ...formData, badge: e.target.value })}
                     placeholder="🔥 Flagship AI Project"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-white/70 mb-1.5">Toifa (Category)</label>
+                  <label className="block text-xs font-semibold text-white/70 mb-1.5">Toifa (Category)</label>
                   <select
                     value={formData.category || 'ai'}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                   >
                     <option value="ai">AI / Data Science (ai)</option>
-                    <option value="fullstack">Full-Stack / Backend (fullstack)</option>
-                    <option value="tools">Tools / CLI / CV (tools)</option>
+                    <option value="fullstack">Web & Mini Apps (fullstack)</option>
+                    <option value="tools">CLI & Tools (tools)</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-white/70 mb-1.5">Rol / Vazifa</label>
+                  <label className="block text-xs font-semibold text-white/70 mb-1.5">Rol / Vazifa</label>
                   <input
                     type="text"
                     value={formData.role || ''}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                     placeholder="Lead AI & Full-Stack Developer"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                   />
                 </div>
               </div>
 
               {/* Flagship Toggle & Stats */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center p-4 rounded-xl bg-[#131326] border border-white/5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center p-4 rounded-xl bg-[#181818] border border-white/5">
                 <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
                     id="flagship_toggle"
                     checked={formData.isFlagship || false}
                     onChange={(e) => setFormData({ ...formData, isFlagship: e.target.checked })}
-                    className="w-4 h-4 rounded text-purple-600 focus:ring-purple-500"
+                    className="w-4 h-4 rounded text-red-600 focus:ring-red-500"
                   />
                   <label htmlFor="flagship_toggle" className="text-xs font-bold text-white cursor-pointer select-none">
                     ★ Flagship Loyiha (Katta maxsus karta sifatida ko'rsatish)
@@ -376,20 +376,20 @@ const ProjectsTab = ({ onShowToast }) => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-white/70 mb-1">Status nishoni</label>
+                  <label className="block text-xs font-semibold text-white/70 mb-1">Status nishoni</label>
                   <input
                     type="text"
                     value={formData.stats || ''}
                     onChange={(e) => setFormData({ ...formData, stats: e.target.value })}
                     placeholder="Live Production · Vercel"
-                    className="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-white/10 text-xs text-white"
+                    className="w-full px-3 py-1.5 rounded-lg bg-black/60 border border-white/10 text-xs text-white"
                   />
                 </div>
               </div>
 
               {/* HR Highlights */}
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1.5">
+                <label className="block text-xs font-semibold text-white/70 mb-1.5">
                   HR & Texnik Highlight (Qisqa jozibador xulosa)
                 </label>
                 <textarea
@@ -397,38 +397,38 @@ const ProjectsTab = ({ onShowToast }) => {
                   value={formData.hrHighlights || ''}
                   onChange={(e) => setFormData({ ...formData, hrHighlights: e.target.value })}
                   placeholder="Video va audio materiallardan soniyalar ichida chuqur xulosa ajratuvchi platforma..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                 />
               </div>
 
               {/* Full Description */}
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1.5">To'liq Tavsif (Description)</label>
+                <label className="block text-xs font-semibold text-white/70 mb-1.5">To'liq Tavsif (Description)</label>
                 <textarea
                   rows={3}
                   value={formData.description || ''}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                 />
               </div>
 
               {/* Features List */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-medium text-white/70">
+                  <label className="text-xs font-semibold text-white/70">
                     Xususiyatlar va Imkoniyatlar (Features bullet points)
                   </label>
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, features: [...(formData.features || []), ''] })}
-                    className="text-xs text-purple-400 hover:text-purple-300 font-semibold"
+                    className="text-xs text-red-400 hover:text-red-300 font-bold cursor-pointer"
                   >
                     + Qator qo'shish
                   </button>
                 </div>
                 {formData.features?.map((f, fIdx) => (
                   <div key={fIdx} className="flex items-center gap-2">
-                    <span className="text-xs text-white/30 font-mono">•</span>
+                    <span className="text-xs text-red-500 font-mono">•</span>
                     <input
                       type="text"
                       value={f}
@@ -438,7 +438,7 @@ const ProjectsTab = ({ onShowToast }) => {
                         setFormData({ ...formData, features: newF });
                       }}
                       placeholder={`Xususiyat #${fIdx + 1}`}
-                      className="flex-1 px-3 py-1.5 rounded-lg bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+                      className="flex-1 px-3 py-1.5 rounded-lg bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                     />
                     <button
                       type="button"
@@ -446,7 +446,7 @@ const ProjectsTab = ({ onShowToast }) => {
                         const newF = formData.features.filter((_, idx) => idx !== fIdx);
                         setFormData({ ...formData, features: newF });
                       }}
-                      className="text-white/40 hover:text-red-400 text-xs px-2"
+                      className="text-white/40 hover:text-red-400 text-xs px-2 cursor-pointer"
                     >
                       ✕
                     </button>
@@ -456,7 +456,7 @@ const ProjectsTab = ({ onShowToast }) => {
 
               {/* Tech Tags */}
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1.5">
+                <label className="block text-xs font-semibold text-white/70 mb-1.5">
                   Texnologiyalar (Vergul bilan ajrating)
                 </label>
                 <input
@@ -464,14 +464,14 @@ const ProjectsTab = ({ onShowToast }) => {
                   value={Array.isArray(formData.techTags) ? formData.techTags.join(', ') : formData.techTags}
                   onChange={(e) => setFormData({ ...formData, techTags: e.target.value.split(',').map((s) => s.trim()) })}
                   placeholder="Python, FastAPI, Google Gemini, React, TailwindCSS"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                 />
               </div>
 
               {/* Links */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-white/70 mb-1.5">GitHub Havola</label>
+                  <label className="block text-xs font-semibold text-white/70 mb-1.5">GitHub Havola</label>
                   <input
                     type="url"
                     value={formData.links?.github || ''}
@@ -482,12 +482,12 @@ const ProjectsTab = ({ onShowToast }) => {
                       })
                     }
                     placeholder="https://github.com/..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-white/70 mb-1.5">Jonli Demo Havola (Vercel / Web)</label>
+                  <label className="block text-xs font-semibold text-white/70 mb-1.5">Jonli Demo Havola (Vercel / Web)</label>
                   <input
                     type="url"
                     value={formData.links?.demo || ''}
@@ -498,18 +498,18 @@ const ProjectsTab = ({ onShowToast }) => {
                       })
                     }
                     placeholder="https://..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                   />
                 </div>
               </div>
 
               {/* Accent Color Preset */}
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1.5">Karta Gradient Rangi (Accent)</label>
+                <label className="block text-xs font-semibold text-white/70 mb-1.5">Karta Gradient Rangi (Accent)</label>
                 <select
                   value={formData.accent || ACCENT_PRESETS[0].value}
                   onChange={(e) => setFormData({ ...formData, accent: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                 >
                   {ACCENT_PRESETS.map((p, i) => (
                     <option key={i} value={p.value}>
@@ -524,13 +524,13 @@ const ProjectsTab = ({ onShowToast }) => {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/70 transition-colors"
+                  className="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/70 transition-colors cursor-pointer"
                 >
                   Bekor qilish
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-xs font-semibold text-white shadow-lg shadow-purple-600/30 transition-all cursor-pointer"
+                  className="px-6 py-2.5 rounded-xl bg-[#ff2a2a] hover:bg-red-600 text-xs font-black text-white shadow-lg shadow-red-600/30 transition-all cursor-pointer"
                 >
                   {editingIndex !== null ? 'Yangilashni Saqlash' : 'Loyihani Qo‘shish'}
                 </button>

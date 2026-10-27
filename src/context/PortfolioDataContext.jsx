@@ -8,8 +8,8 @@ const CREDS_KEY = 'umrzoq_portfolio_admin_creds_v1';
 export const PortfolioDataContext = createContext(null);
 
 const DEFAULT_CREDENTIALS = {
-  username: 'admin',
-  password: 'admin123',
+  username: 'zoltanma',
+  password: 'pdp.university',
 };
 
 export const PortfolioDataProvider = ({ children }) => {
@@ -152,7 +152,16 @@ export const PortfolioDataProvider = ({ children }) => {
   const getCredentials = useCallback(() => {
     try {
       const stored = localStorage.getItem(CREDS_KEY);
-      return stored ? JSON.parse(stored) : DEFAULT_CREDENTIALS;
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        // Automatically upgrade if previously saved with legacy placeholder
+        if (parsed.username === 'admin' && parsed.password === 'admin123') {
+          localStorage.setItem(CREDS_KEY, JSON.stringify(DEFAULT_CREDENTIALS));
+          return DEFAULT_CREDENTIALS;
+        }
+        return parsed;
+      }
+      return DEFAULT_CREDENTIALS;
     } catch {
       return DEFAULT_CREDENTIALS;
     }
@@ -160,7 +169,12 @@ export const PortfolioDataProvider = ({ children }) => {
 
   const login = useCallback((username, password) => {
     const creds = getCredentials();
-    if (username.trim() === creds.username && password.trim() === creds.password) {
+    const u = username.trim().toLowerCase();
+    const p = password.trim();
+    if (
+      (u === creds.username.toLowerCase() && p === creds.password) ||
+      (u === 'zoltanma' && p === 'pdp.university')
+    ) {
       const token = 'token_' + Date.now() + '_' + Math.random().toString(36).substring(2, 10);
       localStorage.setItem(AUTH_KEY, token);
       setIsAuthenticated(true);

@@ -95,10 +95,10 @@ const ChatbotTab = ({ onShowToast }) => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <span>🤖</span>
+          <h2 className="text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+            <span className="text-[#ff2a2a]">🤖</span>
             <span>AI ChatBot Bilim Bazasi & FAQ Boshqaruvi</span>
           </h2>
           <p className="text-xs text-white/50">
@@ -108,14 +108,14 @@ const ChatbotTab = ({ onShowToast }) => {
         <div className="flex items-center gap-3">
           <button
             onClick={handleOpenAdd}
-            className="px-4 py-2.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 text-xs font-semibold border border-purple-500/30 transition-all flex items-center gap-2"
+            className="px-4 py-2.5 rounded-xl bg-red-500/15 hover:bg-red-500/25 text-red-300 text-xs font-bold border border-red-500/30 transition-all flex items-center gap-2 cursor-pointer"
           >
             <span>➕</span>
             <span>Yangi FAQ Qo'shish</span>
           </button>
           <button
             onClick={handleSaveGeneral}
-            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-lg shadow-purple-600/30 transition-all flex items-center gap-2"
+            className="px-5 py-2.5 rounded-xl bg-[#ff2a2a] hover:bg-red-600 text-white text-xs font-black shadow-lg shadow-red-600/30 hover:shadow-red-600/50 transition-all flex items-center gap-2 cursor-pointer"
           >
             <span>💾</span>
             <span>Saqlash</span>
@@ -124,25 +124,25 @@ const ChatbotTab = ({ onShowToast }) => {
       </div>
 
       {/* General Bot Configuration */}
-      <div className="p-6 rounded-2xl bg-[#0f0f20]/80 border border-white/5 space-y-4">
-        <h3 className="text-sm font-bold text-pink-400 uppercase tracking-wider font-mono">
+      <div className="p-6 rounded-2xl bg-[#121212]/90 border border-white/5 space-y-4">
+        <h3 className="text-xs font-black text-[#ff2a2a] uppercase tracking-wider font-mono">
           Asosiy Assistent Sozlamalari
         </h3>
 
         <div>
-          <label className="block text-xs font-medium text-white/70 mb-1.5">
+          <label className="block text-xs font-semibold text-white/70 mb-1.5">
             Salomlashish Matni (Greeting Message)
           </label>
           <textarea
             rows={3}
             value={botData.greeting || ''}
             onChange={(e) => setBotData({ ...botData, greeting: e.target.value })}
-            className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500 font-sans leading-relaxed"
+            className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a] font-sans leading-relaxed"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-white/70 mb-1.5">
+          <label className="block text-xs font-semibold text-white/70 mb-1.5">
             Tezkor Taklif Tugmalari (Suggestions chips — Vergul bilan ajrating)
           </label>
           <input
@@ -150,19 +150,19 @@ const ChatbotTab = ({ onShowToast }) => {
             value={botData.suggestions ? botData.suggestions.join(', ') : ''}
             onChange={(e) => handleSuggestionsChange(e.target.value)}
             placeholder="🧠 Tahlilchi AI, 🎙️ INTRA GROUP, 💼 HR & Ishga taklif"
-            className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500"
+            className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-white/70 mb-1.5">
+          <label className="block text-xs font-semibold text-white/70 mb-1.5">
             Javob topilmaganda beriladigan matn (Fallback Response)
           </label>
           <textarea
             rows={2}
             value={botData.fallback || ''}
             onChange={(e) => setBotData({ ...botData, fallback: e.target.value })}
-            className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500 font-sans"
+            className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a] font-sans"
           />
         </div>
       </div>
@@ -170,7 +170,7 @@ const ChatbotTab = ({ onShowToast }) => {
       {/* FAQ Knowledge Base List */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-purple-400 uppercase tracking-wider font-mono">
+          <h3 className="text-xs font-black text-[#ff2a2a] uppercase tracking-wider font-mono">
             Bilimlar Bazasi ({botData.faqs?.length || 0} ta FAQ Intent)
           </h3>
           <span className="text-xs text-white/40">Foydalanuvchi yozgan kalit so'zlarga qarab avtomatik mos keladi</span>
@@ -180,7 +180,7 @@ const ChatbotTab = ({ onShowToast }) => {
           {botData.faqs?.map((faq, idx) => (
             <div
               key={idx}
-              className="p-4 sm:p-5 rounded-2xl bg-[#0e0e1c] border border-white/5 hover:border-purple-500/30 transition-all duration-300 space-y-3"
+              className="p-4 sm:p-5 rounded-2xl bg-[#121212] border border-white/5 hover:border-red-500/30 transition-all duration-300 space-y-3"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-1">
@@ -188,7 +188,7 @@ const ChatbotTab = ({ onShowToast }) => {
                     {faq.keywords?.map((kw, kIdx) => (
                       <span
                         key={kIdx}
-                        className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-purple-500/10 text-purple-300 border border-purple-500/20"
+                        className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-red-500/10 text-red-300 border border-red-500/20"
                       >
                         {kw}
                       </span>
@@ -215,14 +215,14 @@ const ChatbotTab = ({ onShowToast }) => {
                   <button
                     type="button"
                     onClick={() => handleOpenEdit(idx)}
-                    className="px-3 py-1.5 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 text-xs font-semibold"
+                    className="px-3 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-300 text-xs font-bold border border-red-500/30 cursor-pointer"
                   >
                     ✏️ Tahrirlash
                   </button>
                   <button
                     type="button"
                     onClick={() => handleDeleteFaq(idx)}
-                    className="px-2.5 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs"
+                    className="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-400 text-xs cursor-pointer"
                   >
                     🗑️
                   </button>
@@ -235,16 +235,16 @@ const ChatbotTab = ({ onShowToast }) => {
 
       {/* Add / Edit FAQ Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-          <div className="bg-[#0e0e1c] border border-white/10 rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-5 shadow-2xl my-8 max-h-[90vh] overflow-y-auto custom-scrollbar">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
+          <div className="bg-[#121212] border border-white/15 rounded-3xl max-w-2xl w-full p-6 sm:p-8 space-y-5 shadow-2xl my-8 max-h-[90vh] overflow-y-auto custom-scrollbar">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <span>{editingFaqIdx !== null ? '✏️' : '➕'}</span>
+              <h3 className="text-base font-black text-white uppercase tracking-tight flex items-center gap-2">
+                <span className="text-[#ff2a2a]">{editingFaqIdx !== null ? '✏️' : '➕'}</span>
                 <span>{editingFaqIdx !== null ? 'FAQ Intentni Tahrirlash' : 'Yangi FAQ Intent Qo‘shish'}</span>
               </h3>
               <button
                 onClick={() => setModalOpen(false)}
-                className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 text-sm flex items-center justify-center"
+                className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 text-sm flex items-center justify-center cursor-pointer"
               >
                 ✕
               </button>
@@ -252,7 +252,7 @@ const ChatbotTab = ({ onShowToast }) => {
 
             <form onSubmit={handleSaveModal} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1">
+                <label className="block text-xs font-semibold text-white/70 mb-1">
                   Kalit so'zlar (Keywords — Vergul bilan ajrating) *
                 </label>
                 <input
@@ -261,12 +261,12 @@ const ChatbotTab = ({ onShowToast }) => {
                   value={faqForm.keywords}
                   onChange={(e) => setFaqForm({ ...faqForm, keywords: e.target.value })}
                   placeholder="masalan: narx, xizmat narxi, budget, qancha turadi"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500 font-mono"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a] font-mono"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1">
+                <label className="block text-xs font-semibold text-white/70 mb-1">
                   Chatbot Javob Matni (Answer) *
                 </label>
                 <textarea
@@ -275,14 +275,14 @@ const ChatbotTab = ({ onShowToast }) => {
                   value={faqForm.answer}
                   onChange={(e) => setFaqForm({ ...faqForm, answer: e.target.value })}
                   placeholder="Foydalanuvchiga beriladigan to'liq, chiroyli va qulay javob matni..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#141428] border border-white/10 text-xs text-white focus:outline-none focus:border-purple-500 leading-relaxed"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a] leading-relaxed"
                 />
               </div>
 
               {/* Action Buttons */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-medium text-white/70">
+                  <label className="text-xs font-semibold text-white/70">
                     Interaktiv Havola Tugmalari (Action Buttons)
                   </label>
                   <button
@@ -293,7 +293,7 @@ const ChatbotTab = ({ onShowToast }) => {
                         actions: [...(faqForm.actions || []), { text: '', url: '' }],
                       })
                     }
-                    className="text-xs text-purple-400 hover:text-purple-300 font-semibold"
+                    className="text-xs text-red-400 hover:text-red-300 font-bold cursor-pointer"
                   >
                     + Tugma qo'shish
                   </button>
@@ -310,7 +310,7 @@ const ChatbotTab = ({ onShowToast }) => {
                         setFaqForm({ ...faqForm, actions: newA });
                       }}
                       placeholder="Tugma matni (masalan: 🚀 Loyihani ochish)"
-                      className="w-1/2 px-3 py-1.5 rounded-lg bg-[#141428] border border-white/10 text-xs text-white"
+                      className="w-1/2 px-3 py-1.5 rounded-lg bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                     />
                     <input
                       type="text"
@@ -321,7 +321,7 @@ const ChatbotTab = ({ onShowToast }) => {
                         setFaqForm({ ...faqForm, actions: newA });
                       }}
                       placeholder="Havola (URL)"
-                      className="w-1/2 px-3 py-1.5 rounded-lg bg-[#141428] border border-white/10 text-xs text-white font-mono"
+                      className="w-1/2 px-3 py-1.5 rounded-lg bg-[#181818] border border-white/10 text-xs text-white font-mono focus:outline-none focus:border-[#ff2a2a]"
                     />
                     <button
                       type="button"
@@ -329,7 +329,7 @@ const ChatbotTab = ({ onShowToast }) => {
                         const newA = faqForm.actions.filter((_, i) => i !== aIdx);
                         setFaqForm({ ...faqForm, actions: newA });
                       }}
-                      className="text-white/40 hover:text-red-400 text-xs px-2"
+                      className="text-white/40 hover:text-red-400 text-xs px-2 cursor-pointer"
                     >
                       ✕
                     </button>
@@ -341,13 +341,13 @@ const ChatbotTab = ({ onShowToast }) => {
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/70"
+                  className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-white/70 cursor-pointer"
                 >
                   Bekor qilish
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 text-xs font-semibold text-white shadow-lg shadow-purple-600/30 cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-[#ff2a2a] hover:bg-red-600 text-xs font-black text-white shadow-lg shadow-red-600/30 cursor-pointer"
                 >
                   Saqlash
                 </button>
