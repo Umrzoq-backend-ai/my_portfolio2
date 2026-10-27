@@ -1,9 +1,9 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import { leadershipList as defaultLeadership } from '../data/portfolioData';
 import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
-const LeadershipItem = ({ item, index, dark }) => {
+const LeadershipItem = ({ item, index, dark, onImageClick }) => {
   const isEven = index % 2 === 0;
 
   return (
@@ -38,9 +38,34 @@ const LeadershipItem = ({ item, index, dark }) => {
           }`}>
             {item.title}
           </h3>
-          <p className="text-[#ff2a2a] text-xs font-bold font-mono tracking-wider uppercase mb-4">
+          <p className="text-[#ff2a2a] text-xs font-bold font-mono tracking-wider uppercase mb-3">
             {item.role}
           </p>
+
+          {/* Optional Achievement Photo */}
+          {item.image && (
+            <div 
+              onClick={() => onImageClick?.(item.image, item.title, item.badge)}
+              className="relative my-3 rounded-xl overflow-hidden border border-white/10 group/img cursor-pointer aspect-video bg-black/40 shadow-lg"
+            >
+              <img 
+                src={item.image} 
+                alt={item.title} 
+                className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105" 
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3">
+                <span className="text-[11px] font-mono text-white/90 bg-black/60 px-2.5 py-1 rounded-lg backdrop-blur-sm flex items-center gap-1.5 border border-white/15">
+                  <span>🔍</span>
+                  <span>Kattalashtirish</span>
+                </span>
+                <span className="text-[10px] text-white/70 font-semibold uppercase tracking-wider">
+                  {item.badge}
+                </span>
+              </div>
+            </div>
+          )}
+
           <p className={`text-sm leading-relaxed font-medium ${
             dark ? 'text-white/60' : 'text-gray-600'
           }`}>
@@ -59,6 +84,11 @@ const Leadership = () => {
   const { dark } = useContext(ThemeContext);
   const portfolioData = usePortfolioData();
   const leadershipList = portfolioData?.leadershipList || defaultLeadership;
+  const [lightboxImage, setLightboxImage] = useState(null);
+
+  const handleImageClick = (url, title, badge) => {
+    setLightboxImage({ url, title, badge });
+  };
 
   return (
     <section 
@@ -82,7 +112,7 @@ const Leadership = () => {
           <div className={`inline-block border rounded-full px-5 py-1.5 text-sm font-bold mb-6 shadow-sm ${
             dark ? 'border-white/20 text-white/60 bg-white/5 backdrop-blur-sm' : 'border-gray-300 text-gray-600 bg-white'
           }`}>
-            Activities
+            Activities & Achievements
           </div>
           <h2 className={`text-4xl md:text-5xl font-black tracking-tight mb-4 uppercase ${
             dark ? 'text-white' : 'text-gray-900'
@@ -105,16 +135,51 @@ const Leadership = () => {
           <div className="w-full">
             {leadershipList.map((item, index) => (
               <LeadershipItem 
-                key={item.title} 
+                key={item.title || index} 
                 item={item} 
                 index={index} 
                 dark={dark} 
+                onImageClick={handleImageClick}
               />
             ))}
           </div>
         </div>
 
       </div>
+
+      {/* Lightbox Modal */}
+      {lightboxImage && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in"
+          onClick={() => setLightboxImage(null)}
+        >
+          <div 
+            className="relative max-w-4xl w-full max-h-[92vh] bg-[#121212] border border-[#ff2a2a]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-black/60">
+              <div>
+                <h4 className="text-sm font-bold text-white">{lightboxImage.title}</h4>
+                <span className="text-[10px] font-mono text-[#ff2a2a]">{lightboxImage.badge}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setLightboxImage(null)}
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-[#ff2a2a] text-white flex items-center justify-center transition-colors cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="p-3 overflow-auto flex items-center justify-center bg-black/90">
+              <img 
+                src={lightboxImage.url} 
+                alt={lightboxImage.title} 
+                className="max-h-[75vh] w-auto max-w-full object-contain rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

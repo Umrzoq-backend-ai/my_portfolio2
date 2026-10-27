@@ -175,24 +175,28 @@ export const leadershipList = [
     description: "Currently studying at School 21, a peer-to-peer project-based coding school. Working through intensive programming and data science curriculum.",
     role: "Data Science Student",
     badge: "Education",
+    image: "",
   },
   {
     title: "AI Hackathon — Samarkand",
     description: "Participated in AI-focused hackathon in Samarkand, building intelligent solutions and competing with other developers across Uzbekistan.",
     role: "Participant",
     badge: "Competition",
+    image: "",
   },
   {
     title: "Open Source Contributor",
     description: "Actively contributing to open source projects and maintaining personal repositories on GitHub with AI and backend projects.",
     role: "Developer",
     badge: "Open Source",
+    image: "",
   },
   {
     title: "Self-Driven Learner",
     description: "Independently studying Machine Learning and Backend Development through online courses, books, and hands-on projects.",
     role: "Independent Learner",
     badge: "Self-Education",
+    image: "",
   },
 ];
 

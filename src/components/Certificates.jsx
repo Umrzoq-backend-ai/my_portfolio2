@@ -1,23 +1,41 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import { certificates as defaultCertificates } from '../data/portfolioData';
 import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
-const CertificateCard = ({ cert, aosDelay }) => (
+const CertificateCard = ({ cert, aosDelay, onImageClick }) => (
   <div 
     data-aos="zoom-in"
     data-aos-delay={aosDelay}
-    className="bg-black/20 backdrop-blur-sm rounded-2xl p-5 border border-white/15 hover:border-white/30 hover:scale-105 hover:shadow-[0_15px_40px_rgba(0,0,0,0.3)] transition-all duration-500 cursor-default group"
+    onClick={() => cert.image && onImageClick?.(cert.image, cert.name, cert.issuer)}
+    className={`bg-black/20 backdrop-blur-sm rounded-2xl p-5 border border-white/15 hover:border-white/30 hover:scale-105 hover:shadow-[0_15px_40px_rgba(0,0,0,0.3)] transition-all duration-500 group ${
+      cert.image ? 'cursor-pointer' : 'cursor-default'
+    }`}
   >
     <div className="flex items-start gap-4">
-      <span className="text-2xl mt-0.5 group-hover:scale-110 transition-transform duration-300">{cert.icon}</span>
-      <div>
-        <h3 className="text-white font-bold text-sm md:text-base leading-tight mb-1 group-hover:text-white transition-colors">
+      {cert.image ? (
+        <div className="w-12 h-12 rounded-xl overflow-hidden border border-white/20 shrink-0 bg-black/40">
+          <img 
+            src={cert.image} 
+            alt={cert.name} 
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" 
+          />
+        </div>
+      ) : (
+        <span className="text-2xl mt-0.5 group-hover:scale-110 transition-transform duration-300">{cert.icon}</span>
+      )}
+      <div className="flex-1 min-w-0">
+        <h3 className="text-white font-bold text-sm md:text-base leading-tight mb-1 group-hover:text-white transition-colors truncate">
           {cert.name}
         </h3>
         <p className="text-white/60 text-xs font-semibold uppercase tracking-wider">
           {cert.issuer}
         </p>
+        {cert.image && (
+          <span className="inline-flex items-center gap-1 text-[11px] text-white/90 font-mono mt-1 underline decoration-white/40">
+            <span>🔍 Rasmni ko‘rish</span>
+          </span>
+        )}
       </div>
     </div>
   </div>
@@ -27,6 +45,11 @@ const Certificates = () => {
   const { dark } = useContext(ThemeContext);
   const portfolioData = usePortfolioData();
   const certificates = portfolioData?.certificates || defaultCertificates;
+  const [lightboxImage, setLightboxImage] = useState(null);
+
+  const handleImageClick = (url, title, issuer) => {
+    setLightboxImage({ url, title, issuer });
+  };
 
   return (
     <section className="bg-[#ff2a2a] pt-20 pb-28 px-6 md:px-12 w-full relative overflow-hidden font-sans">
@@ -53,9 +76,10 @@ const Certificates = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-12">
           {certificates.featured.map((cert, index) => (
             <CertificateCard 
-              key={cert.name} 
+              key={cert.name || index} 
               cert={cert} 
               aosDelay={String((index + 1) * 100)} 
+              onImageClick={handleImageClick}
             />
           ))}
         </div>
@@ -78,6 +102,40 @@ const Certificates = () => {
           </a>
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      {lightboxImage && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in"
+          onClick={() => setLightboxImage(null)}
+        >
+          <div 
+            className="relative max-w-4xl w-full max-h-[92vh] bg-[#121212] border border-white/20 rounded-2xl overflow-hidden shadow-2xl flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-black/60">
+              <div>
+                <h4 className="text-sm font-bold text-white">{lightboxImage.title}</h4>
+                <span className="text-[10px] font-mono text-[#ff2a2a]">{lightboxImage.issuer}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setLightboxImage(null)}
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-[#ff2a2a] text-white flex items-center justify-center transition-colors cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="p-3 overflow-auto flex items-center justify-center bg-black/90">
+              <img 
+                src={lightboxImage.url} 
+                alt={lightboxImage.title} 
+                className="max-h-[75vh] w-auto max-w-full object-contain rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Decorative stars */}
       <div className="absolute top-16 left-6 md:left-16 text-black opacity-20 animate-pulse">

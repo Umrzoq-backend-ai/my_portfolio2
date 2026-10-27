@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { usePortfolioData } from '../../../context/PortfolioDataContext';
+import ImageUploadField from '../ImageUploadField';
 
 const CertificatesTab = ({ onShowToast }) => {
   const {
@@ -23,7 +24,10 @@ const CertificatesTab = ({ onShowToast }) => {
   };
 
   const handleAddCert = () => {
-    const updated = [...(certs.featured || []), { name: 'Yangi Sertifikat', issuer: 'Tashkilot', icon: '🎓' }];
+    const updated = [
+      ...(certs.featured || []),
+      { name: 'Yangi Sertifikat', issuer: 'Tashkilot', icon: '🎓', image: '' },
+    ];
     setCerts({ ...certs, featured: updated });
   };
 
@@ -115,6 +119,12 @@ const CertificatesTab = ({ onShowToast }) => {
                 onChange={(e) => handleCertChange(idx, 'issuer', e.target.value)}
                 placeholder="Beruvchi tashkilot (Issuer)"
                 className="w-full px-2.5 py-1 rounded bg-transparent border border-white/10 text-xs text-white/60"
+              />
+              <ImageUploadField
+                value={c.image || ''}
+                onChange={(val) => handleCertChange(idx, 'image', val)}
+                label="Sertifikat Rasmi"
+                placeholder="https://... yoki fayl tanlang"
               />
             </div>
           ))}

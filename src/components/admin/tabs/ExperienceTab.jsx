@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { usePortfolioData } from '../../../context/PortfolioDataContext';
+import ImageUploadField from '../ImageUploadField';
 
 const ExperienceTab = ({ onShowToast }) => {
   const {
@@ -59,6 +60,7 @@ const ExperienceTab = ({ onShowToast }) => {
         role: 'Ishtirokchi',
         badge: 'Tashabbus',
         description: 'Faoliyat haqida batafsil tavsif...',
+        image: '',
       },
     ]);
   };
@@ -249,6 +251,13 @@ const ExperienceTab = ({ onShowToast }) => {
                   className="w-full px-3 py-1.5 rounded-lg bg-[#181818] border border-white/10 text-xs text-white/80"
                 />
               </div>
+
+              <ImageUploadField
+                value={item.image || ''}
+                onChange={(val) => handleLeadershipChange(idx, 'image', val)}
+                label="Yutuq / Tadbir Rasmi"
+                placeholder="https://... rasm havolasi yoki faylni tanlang"
+              />
             </div>
           ))}
         </div>
