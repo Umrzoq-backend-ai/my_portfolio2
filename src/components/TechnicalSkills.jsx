@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { technicalSkills } from '../data/portfolioData';
+import { technicalSkills as defaultTechSkills } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
 const SkillProgress = ({ name, level, isVisible, dark }) => (
@@ -52,6 +53,8 @@ const SkillCard = ({ category, index, isVisible, dark }) => (
 
 const TechnicalSkills = () => {
   const { dark } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const technicalSkills = portfolioData?.technicalSkills || defaultTechSkills;
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 

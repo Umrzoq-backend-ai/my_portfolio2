@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { aboutContent } from '../data/portfolioData';
+import { aboutContent as defaultAbout } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 import profileImg from '../assets/about/umrzoq-developer.jpg';
 
@@ -56,6 +57,8 @@ const MLIcon = () => (
 
 const About = () => {
   const { dark } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const aboutContent = portfolioData?.aboutContent || defaultAbout;
 
   return (
     <section id="about" className="bg-[#ff2a2a] pt-20 pb-40 px-6 md:px-12 w-full relative overflow-hidden font-sans">

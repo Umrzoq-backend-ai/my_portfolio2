@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { softSkillsList } from '../data/portfolioData';
+import { softSkillsList as defaultSoftSkills } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
 const SoftSkillCard = ({ skill, index, dark }) => (
@@ -34,6 +35,8 @@ const SoftSkillCard = ({ skill, index, dark }) => (
 
 const SoftSkills = () => {
   const { dark } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const softSkillsList = portfolioData?.softSkillsList || defaultSoftSkills;
 
   return (
     <section className={`pt-24 pb-32 px-6 md:px-12 w-full relative overflow-hidden font-sans transition-colors duration-300 ${

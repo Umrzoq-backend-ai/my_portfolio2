@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { personalInfo } from '../data/portfolioData';
+import { personalInfo as defaultPersonal } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 
 const Preloader = () => {
+  const portfolioData = usePortfolioData();
+  const personalInfo = portfolioData?.personalInfo || defaultPersonal;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

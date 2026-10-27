@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { personalInfo } from '../data/portfolioData';
+import { personalInfo as defaultPersonal } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
 const navLinks = [
@@ -12,6 +13,8 @@ const navLinks = [
 
 const Navbar = () => {
   const { dark, toggle } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const personalInfo = portfolioData?.personalInfo || defaultPersonal;
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [hireModal, setHireModal] = useState(false);

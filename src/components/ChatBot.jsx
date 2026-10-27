@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { chatbotData } from '../data/portfolioData';
+import { chatbotData as defaultChatbot } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 import umrzoqAvatar from '../assets/about/umrzoq-developer.jpg';
 
 // ── Smart Multi-turn Intent & Keyword Engine ──────────────────
-const findBestFaq = (input) => {
+const findBestFaq = (input, activeBotData = defaultChatbot) => {
   const clean = input.toLowerCase().replace(/[?!.,;:#@$%^&*()_+=~`[\]{}|\\/<>]/g, ' ').trim();
   if (!clean) return null;
 
@@ -13,9 +14,12 @@ const findBestFaq = (input) => {
   let bestFaq = null;
   let highestScore = 0;
 
-  for (const faq of chatbotData.faqs) {
+  const faqs = activeBotData?.faqs || defaultChatbot.faqs || [];
+
+  for (const faq of faqs) {
     let score = 0;
-    for (const kw of faq.keywords) {
+    const keywords = faq.keywords || [];
+    for (const kw of keywords) {
       const lowerKw = kw.toLowerCase();
       // Exact phrase match gives highest weight
       if (clean.includes(lowerKw)) {
@@ -45,7 +49,7 @@ const findBestFaq = (input) => {
   }
 
   return {
-    text: chatbotData.fallback,
+    text: activeBotData?.fallback || defaultChatbot.fallback,
     actions: [
       { text: "🧠 Tahlilchi AI", url: "https://tahlilchi-ai-ruddy.vercel.app" },
       { text: "🎙️ INTRA GROUP Radio", url: "https://frontend-tau-seven-19.vercel.app" },
@@ -148,6 +152,8 @@ const SuggestionPill = ({ text, onClick, dark }) => (
 // ── Main ChatBot Component ───────────────────────────────────
 const ChatBot = () => {
   const { dark } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const chatbotData = portfolioData?.chatbotData || defaultChatbot;
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -258,7 +264,7 @@ const ChatBot = () => {
 
     setTimeout(() => {
       setIsTyping(false);
-      const res = findBestFaq(userText);
+      const res = findBestFaq(userText, chatbotData);
       setMessages((prev) => [
         ...prev,
         {

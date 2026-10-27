@@ -1,6 +1,7 @@
 import React, { useRef, useState, useContext } from 'react';
 import { motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
-import { skillsContent } from '../data/portfolioData';
+import { skillsContent as defaultSkills } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
 const TagCard = ({ number, title, text, className, aosDelay, aosType, pathLength, containerRef, dark }) => {
@@ -75,6 +76,8 @@ const TagCard = ({ number, title, text, className, aosDelay, aosType, pathLength
 
 const Services = () => {
   const { dark } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const skillsContent = portfolioData?.skillsContent || defaultSkills;
   const containerRef = useRef(null);
   
   const { scrollYProgress } = useScroll({

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { leadershipList } from '../data/portfolioData';
+import { leadershipList as defaultLeadership } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
 const LeadershipItem = ({ item, index, dark }) => {
@@ -56,6 +57,8 @@ const LeadershipItem = ({ item, index, dark }) => {
 
 const Leadership = () => {
   const { dark } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const leadershipList = portfolioData?.leadershipList || defaultLeadership;
 
   return (
     <section 

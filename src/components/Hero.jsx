@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useState } from 'react';
-import AOS from 'aos';
+import { useRef, useEffect, useState } from 'react';
 import 'aos/dist/aos.css';
-import { heroContent, socialLinks } from '../data/portfolioData';
+import { heroContent as defaultHero, socialLinks as defaultSocials } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import heroVideo from '../assets/hero video/Self-introduction_video_Junior_D…_202607260839.mp4';
 import heroPoster from '../assets/hero video/hero-poster.jpg';
 
@@ -9,6 +9,9 @@ const HERO_IMAGE = null;
 const HERO_VIDEO = heroVideo;
 
 const Hero = () => {
+  const portfolioData = usePortfolioData();
+  const heroContent = portfolioData?.heroContent || defaultHero;
+  const socialLinks = portfolioData?.socialLinks || defaultSocials;
   const bgVideoRef = useRef(null);
   const modalVideoRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);

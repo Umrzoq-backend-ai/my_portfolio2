@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { projects, socialLinks } from '../data/portfolioData';
+import { projects as defaultProjects, socialLinks as defaultSocials } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
 const GitHubIcon = () => (
@@ -418,6 +419,9 @@ const filterTabs = [
 
 const Projects = () => {
   const { dark } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const projects = portfolioData?.projects || defaultProjects;
+  const socialLinks = portfolioData?.socialLinks || defaultSocials;
   const [filter, setFilter] = useState('all');
 
   const filteredProjects = filter === 'all'

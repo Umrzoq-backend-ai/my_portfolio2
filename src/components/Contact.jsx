@@ -1,9 +1,14 @@
 import React, { useRef, useState, useContext } from 'react';
-import { emailjsConfig, personalInfo, socialLinks } from '../data/portfolioData';
+import { emailjsConfig as defaultEmailjs, personalInfo as defaultPersonal, socialLinks as defaultSocials } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
 const Contact = () => {
   const { dark } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const emailjsConfig = portfolioData?.emailjsConfig || defaultEmailjs;
+  const personalInfo = portfolioData?.personalInfo || defaultPersonal;
+  const socialLinks = portfolioData?.socialLinks || defaultSocials;
   const formRef = useRef(null);
   const [status, setStatus] = useState('idle'); // idle, sending, success, error
 

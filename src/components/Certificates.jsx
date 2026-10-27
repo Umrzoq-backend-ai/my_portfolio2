@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { certificates } from '../data/portfolioData';
+import { certificates as defaultCertificates } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
 const CertificateCard = ({ cert, aosDelay }) => (
@@ -24,6 +25,8 @@ const CertificateCard = ({ cert, aosDelay }) => (
 
 const Certificates = () => {
   const { dark } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const certificates = portfolioData?.certificates || defaultCertificates;
 
   return (
     <section className="bg-[#ff2a2a] pt-20 pb-28 px-6 md:px-12 w-full relative overflow-hidden font-sans">

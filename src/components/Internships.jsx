@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { internshipsList } from '../data/portfolioData';
+import { internshipsList as defaultInternships } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
 const InternshipCard = ({ intern, index }) => (
@@ -58,6 +59,8 @@ const InternshipCard = ({ intern, index }) => (
 
 const Internships = () => {
   const { dark } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const internshipsList = portfolioData?.internshipsList || defaultInternships;
 
   return (
     <section className="bg-[#ff2a2a] pt-24 pb-32 px-6 md:px-12 w-full relative overflow-hidden font-sans">

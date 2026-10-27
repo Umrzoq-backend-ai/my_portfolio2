@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { personalInfo, socialLinks, footerContent } from '../data/portfolioData';
+import { personalInfo as defaultPersonal, socialLinks as defaultSocials, footerContent as defaultFooter } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
 const navLinks = [
@@ -13,6 +14,10 @@ const navLinks = [
 
 const Footer = () => {
   const { dark } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const personalInfo = portfolioData?.personalInfo || defaultPersonal;
+  const socialLinks = portfolioData?.socialLinks || defaultSocials;
+  const footerContent = portfolioData?.footerContent || defaultFooter;
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -230,8 +235,17 @@ const Footer = () => {
           <p>
             {footerContent.copyright}
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
             <span>Built with React 19 & TailwindCSS</span>
+            <a 
+              href="#/admin"
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold border transition-all ${
+                dark ? 'bg-white/5 border-white/10 text-purple-300 hover:bg-purple-500/20 hover:border-purple-500/40' : 'bg-gray-100 border-gray-300 text-purple-700 hover:bg-purple-100'
+              }`}
+            >
+              <span>⚡</span>
+              <span>Admin Panel</span>
+            </a>
             <a 
               href={socialLinks.github}
               target="_blank"

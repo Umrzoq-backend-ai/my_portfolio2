@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { contentCreation, socialLinks } from '../data/portfolioData';
+import { contentCreation as defaultContent, socialLinks as defaultSocials } from '../data/portfolioData';
+import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
 
 const CreatorCard = ({ category, index, dark }) => (
@@ -50,6 +51,9 @@ const CreatorCard = ({ category, index, dark }) => (
 
 const ContentCreator = () => {
   const { dark } = useContext(ThemeContext);
+  const portfolioData = usePortfolioData();
+  const contentCreation = portfolioData?.contentCreation || defaultContent;
+  const socialLinks = portfolioData?.socialLinks || defaultSocials;
 
   return (
     <section 
