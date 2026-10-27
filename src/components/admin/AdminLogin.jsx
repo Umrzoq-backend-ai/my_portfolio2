@@ -3,7 +3,7 @@ import { usePortfolioData } from '../../context/PortfolioDataContext';
 
 const AdminLogin = ({ onNavigateHome, onLoginSuccess }) => {
   const { login, personalInfo } = usePortfolioData();
-  const [username, setUsername] = useState('zoltanma');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -251,7 +251,7 @@ const AdminLogin = ({ onNavigateHome, onLoginSuccess }) => {
                           required
                           value={username}
                           onChange={(e) => setUsername(e.target.value)}
-                          placeholder="zoltanma"
+                          placeholder="Foydalanuvchi nomi"
                           className="w-full pl-10 pr-4 py-3 bg-transparent text-sm text-white placeholder-white/30 focus:outline-none"
                         />
                       </div>
@@ -273,7 +273,7 @@ const AdminLogin = ({ onNavigateHome, onLoginSuccess }) => {
                           required
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          placeholder="••••••••••••"
+                          placeholder="Parol"
                           className="w-full pl-10 pr-10 py-3 bg-transparent text-sm text-white placeholder-white/30 focus:outline-none"
                         />
                         <button
@@ -312,14 +312,11 @@ const AdminLogin = ({ onNavigateHome, onLoginSuccess }) => {
                     </button>
                   </form>
 
-                  {/* Secure Badge & Hint */}
-                  <div className="pt-2 text-center space-y-2 border-t border-white/5">
-                    <div className="flex items-center justify-center gap-1.5 text-xs text-white/50">
+                  {/* Secure Badge */}
+                  <div className="pt-3 text-center border-t border-white/5">
+                    <div className="flex items-center justify-center gap-2 text-xs text-white/50">
                       <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                      <span>Xavfsiz kirish</span>
-                    </div>
-                    <div className="text-[11px] font-mono text-red-400/80 bg-red-950/20 py-1.5 px-3 rounded-lg border border-red-500/20">
-                      Login: <span className="text-white font-bold">zoltanma</span> | Parol: <span className="text-white font-bold">pdp.university</span>
+                      <span>Shifrlangan va xavfsiz sessiya</span>
                     </div>
                   </div>
                 </div>

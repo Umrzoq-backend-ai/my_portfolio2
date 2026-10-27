@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { personalInfo as defaultPersonal } from '../data/portfolioData';
 import { usePortfolioData } from '../context/PortfolioDataContext';

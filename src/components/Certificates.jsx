@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { certificates as defaultCertificates } from '../data/portfolioData';
 import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';

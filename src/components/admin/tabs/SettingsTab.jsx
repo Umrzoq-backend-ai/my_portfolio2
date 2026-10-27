@@ -15,7 +15,7 @@ const SettingsTab = ({ onShowToast }) => {
   } = usePortfolioData();
 
   const [emailConfig, setEmailConfig] = useState({ ...emailjsConfig });
-  const [footer, setFooter] = useState({ ...footerContent });
+  const footer = footerContent || {};
   const [taglinesInput, setTaglinesInput] = useState(
     footerContent?.taglines ? footerContent.taglines.join(', ') : ''
   );
@@ -196,7 +196,7 @@ const SettingsTab = ({ onShowToast }) => {
                 required
                 value={passForm.oldPassword}
                 onChange={(e) => setPassForm({ ...passForm, oldPassword: e.target.value })}
-                placeholder="Standart: pdp.university"
+                placeholder="Amaldagi parolni kiriting"
                 className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
               />
             </div>
@@ -208,7 +208,7 @@ const SettingsTab = ({ onShowToast }) => {
                   type="text"
                   value={passForm.newUsername}
                   onChange={(e) => setPassForm({ ...passForm, newUsername: e.target.value })}
-                  placeholder="zoltanma"
+                  placeholder="Yangi login kiriting"
                   className="w-full px-3.5 py-2.5 rounded-xl bg-[#181818] border border-white/10 text-xs text-white focus:outline-none focus:border-[#ff2a2a]"
                 />
               </div>

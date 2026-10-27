@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { personalInfo as defaultPersonal } from '../data/portfolioData';
 import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';

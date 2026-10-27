@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { technicalSkills as defaultTechSkills } from '../data/portfolioData';
 import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';

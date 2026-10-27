@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import { useRef, useState, useContext } from 'react';
 import { emailjsConfig as defaultEmailjs, personalInfo as defaultPersonal, socialLinks as defaultSocials } from '../data/portfolioData';
 import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';

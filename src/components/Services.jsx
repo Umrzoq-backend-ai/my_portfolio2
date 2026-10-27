@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import { useRef, useState, useContext } from 'react';
 import { motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
 import { skillsContent as defaultSkills } from '../data/portfolioData';
 import { usePortfolioData } from '../context/PortfolioDataContext';

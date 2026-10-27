@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { chatbotData as defaultChatbot } from '../data/portfolioData';
 import { usePortfolioData } from '../context/PortfolioDataContext';
 import { ThemeContext } from '../App';
@@ -215,14 +215,18 @@ const ChatBot = () => {
 
   // Auto-greeting on first open
   useEffect(() => {
+    let timer;
+    let typingTimer;
     if (isOpen && !hasGreeted) {
-      setIsTyping(true);
-      const timer = setTimeout(() => {
+      typingTimer = setTimeout(() => {
+        setIsTyping(true);
+      }, 50);
+      timer = setTimeout(() => {
         setIsTyping(false);
         setMessages([
           {
             role: 'bot',
-            text: chatbotData.greeting,
+            text: chatbotData?.greeting || '',
             actions: [
               { text: "🧠 Tahlilchi AI Haqida", url: "https://tahlilchi-ai-ruddy.vercel.app" },
               { text: "🎙️ INTRA GROUP Demoni", url: "https://frontend-tau-seven-19.vercel.app" },
@@ -234,13 +238,19 @@ const ChatBot = () => {
         ]);
         setHasGreeted(true);
       }, 500);
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(typingTimer);
+        clearTimeout(timer);
+      };
     }
     if (isOpen) {
-      setUnread(0);
-      setTimeout(() => inputRef.current?.focus(), 150);
+      const focusTimer = setTimeout(() => {
+        setUnread(0);
+        inputRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(focusTimer);
     }
-  }, [isOpen, hasGreeted]);
+  }, [isOpen, hasGreeted, chatbotData?.greeting]);
 
   // Initial nudge notification after 3.5s
   useEffect(() => {
